@@ -1,0 +1,10 @@
+{
+  "name": "xoxa",
+  "version": "0.0.1",
+  "description": "Xoxa chat engine",
+  "main": "index.js",
+  "repository": "https://github.com/itka4yk/xoxa",
+  "author": "Ihor Tkachuk",
+  "license": "MIT",
+  "private": true
+}
