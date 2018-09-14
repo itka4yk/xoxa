@@ -1,0 +1,21 @@
+{
+  "name": "app.api",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "author": "Ihor Tkachuk",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "start": "../../node_modules/ts-node-dev/bin/ts-node-dev src/index.ts"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "typescript": "^3.0.3",
+    "webpack": "^4.19.0",
+    "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "app.domain": "^1.0.0",
+    "express": "^4.16.3"
+  }
+}

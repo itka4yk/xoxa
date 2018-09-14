@@ -1,6 +1,6 @@
 import express = require('express');
 
-import message = require('app.domain/lib');
+import message = require('app.domain/src');
 
 const app = express();
 

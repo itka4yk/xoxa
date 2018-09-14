@@ -4,4 +4,4 @@ ENV PORT 3001
 
 EXPOSE 3001
 
-COPY . .
+COPY ./dist .
