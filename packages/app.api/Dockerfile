@@ -1,9 +1,7 @@
-FROM risingstack/alpine:3.4-v6.9.4-4.2.0
+FROM node:8.12.0-alpine
 
 ENV PORT 3001
 
 EXPOSE 3001
 
 COPY . .
-
-CMD ["node", "lib/"]
