@@ -6,5 +6,8 @@
   "repository": "https://github.com/itka4yk/xoxa",
   "author": "Ihor Tkachuk",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.3.2"
+  }
 }
