@@ -1,9 +1,23 @@
-import express = require('express');
+import path = require('path');
 
-import message = require('app.domain/src');
+import express = require('express');
 
 const app = express();
 
-app.get('/', (_, res) => res.send(message));
+/**
+ * API
+ */
+
+app.get('/api', (_, res) => res.send('Hello from api'));
+
+
+/**
+ * STATIC
+ */
+
+app.use('/', express.static(path.resolve(path.join(__dirname, '..', '/wwwroot'))));
+
+app.get('*', (_, res) => res.sendFile(path.resolve(path.join(__dirname, '..', '/wwwroot/index.html'))));
+
 
 app.listen(3001, () => console.log('Listening on port 3001'));

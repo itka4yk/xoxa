@@ -9,6 +9,7 @@
     "start": "../../node_modules/ts-node-dev/bin/ts-node-dev src/index.ts"
   },
   "devDependencies": {
+    "@types/node": "^10.9.4",
     "awesome-typescript-loader": "^5.2.1",
     "typescript": "^3.0.3",
     "webpack": "^4.19.0",
