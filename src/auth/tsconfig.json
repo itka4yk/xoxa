@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "lib": ["es2017"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "pretty": true,
+    "newLine": "LF",
+    "strict": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "noStrictGenericChecks": true,
+    "noImplicitAny": false,
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
