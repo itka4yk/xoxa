@@ -14,43 +14,43 @@ router.delete('/:id', _delete);
 function authenticate(req: Request, res: Response, next: NextFunction) {
     userService.authenticate(req.body)
         .then(user => user ? res.json(user) : res.status(400).json({ message: 'Username or password is incorrect' }))
-        .catch(err => next(err));
+        .catch(next);
 }
 
 function register(req: Request, res: Response, next: NextFunction) {
     userService.create(req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+        .then(res.json)
+        .catch(next);
 }
 
 function getAll(_, res: Response, next: NextFunction) {
     userService.getAll()
-        .then(users => res.json(users))
-        .catch(err => next(err));
+        .then(res.json)
+        .catch(next);
 }
 
 function getCurrent(req: any, res: Response, next: NextFunction) {
     userService.getById(req.user.sub)
         .then(user => user ? res.json(user) : res.sendStatus(404))
-        .catch(err => next(err));
+        .catch(next);
 }
 
 function getById(req: Request, res: Response, next: NextFunction) {
     userService.getById(req.params.id)
         .then(user => user ? res.json(user) : res.sendStatus(404))
-        .catch(err => next(err));
+        .catch(next);
 }
 
 function update(req: Request, res: Response, next: NextFunction) {
     userService.update(req.params.id, req.body)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+        .then(res.json)
+        .catch(next);
 }
 
 function _delete(req: Request, res: Response, next: NextFunction) {
     userService.del(req.params.id)
-        .then(() => res.json({}))
-        .catch(err => next(err));
+        .then(res.json)
+        .catch(next);
 }
 
 
