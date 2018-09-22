@@ -5,9 +5,9 @@ services:
     build:
       context: ./src/app.api
       dockerfile: Dockerfile
-    ports:
-    - "8080:8080"
     command: node .
+    labels:
+      - "traefik.frontend.rule=Host:api.xoxa.app"
   wss:
     build:
       context: ./src/app.wss
@@ -30,3 +30,26 @@ services:
       - ~/xoxa/data/db:/data/db
     ports:
         - 27017:27017
+  auth:
+    build:
+      context: ./src/auth
+      dockerfile: Dockerfile
+    command: node .
+    depends_on:
+      - database
+    labels:
+      - "traefik.frontend.rule=Host:auth.xoxa.app"
+  database:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+  reverse-proxy:
+    image: traefik
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/traefik.toml
