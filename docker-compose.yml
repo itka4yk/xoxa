@@ -5,6 +5,28 @@ services:
     build:
       context: ./src/app.api
       dockerfile: Dockerfile
-    command: node .
     ports:
-    - "3001:3001"
+    - "8080:8080"
+    command: node .
+  wss:
+    build:
+      context: ./src/app.wss
+      dockerfile: Dockerfile
+    ports:
+    - "8081:8081"
+    command: node .
+  infrastructure:
+    build:
+      context: ./src/app.infrastructure
+      dockerfile: Dockerfile
+    depends_on:
+      - mongo
+    command: node .
+  rabbit:
+    image: rabbitmq
+  mongo:
+    image: mongo
+    volumes:
+      - ~/xoxa/data/db:/data/db
+    ports:
+        - 27017:27017

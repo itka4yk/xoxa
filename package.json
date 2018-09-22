@@ -8,12 +8,19 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "api": " yarn --cwd ./src/app.api/ start",
-    "build": "yarn api:build",
-    "api:build": " yarn --cwd ./src/app.api/ build"
+    "api:build": "yarn --cwd ./src/app.api/ build",
+    "api": "yarn --cwd ./src/app.api/ start",
+    "auth": "yarn --cwd ./src/auth/ start",
+    "auth:build": "yarn --cwd ./src/auth/ build",
+    "wss": "yarn --cwd ./src/app.wss/ start",
+    "wss:build": "yarn --cwd ./src/app.wss/ build",
+    "infrastructure": "yarn --cwd ./src/app.infrastructure/ start",
+    "infrastructure:build": "yarn --cwd ./src/app.infrastructure/ build",
+    "build": "yarn api:build && yarn wss:build && yarn infrastructure:build && yarn auth:build"
   },
   "devDependencies": {
     "lerna": "^3.3.2",
-    "ts-node-dev": "^1.0.0-pre.30"
+    "ts-node-dev": "^1.0.0-pre.30",
+    "typescript": "^3.0.3"
   }
 }

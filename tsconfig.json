@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "lib": ["es2017"],
     "sourceMap": true,
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
@@ -10,16 +11,17 @@
     "pretty": true,
     "newLine": "LF",
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "skipLibCheck": true,
     "allowJs": true,
     "jsx": "react",
     "baseUrl": ".",
     "rootDir": ".",
+    "experimentalDecorators": true,
     "paths": {
       "~/*": ["src/*"]
-    }
+    },
+    "noStrictGenericChecks": true,
+    "noImplicitAny": false,
   },
   "exclude": [
     "**/build"

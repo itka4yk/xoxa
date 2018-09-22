@@ -1,7 +1,6 @@
 FROM node:8.12.0-alpine
 
-ENV PORT 3001
-
-EXPOSE 3001
+EXPOSE 8080
 
 COPY ./dist .
+COPY ./wwwroot ./wwwroot
