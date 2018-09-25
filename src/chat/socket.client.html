@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Socket.io Client</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script>
+      var socket = io('http://localhost:3000'); // ip of wifi shield and port of socket
+      console.log(socket);
+      socket.on('data', function (data) {
+        console.log(data);
+      });
+      socket.on('connect', () => {
+        console.log(socket.id); // 'G5p5...'
+      });
+      socket.emit('events', 'world');
+      socket.emit('identity', 'client', 'data');
+    </script>
+</head>
+<body>
+Check the console
+</body>
+</html>
