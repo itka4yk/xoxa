@@ -1,6 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreateNewUserCommand } from 'application/commands/users/createNewUser.command';
+import { CreateNewUserCommand } from '../../../application/commands/users/createNewUser.command';
 
 @Controller('users')
 export class UsersController {

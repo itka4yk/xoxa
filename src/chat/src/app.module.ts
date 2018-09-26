@@ -5,9 +5,11 @@ import { DomainModule } from './domain/domain.module';
 import { ApplicationModule } from './application/application.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
+const dbUrl = process.env.DBNAME || 'localhost';
+
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/xoxa'),
+    MongooseModule.forRoot(`mongodb://${dbUrl}/xoxa`),
     ApiModule,
     InfrastructureModule,
     DomainModule,

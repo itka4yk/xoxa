@@ -1,5 +1,5 @@
 FROM node:8.12.0-alpine
 
-EXPOSE 8081
+EXPOSE 8080
 
 COPY ./dist .

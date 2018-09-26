@@ -1,20 +1,29 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "declaration": true,
     "noImplicitAny": false,
     "removeComments": true,
-    "noLib": false,
+    // "noLib": false,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es6",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "moduleResolution": "node",
+    "lib": ["es2017"],
+    "esModuleInterop": true,
+    "pretty": true,
+    "newLine": "LF",
+    // "strict": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    // "noStrictGenericChecks": true,
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "node_modules/class-validator"
   ],
   "exclude": [
     "node_modules",

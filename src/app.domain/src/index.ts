@@ -1,1 +1,0 @@
-export default "Hello from domain v6";
