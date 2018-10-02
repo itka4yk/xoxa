@@ -10,7 +10,6 @@
     "moduleResolution": "node",
     "pretty": true,
     "newLine": "LF",
-    "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
     "jsx": "react",
@@ -18,7 +17,7 @@
     "rootDir": ".",
     "experimentalDecorators": true,
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["src/*"],
     },
     "noStrictGenericChecks": true,
     "noImplicitAny": false,

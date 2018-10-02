@@ -5,17 +5,24 @@ services:
     build:
       context: src/chat
       dockerfile: Dockerfile
-    command: node .
     environment:
       - DBNAME=mongo
+      - REDISNAME=redis
     labels:
       - "traefik.frontend.rule=Host:api.xoxa.app"
+    depends_on:
+      - mongo
+      - redis
   mongo:
     image: mongo
     volumes:
       - ~/xoxa/data/db:/data/db
     ports:
         - 27017:27017
+  redis:
+    image: redis:latest
+    ports:
+      - 6379-6379
   auth:
     build:
       context: ./src/auth

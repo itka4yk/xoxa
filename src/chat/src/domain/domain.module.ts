@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { InfrastructureModule } from '../infrastructure/infrastructure.module';
 
-@Module({})
+@Module({
+  imports: [InfrastructureModule],
+})
 export class DomainModule {}

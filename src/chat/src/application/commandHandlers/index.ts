@@ -1,5 +1,7 @@
-import { CreateNewUserCommandHandler } from './users/createNewUser.commandHandler';
+import { CreateNewSpaceCommandHandler } from './spaces/createNewSpace.commandHandler';
+import { CreateNewChannelCommandHandler } from './channels/createNewChannel.commandHandler';
 
 export const CommandHandlers = [
-  CreateNewUserCommandHandler,
+  CreateNewSpaceCommandHandler,
+  CreateNewChannelCommandHandler,
 ];

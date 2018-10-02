@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "api:build": "yarn --cwd ./src/chat/ build",
+    "api:build": "yarn --cwd ./src/chat/",
     "api": "yarn --cwd ./src/chat/ start",
     "auth": "yarn --cwd ./src/auth/ start",
     "auth:build": "yarn --cwd ./src/auth/ build",

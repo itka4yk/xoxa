@@ -1,22 +1,28 @@
 import { Module } from '@nestjs/common';
-import { CQRSModule, CommandBus } from '@nestjs/cqrs';
+import { CQRSModule, EventBus } from '@nestjs/cqrs';
 import { ModuleRef } from '@nestjs/core';
 import { CommandHandlers } from '../application/commandHandlers';
+import { EventHandlers } from '../application/eventHandlers';
 import { InfrastructureModule } from '../infrastructure/infrastructure.module';
+import { CommandBus } from './CommandBus';
 
 @Module({
   imports: [CQRSModule, InfrastructureModule],
-  providers: [...CommandHandlers],
+  providers: [...CommandHandlers, ...EventHandlers, CommandBus],
+  exports: [CommandBus, CQRSModule],
 })
 export class ApplicationModule {
   constructor(
     private readonly moduleRef: ModuleRef,
-    private readonly command$: CommandBus,
+    private readonly commandBus$: CommandBus,
+    private readonly eventBus$: EventBus,
   ) {}
 
   onModuleInit() {
-    this.command$.setModuleRef(this.moduleRef);
+    this.commandBus$.setModuleRef(this.moduleRef);
+    this.eventBus$.setModuleRef(this.moduleRef);
 
-    this.command$.register(CommandHandlers);
+    this.commandBus$.register(CommandHandlers);
+    this.eventBus$.register(EventHandlers);
   }
 }
