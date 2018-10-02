@@ -12,11 +12,15 @@
     "api": "yarn --cwd ./src/chat/ start",
     "auth": "yarn --cwd ./src/auth/ start",
     "auth:build": "yarn --cwd ./src/auth/ build",
-    "build": "yarn api:build && yarn auth:build"
+    "build": "yarn api:build && yarn auth:build",
+    "lines": "sloc ./src/chat/src ./src/auth/src"
   },
   "devDependencies": {
     "lerna": "^3.3.2",
     "ts-node-dev": "^1.0.0-pre.30",
     "typescript": "^3.0.3"
+  },
+  "dependencies": {
+    "sloc": "^0.2.0"
   }
 }
