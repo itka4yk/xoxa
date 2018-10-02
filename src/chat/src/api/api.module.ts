@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CQRSModule } from '@nestjs/cqrs';
 import { ApplicationModule } from '../application/application.module';
 
 import { SpacesController } from './controllers/spaces.controller';

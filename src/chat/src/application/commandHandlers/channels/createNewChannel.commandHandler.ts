@@ -16,7 +16,7 @@ export class CreateNewChannelCommandHandler implements ICommandHandler<CreateNew
   ) {}
 
   async execute(command: CreateNewChannelCommand) {
-    const space = await this.spacesRepository.getById(command.spaceId) as Space;
+    const space = await this.spacesRepository.getById(command.spaceId);
     if (!space) throw new NotFoundException(`no space exist with id ${command.spaceId}`);
     await this.channelsRepository.create({ ...command, id: uuid.v4() } as IChannelState);
   }

@@ -10,6 +10,4 @@ export class BaseEntity<T extends IEntityState> {
   constructor(state?: T) {
     if (state) this.init(state);
   }
-
-  update = () => this.state.save();
 }
