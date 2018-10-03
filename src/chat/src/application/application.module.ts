@@ -12,11 +12,10 @@ const QueryHandlers = [
   SampleQueryHandler,
 ];
 
-
 @Module({
-  imports: [CQRSModule, InfrastructureModule],
-  providers: [...CommandHandlers, ...EventHandlers, ...QueryHandlers, QueryBus, CommandBus],
-  exports: [CommandBus, QueryBus, CQRSModule],
+  imports: [InfrastructureModule],
+  providers: [QueryBus, CommandBus, EventBus, ...CommandHandlers, ...EventHandlers, ...QueryHandlers],
+  exports: [QueryBus, CommandBus, EventBus],
 })
 export class ApplicationModule {
   constructor(

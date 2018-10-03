@@ -1,3 +1,3 @@
 import { IQuery } from '../QueryBus';
 
-export class SampleQuery implements IQuery {}
+export class SampleQuery implements IQuery<string> {}
