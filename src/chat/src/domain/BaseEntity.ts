@@ -1,6 +1,4 @@
-import { Document } from 'mongoose';
-
-export interface IEntityState extends Document {}
+export interface IEntityState {}
 
 export class BaseEntity<T extends IEntityState> {
   state: T;

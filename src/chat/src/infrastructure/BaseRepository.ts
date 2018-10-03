@@ -1,12 +1,13 @@
-import { Document, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { BaseEntity, IEntityState } from 'domain/BaseEntity';
+import { BaseEntity } from '../domain/BaseEntity';
+import { IDbEntityState } from './IDbEntityState';
 
 @Injectable()
-export abstract class BaseRepository<T extends BaseEntity<IEntityState>> {
-  constructor(readonly dbSet: Model<any>, readonly getEntity: (state: IEntityState) => T) { }
+export abstract class BaseRepository<T extends BaseEntity<IDbEntityState>> {
+  constructor(readonly dbSet: Model<any>, readonly getEntity: (state: IDbEntityState) => T) { }
 
-  async create(state: IEntityState) {
+  async create(state: IDbEntityState) {
     const st = await this.dbSet.create(state);
     return this.getEntity(st);
   }
@@ -24,7 +25,7 @@ export abstract class BaseRepository<T extends BaseEntity<IEntityState>> {
     await this.dbSet.deleteOne({ id });
   }
 
-  async update(newState: IEntityState) {
+  async update(newState: IDbEntityState) {
     await this.dbSet.updateOne({ id: newState.id }, newState);
   }
 }
