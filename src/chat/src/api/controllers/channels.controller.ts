@@ -3,8 +3,8 @@ import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { CreateNewChannelCommand } from '../../application/commands/channels/createNewChannel.command';
 import { CommandBus } from '../../application/CommandBus';
 import { SampleQuery } from '../../application/queries/sample.query';
-import { QueryBus } from '../../application/QueryBus';
 import { AuthGuard } from '../guards/auth.guard';
+import { QueryBus } from '@nestjs/cqrs';
 
 @Controller('channels')
 export class ChannelsController {

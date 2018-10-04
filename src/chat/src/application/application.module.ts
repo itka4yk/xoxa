@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { CQRSModule, EventBus } from '@nestjs/cqrs';
+import { EventBus, QueryBus } from '@nestjs/cqrs';
 import { ModuleRef } from '@nestjs/core';
 import { CommandHandlers } from '../application/commandHandlers';
 import { EventHandlers } from '../application/eventHandlers';
 import { InfrastructureModule } from '../infrastructure/infrastructure.module';
 import { CommandBus } from './CommandBus';
-import { QueryBus } from './QueryBus';
 import { SampleQueryHandler } from './queryHandlers/sample.queryHandler';
 
 const QueryHandlers = [

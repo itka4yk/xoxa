@@ -1,9 +1,9 @@
-import { IQueryHandler, QueryHandler } from '../QueryBus';
 import { SampleQuery } from '../queries/sample.query';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(SampleQuery)
 export class SampleQueryHandler implements IQueryHandler<SampleQuery, string> {
-  execute(query: SampleQuery, resolve: (value?: any) => void): string {
-    return 'hello from the other side';
+  execute(query: SampleQuery): Promise<string> {
+    return new Promise((res) => res('hello from the other side'));
   }
 }
