@@ -13,7 +13,7 @@ import { InitialSeedService } from './db/initialSeed.service';
     TypeOrmModule.forFeature([
       User,
       Role,
-    ])
+    ]),
   ],
   providers: [UserService, HashService, InitialSeedService],
   controllers: [AuthController],

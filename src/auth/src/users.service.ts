@@ -9,14 +9,9 @@ import { RegisterUserDto } from './dto/registerUser.dto';
 import { CredentialsDto } from './dto/credentials.dto';
 import { Role } from './entity/role.entity';
 import { HashService } from './hash.service';
+import { IUserInfo } from './interfaces/userInfo.interface';
 
 // FIXME: move secret to config
-
-interface IUserInfo {
-  id: string;
-  email: string;
-  roles: string[];
-}
 
 @Injectable()
 export class UserService {
@@ -43,11 +38,11 @@ export class UserService {
     if (!user || !await this.hashService.compare(credentials.password, user.passwordHash)) {
       throw new Error('Invalid credentials');
     }
-    return sign(await this.getUserInfo(user.email), 'some_random_secret', { expiresIn: '1 second' });
+    return sign(await this.getUserInfo(user.email), 'some_random_secret');
   }
 
-  validate(token: string) {
-    return verify(token, 'some_random_secret');
+  validate(token: string): Promise<IUserInfo> {
+    return verify(token, 'some_random_secret') as any;
   }
 
   async getUserInfo(userEmail: string): Promise<IUserInfo> {

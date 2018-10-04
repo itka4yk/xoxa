@@ -1,9 +1,10 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 
 import { CreateNewChannelCommand } from '../../application/commands/channels/createNewChannel.command';
 import { CommandBus } from '../../application/CommandBus';
 import { SampleQuery } from '../../application/queries/sample.query';
 import { QueryBus } from '../../application/QueryBus';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('channels')
 export class ChannelsController {
@@ -13,11 +14,13 @@ export class ChannelsController {
   ) {}
 
   @Post()
+  @UseGuards(AuthGuard)
   async createNewChannel(@Body() commandDto: CreateNewChannelCommand ) {
     const command = new CreateNewChannelCommand();
     Object.assign(command, commandDto);
     await this.commandBus.execute(command);
   }
+
   @Get()
   async getChannels() {
     return await this.queryBus.execute(new SampleQuery());

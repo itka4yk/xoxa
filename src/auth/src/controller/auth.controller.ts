@@ -1,8 +1,10 @@
-import { Controller, Post, Get, Put, Delete, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common';
 import { UserService } from 'users.service';
 import { RegisterUserDto } from '../dto/registerUser.dto';
 import { CredentialsDto } from 'dto/credentials.dto';
 import { AuthGuard } from '../auth.guard';
+import { MessagePattern } from '@nestjs/microservices';
+import { IUserInfo } from '../interfaces/userInfo.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -24,18 +26,8 @@ export class AuthController {
 
   }
 
-  @Get()
-  async getById() {
-
-  }
-
-  @Put()
-  async update() {
-
-  }
-
-  @Delete()
-  async delete() {
-
+  @MessagePattern({ cmd: 'verify' })
+  verify(data: string): string {
+    return this.usersService.validate(data) as any;
   }
 }
