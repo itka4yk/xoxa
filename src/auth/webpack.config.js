@@ -1,15 +1,10 @@
+const webpack = require('webpack');
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+
 module.exports = {
-  entry: './src',
-  output: {
-    path: __dirname + '/dist',
-    filename: 'index.js',
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx']
-  },
-
-  devtool: 'source-map',
-
+  entry: './src/main.ts',
+  target: 'node',
   module: {
     rules: [
       {
@@ -18,19 +13,12 @@ module.exports = {
       }
     ]
   },
-  target: 'node',
-  mode: 'development',
-  externals: [
-    'sqlite3',
-    'tedious',
-    'pg-hstore',
-    'mssql',
-    'mysql',
-    'oracle',
-    'oracledb',
-    'mssql/lib/base',
-    'pg-native',
-    'mssql/package.json',
-    'pg-query-stream'
-  ],
-}
+  mode: "development",
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: 'index.js',
+  },
+};

@@ -1,22 +1,33 @@
 {
   "compilerOptions": {
-    "target": "es6",
     "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": true,
+    // "noLib": false,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
     "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
     "moduleResolution": "node",
     "lib": ["es2017"],
-    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "pretty": true,
     "newLine": "LF",
-    "strict": true,
+    // "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "experimentalDecorators": true,
-    "noStrictGenericChecks": true,
-    "noImplicitAny": false,
+    // "noStrictGenericChecks": true,
+    "strictPropertyInitialization": false,
   },
+  "include": [
+    "src/**/*",
+    "node_modules/class-validator",
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts"
   ]
 }
