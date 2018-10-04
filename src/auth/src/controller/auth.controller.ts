@@ -1,8 +1,8 @@
-import { Controller, Post, Get, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Body, UseGuards } from '@nestjs/common';
 import { UserService } from 'users.service';
 import { RegisterUserDto } from '../dto/registerUser.dto';
-import { User } from 'entity/user.entity';
 import { CredentialsDto } from 'dto/credentials.dto';
+import { AuthGuard } from '../auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -18,6 +18,7 @@ export class AuthController {
     await this.usersService.create(registerDto);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   async getAll() {
 

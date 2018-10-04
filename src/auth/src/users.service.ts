@@ -1,17 +1,28 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entity/user.entity';
-import { RegisterUserDto } from 'dto/registerUser.dto';
-import { HashService } from 'hash.service';
 import uuid from 'uuid';
-import { CredentialsDto } from 'dto/credentials.dto';
+import { sign, verify } from 'jsonwebtoken';
+
+import { User } from './entity/user.entity';
+import { RegisterUserDto } from './dto/registerUser.dto';
+import { CredentialsDto } from './dto/credentials.dto';
+import { Role } from './entity/role.entity';
+import { HashService } from './hash.service';
+
+// FIXME: move secret to config
+
+interface IUserInfo {
+  id: string;
+  email: string;
+  roles: string[];
+}
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Role) private readonly rolesRepository: Repository<Role>,
     private readonly hashService: HashService,
   ) {}
 
@@ -23,6 +34,7 @@ export class UserService {
       id: uuid.v4(),
       email: newUser.email,
       passwordHash: await this.hashService.create(newUser.password),
+      roles: [await this.rolesRepository.findOne({ where: { name: 'user' }})],
     });
   }
 
@@ -31,11 +43,15 @@ export class UserService {
     if (!user || !await this.hashService.compare(credentials.password, user.passwordHash)) {
       throw new Error('Invalid credentials');
     }
-    // TODO: add token generator
-    return 'ok';
+    return sign(await this.getUserInfo(user.email), 'some_random_secret', { expiresIn: '1 second' });
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+  validate(token: string) {
+    return verify(token, 'some_random_secret');
+  }
+
+  async getUserInfo(userEmail: string): Promise<IUserInfo> {
+    const { id, email, roles } = await this.userRepository.findOne({ where: { email: userEmail }, relations: ['roles'] });
+    return { id, email, roles: roles.map(r => r.name) } as IUserInfo;
   }
 }
