@@ -1,0 +1,33 @@
+import dev from './config.dev';
+import ci from './config.ci';
+import prod from './config.prod';
+
+declare var process: {
+  env: {
+    NODE_ENV: string;
+    PLATFORM_ENV: string;
+    CI_COMMIT_REF_SLUG: string;
+  };
+};
+
+export interface IEnvSettings {
+  readonly baseUrl: string;
+}
+
+let configuration: IEnvSettings;
+
+switch (process.env.NODE_ENV) {
+  case 'development':
+    configuration = dev;
+    break;
+  case 'ci':
+    configuration = ci;
+    break;
+  default:
+    configuration = prod;
+    break;
+}
+
+export const ConfigurationType = Symbol('CONFIGURATION');
+
+export { configuration };

@@ -10,12 +10,18 @@
     "jsx": "react",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "noUnusedLocals": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "sourceRoot": "./src"
+    "sourceRoot": "./src",
+    "declaration": true,
+    "outDir": "./lib",
+    "rootDir": "./src"
   },
+  "include": [
+    "./src/**/*"
+  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/*.spec.ts"
   ]
 }
