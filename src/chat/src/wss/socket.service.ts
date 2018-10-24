@@ -22,10 +22,10 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     private readonly authService: AuthService,
    ) { }
 
-  handleConnection(client: Socket, ...args: any[]) {
+  async handleConnection(client: Socket, ...args: any[]) {
     const query = client.handshake.query;
     try {
-      const token = this.authService.signin(query.username, query.password);
+      const token = await this.authService.signin(query.username, query.password);
       this.clients.handleClientConnected('clientId', client.id);
     } catch (error) {
       client.disconnect();

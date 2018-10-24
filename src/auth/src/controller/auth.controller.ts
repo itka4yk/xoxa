@@ -20,12 +20,6 @@ export class AuthController {
     await this.usersService.create(registerDto);
   }
 
-  @UseGuards(AuthGuard)
-  @Get()
-  async getAll() {
-
-  }
-
   @MessagePattern({ cmd: 'verify' })
   verify(data: string): string {
     return this.usersService.validate(data) as any;

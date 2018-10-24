@@ -1,5 +1,5 @@
 import * as React from 'react';
-import autobind from 'autobind-decorator';
+import { observer } from 'mobx-react';
 import { ListGroup, ProgressBar, ListGroupItem, Checkbox, Panel } from 'react-bootstrap';
 import { ITodoStore, TodoStoreType } from '../todo.module';
 import { injectProps } from 'front.core';
@@ -9,11 +9,11 @@ interface IInjectedProps {
 }
 
 @injectProps({ store: TodoStoreType })
-@autobind
+@observer
 class TodoList extends React.Component<IInjectedProps> {
-  toggleTodoStatus(e: React.MouseEvent<Checkbox>) {
+  toggleTodoStatus = (e: React.MouseEvent<Checkbox>) => {
     this.props.store.toggleTodoStatus((e.target as HTMLButtonElement).value);
-  }
+  };
   get renderTodos(): React.ReactElement<{}>[] {
     return this.props.store.todos.map(t => (
       <ListGroupItem key={t.id} value={t.id} onClick={this.toggleTodoStatus}>
@@ -48,9 +48,7 @@ class TodoList extends React.Component<IInjectedProps> {
                 label={todoCount - completedTodoCount}
               />
             </ProgressBar>
-            <ListGroup>
-              {this.renderTodos}
-            </ListGroup>
+            <ListGroup>{this.renderTodos}</ListGroup>
             <br />
           </div>
         </Panel.Body>

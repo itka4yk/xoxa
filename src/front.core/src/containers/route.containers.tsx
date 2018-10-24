@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Route, Redirect, RouteProps, RouteComponentProps, Switch } from 'react-router-dom';
 import autobind from 'autobind-decorator';
-import { IAuthStore, AuthStoreType } from '../stores/stores.module';
 import { as, injectProps } from '../helpers/react.helpers';
+import { IAuthStore, AuthStoreType } from '../modules';
 
 interface IInjectedProps {
   auth: IAuthStore;

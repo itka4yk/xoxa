@@ -26,14 +26,7 @@ export function injectProps(props: IInjectProps, callback?: (s: any) => ICallbac
 
     if (callback) newProps = callback({ ...newProps });
 
-    const DecoratedComponent = observer(Component);
-    class Wrapper extends React.Component {
-      render() {
-        return <DecoratedComponent {...newProps} {...this.props} />;
-      }
-    }
-
-    return Wrapper;
+    return (props: any) => <Component {...newProps} {...props} />;
   };
 }
 

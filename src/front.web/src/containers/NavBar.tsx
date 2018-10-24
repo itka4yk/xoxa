@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Navbar, NavItem, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import autobind from 'autobind-decorator';
+import NavItem from './NavItem';
 
 @autobind
 export default class NavBar extends React.Component {
@@ -9,16 +10,15 @@ export default class NavBar extends React.Component {
       <Navbar>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#home">XOXA</a>
+            <a href="/home">XOXA</a>
           </Navbar.Brand>
         </Navbar.Header>
         <Nav>
-          <NavItem eventKey={1} href="form">
-            Form
-          </NavItem>
-          <NavItem eventKey={2} href="list">
-            List
-          </NavItem>
+          <NavItem to="/todo/form">Form</NavItem>
+          <NavItem to="/todo/list">List</NavItem>
+        </Nav>
+        <Nav>
+          <NavItem to="/logout">Logout</NavItem>
         </Nav>
       </Navbar>
     );

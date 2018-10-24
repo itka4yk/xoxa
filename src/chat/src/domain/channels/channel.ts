@@ -1,7 +1,8 @@
-import { BaseEntity, IEntityState } from '../BaseEntity';
+import { BaseEntity } from '../BaseEntity';
 import { InvalidArgumentException } from '../../shared/exceptions/InvalidArgument.exception';
+import { IDbEntityState } from 'infrastructure/IDbEntityState';
 
-export interface IChannelState extends IEntityState {
+export interface IChannelState extends IDbEntityState {
   id: string;
   name: string;
   spaceId: string;

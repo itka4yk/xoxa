@@ -12,6 +12,8 @@
     "max-line-length": [true, 100],
     "space-before-function-paren": false,
     "jsx-boolean-value": [false, "never"],
-    "no-unused-variable": true
+    "no-unused-variable": true,
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
+    "arrow-parens": false
   }
 }

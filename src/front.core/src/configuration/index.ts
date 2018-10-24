@@ -1,6 +1,7 @@
 import dev from './config.dev';
 import ci from './config.ci';
 import prod from './config.prod';
+import { ContainerModule, interfaces } from 'inversify';
 
 declare var process: {
   env: {
@@ -12,6 +13,7 @@ declare var process: {
 
 export interface IEnvSettings {
   readonly baseUrl: string;
+  readonly authUrl: string;
 }
 
 let configuration: IEnvSettings;
@@ -27,7 +29,8 @@ switch (process.env.NODE_ENV) {
     configuration = prod;
     break;
 }
-
 export const ConfigurationType = Symbol('CONFIGURATION');
 
-export { configuration };
+export const configurationModule = new ContainerModule((bind: interfaces.Bind) => {
+  bind<IEnvSettings>(ConfigurationType).toConstantValue(configuration);
+});

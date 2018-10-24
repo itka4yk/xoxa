@@ -1,7 +1,11 @@
 import * as React from 'react';
+import { LoginContainer } from 'front.core/lib/modules/auth/containers';
+import Login from '../components/auth/Login';
 
 export const LoginView = () => (
   <div>
-    <h3>Login View</h3>
+    <LoginContainer>
+      <Login />
+    </LoginContainer>
   </div>
 );

@@ -7,7 +7,7 @@
     "prebuild": "rm -rf dist",
     "build": "parcel build --public-url . public/index.html",
     "lint": "tslint --project .",
-    "prelint": "prettier --write ./src/**/*.{ts,tsx}",
+    "prelint": "prettier --write \"src/**/*.{ts,tsx}\"",
     "test": "echo please, add tests"
   },
   "devDependencies": {
@@ -20,7 +20,9 @@
     "@types/react-dom": "16.0.9",
     "@types/react-router": "4.0.32",
     "@types/react-router-dom": "4.3.1",
+    "@types/reactstrap": "^6.4.2",
     "@types/store": "2.0.0",
+    "@types/toastr": "^2.1.35",
     "@types/uuid": "3.4.4",
     "husky": "1.1.2",
     "mobx-logger": "0.7.1",
@@ -41,9 +43,10 @@
     "history": "4.7.2",
     "inversify": "5.0.1",
     "inversify-inject-decorators": "3.1.0",
+    "inversify-react": "^0.2.7",
     "lodash": "4.17.11",
     "mobx": "5.5.1",
-    "mobx-persist": "0.4.1",
+    "mobx-persist": "^0.4.1",
     "mobx-react": "5.3.4",
     "mobx-react-router": "4.0.5",
     "react": "16.5.2",
@@ -51,14 +54,17 @@
     "react-dom": "16.5.2",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
+    "reactstrap": "^6.5.0",
     "reflect-metadata": "0.1.12",
+    "reset.css": "^2.0.2",
     "store": "2.0.12",
+    "toastr": "^2.1.4",
     "uuid": "3.3.2"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pnpm run lint",
-      "pre-push": "pnpm run test"
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn test"
     }
   }
 }

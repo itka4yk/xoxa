@@ -10,4 +10,8 @@ export class AuthService {
   async verify(token: string): Promise<any> {
     return await this.client.send<string>({ cmd: 'verify' }, token).toPromise();
   }
+
+  async signin(username: string, password: string): Promise<string> {
+    return 'token';
+  }
 }

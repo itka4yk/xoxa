@@ -1,4 +1,4 @@
-import { ContainerModule, interfaces } from 'front.core';
+import { ContainerModule, interfaces } from 'inversify';
 import { TodoStore, ITodoStore, TodoStoreType } from './todo.store';
 
 export const todoModule = new ContainerModule((bind: interfaces.Bind) => {

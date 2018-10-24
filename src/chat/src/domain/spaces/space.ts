@@ -1,7 +1,8 @@
-import { IEntityState, BaseEntity } from '../BaseEntity';
+import { BaseEntity } from '../BaseEntity';
 import { InvalidArgumentException } from 'shared/exceptions/InvalidArgument.exception';
+import { IDbEntityState } from 'infrastructure/IDbEntityState';
 
-export interface ISpaceState extends IEntityState {
+export interface ISpaceState extends IDbEntityState {
   id: string;
   name: string;
   members: string[];

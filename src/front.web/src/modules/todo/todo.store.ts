@@ -1,8 +1,14 @@
 import { observable, action, computed } from 'mobx';
 import { ITodoModel } from './todo.module';
 import { TodoModel } from './todo.model';
-import { injectable } from 'inversify';
-import { persistable } from 'front.core';
+import { injectable, inject } from 'inversify';
+import {
+  persistable,
+  NotificationsStoreType,
+  INotificationsStore,
+  INotification,
+  NotificationType,
+} from 'front.core';
 
 export const TodoStoreType = Symbol('TODO_STORE');
 
@@ -23,13 +29,24 @@ export class TodoStore implements ITodoStore {
   @action
   addTodo(newTodo: string): void {
     this.todos.push(new TodoModel(newTodo));
+    this.notifications.push({
+      body: 'Added new todo!',
+      type: NotificationType.INFO,
+    } as INotification);
   }
+
+  @inject(NotificationsStoreType)
+  notifications!: INotificationsStore;
 
   @action
   toggleTodoStatus(todoId: string): void {
     const todo = this.todos.find(t => t.id === todoId);
     if (!todo) return;
     todo.completed = !todo.completed;
+    this.notifications.push({
+      body: 'Toggled todo status!',
+      type: NotificationType.SUCCESS,
+    } as INotification);
   }
 
   @computed
