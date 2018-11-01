@@ -8,14 +8,24 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "api:build": "yarn --cwd ./src/chat/",
-    "api": "yarn --cwd ./src/chat/ start",
-    "auth": "yarn --cwd ./src/auth/ start",
+    "api": "yarn --cwd ./src/api/ start:dev",
+    "api:build": "yarn --cwd ./src/api/ build",
+    "auth": "yarn --cwd ./src/auth/ start:dev",
     "auth:build": "yarn --cwd ./src/auth/ build",
+    "api.contract": "yarn --cwd ./src/api.contract/ start",
+    "api.contract:build": "yarn --cwd ./src/api.contract/ build",
+    "auth.contract": "yarn --cwd ./src/auth.contract/ start",
+    "auth.contract:build": "yarn --cwd ./src/auth.contract/ build",
+    "front.core": "yarn --cwd ./src/front.core/ start",
+    "front.core:build": "yarn --cwd ./src/front.core/ build",
+    "front.web": "yarn --cwd ./src/front.web/ start",
+    "front.web:build": "yarn --cwd ./src/front.web/ build",
     "build": "yarn api:build && yarn auth:build",
-    "lines": "sloc ./src/chat/src ./src/auth/src"
+    "lines": "sloc ./src/api/src ./src/auth/src",
+    "start": "concurrently \"yarn front.core\" \"yarn front.web\" \"yarn api\" \"yarn auth\" \"yarn api.contract\" \"yarn auth.contract\""
   },
   "devDependencies": {
+    "concurrently": "^4.0.1",
     "lerna": "^3.3.2",
     "ts-node-dev": "^1.0.0-pre.30",
     "typescript": "^3.0.3"

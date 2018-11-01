@@ -25,22 +25,22 @@ enableDevTools();
 const browserHistory = createBrowserHistory();
 const history = syncHistoryWithStore(browserHistory, container.get(RouterStoreType));
 const notificationStore = container.get<INotificationsStore>(NotificationsStoreType);
-function notifyMe(notification: string) {
-  if (!('Notification' in window)) return;
-  if (Notification.permission === 'granted') {
-    new Notification(notification);
-  } else if (Notification.permission !== 'denied') {
-    Notification.requestPermission().then((permission: string) => {
-      if (permission === 'granted') {
-        new Notification(notification);
-      }
-    });
-  }
-}
+// function notifyMe(notification: string) {
+//   if (!('Notification' in window)) return;
+//   if (Notification.permission === 'granted') {
+//     new Notification(notification);
+//   } else if (Notification.permission !== 'denied') {
+//     Notification.requestPermission().then((permission: string) => {
+//       if (permission === 'granted') {
+//         new Notification(notification);
+//       }
+//     });
+//   }
+// }
 
 notificationStore.initNotifications(({ type, body }: INotification) => {
   toastr[type](body);
-  notifyMe(body);
+  // notifyMe(body);
 });
 
 const App: any = () => (

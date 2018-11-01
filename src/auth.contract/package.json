@@ -1,0 +1,22 @@
+{
+  "name": "auth.contract",
+  "version": "1.0.2",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "Ihor Tkachuk",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc -w"
+  },
+  "dependencies": {
+    "class-validator": "^0.9.1",
+    "joi": "^14.0.1",
+    "reflect-metadata": "^0.1.12"
+  },
+  "devDependencies": {
+    "@types/joi": "^13.6.1",
+    "@types/node": "10.12.0",
+    "typescript": "3.1.3"
+  }
+}

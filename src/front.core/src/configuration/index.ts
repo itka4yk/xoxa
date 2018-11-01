@@ -13,7 +13,6 @@ declare var process: {
 
 export interface IEnvSettings {
   readonly baseUrl: string;
-  readonly authUrl: string;
 }
 
 let configuration: IEnvSettings;

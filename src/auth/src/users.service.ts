@@ -1,17 +1,13 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import uuid from 'uuid';
-import { sign, verify } from 'jsonwebtoken';
+import { sign, verify, decode } from 'jsonwebtoken';
 
 import { User } from './entity/user.entity';
-import { RegisterUserDto } from './dto/registerUser.dto';
-import { CredentialsDto } from './dto/credentials.dto';
 import { Role } from './entity/role.entity';
 import { HashService } from './hash.service';
-import { IUserInfo } from './interfaces/userInfo.interface';
-
-// FIXME: move secret to config
+import { IUserInfo } from 'auth.contract';
 
 @Injectable()
 export class UserService {
@@ -19,9 +15,13 @@ export class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Role) private readonly rolesRepository: Repository<Role>,
     private readonly hashService: HashService,
-  ) {}
+    ) {}
 
-  async create(newUser: RegisterUserDto): Promise<void> {
+  async activate(id: string) {
+    await this.userRepository.update({ id }, { activated: true });
+  }
+
+  async create(newUser): Promise<void> {
     if (await this.userRepository.findOne({ where: { email: newUser.email } })) {
       throw new Error(`User with email ${newUser.email} allready exists.`);
     }
@@ -30,10 +30,11 @@ export class UserService {
       email: newUser.email,
       passwordHash: await this.hashService.create(newUser.password),
       roles: [await this.rolesRepository.findOne({ where: { name: 'user' }})],
+      activated: false,
     });
   }
 
-  async login(credentials: CredentialsDto): Promise<string> {
+  async login(credentials): Promise<string> {
     const user = await this.userRepository.findOne({ where: { email: credentials.email } });
     if (!user || !await this.hashService.compare(credentials.password, user.passwordHash)) {
       throw new Error('Invalid credentials');
@@ -45,8 +46,9 @@ export class UserService {
     return verify(token, 'some_random_secret') as any;
   }
 
-  async getUserInfo(userEmail: string): Promise<IUserInfo> {
-    const { id, email, roles } = await this.userRepository.findOne({ where: { email: userEmail }, relations: ['roles'] });
+  async getUserInfo(token: string): Promise<IUserInfo> {
+    const { email: decodedEmail } = decode(token) as IUserInfo;
+    const { id, email, roles } = await this.userRepository.findOne({ where: { decodedEmail }, relations: ['roles'] });
     return { id, email, roles: roles.map(r => r.name) } as IUserInfo;
   }
 }

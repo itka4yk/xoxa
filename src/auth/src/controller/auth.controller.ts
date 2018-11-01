@@ -1,27 +1,35 @@
-import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common';
+import { Controller, Body, UsePipes, UseFilters } from '@nestjs/common';
 import { UserService } from 'users.service';
-import { RegisterUserDto } from '../dto/registerUser.dto';
-import { CredentialsDto } from 'dto/credentials.dto';
-import { AuthGuard } from '../auth.guard';
 import { MessagePattern } from '@nestjs/microservices';
-import { IUserInfo } from '../interfaces/userInfo.interface';
+import { RpcFilter } from '../all-exception.filter';
 
 @Controller('auth')
+
+@UseFilters(new RpcFilter())
 export class AuthController {
   constructor(private readonly usersService: UserService) {}
 
-  @Post('login')
-  async authenticate(@Body() credentials: CredentialsDto): Promise<string> {
+  @MessagePattern({ cmd: 'authenticate' })
+  async authenticate(credentials): Promise<string> {
     return await this.usersService.login(credentials);
   }
 
-  @Post('register')
-  async register(@Body() registerDto: RegisterUserDto) {
+  @MessagePattern({ cmd: 'register' })
+  async register(registerDto) {
     await this.usersService.create(registerDto);
   }
 
   @MessagePattern({ cmd: 'verify' })
-  verify(data: string): string {
-    return this.usersService.validate(data) as any;
+  verify(token: string): string {
+    return this.usersService.validate(token) as any;
+  }
+
+  @MessagePattern({ cmd: 'activate' })
+  activate(id: string) {
+    return this.usersService.activate(id);
+  }
+  @MessagePattern({ cmd: 'userInfo' })
+  getUserInfo(token: string) {
+    return this.usersService.getUserInfo(token);
   }
 }

@@ -6,7 +6,8 @@
   "author": "Ihor Tkachuk",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -w"
+    "build": "tsc",
+    "start": "tsc -w"
   },
   "dependencies": {
     "@types/inversify-binding-decorators": "^2.0.0",

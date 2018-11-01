@@ -15,4 +15,7 @@ export class User {
   @ManyToMany(type => Role)
   @JoinTable()
   roles: Role[];
+
+  @Column()
+  activated: boolean = false;
 }

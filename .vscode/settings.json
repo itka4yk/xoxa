@@ -8,5 +8,9 @@
     "**/shrinkwrap.yaml": true,
     "**/yarn-error.log": true,
     "**/yarn.lock": true
-  }
+  },
+  "editor.rulers": [
+    100
+  ],
+  "editor.renderWhitespace": "all"
 }

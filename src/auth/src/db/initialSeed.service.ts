@@ -34,6 +34,7 @@ export class InitialSeedService {
     admin.id = uuid.v4();
     admin.email = 'admin@xoxa.app';
     admin.passwordHash = await this.hashService.create('password');
+    admin.activated = true;
     const adminRole = await this.rolesRepository.findOne('1');
     admin.roles = [adminRole];
     await this.userRepository.save(admin);
