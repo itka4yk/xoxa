@@ -39,7 +39,8 @@ export class UserService {
     if (!user || !await this.hashService.compare(credentials.password, user.passwordHash)) {
       throw new Error('Invalid credentials');
     }
-    return sign(await this.getUserInfo(user.email), 'some_random_secret');
+    const { id, email } = user;
+    return sign({ id, email }, 'some_random_secret');
   }
 
   validate(token: string): Promise<IUserInfo> {

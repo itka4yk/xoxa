@@ -1,1 +1,2 @@
-export const authContract = 'chat.contract';
+export * from './interfaces';
+export * from './dto';

@@ -1,7 +1,5 @@
-import * as React from 'react';
 import { enableLogging } from 'mobx-logger';
 import { isObservable } from 'mobx';
-import { whyDidYouUpdate } from 'why-did-you-update';
 
 declare var process: any;
 
@@ -22,6 +20,4 @@ export function enableDevTools() {
     // tslint:disable-next-line:no-console
     console.error('Why did you MOTHERFUCKER update?', componentName, diffs);
   };
-
-  whyDidYouUpdate(React, { notifier, groupByComponent: false, collapseComponentGroups: false } as any);
 }

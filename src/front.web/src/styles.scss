@@ -42,6 +42,13 @@ $gray: #92959e;
     }
   }
 }
+.navbar {
+  .container {
+    margin: 0;
+    padding: 0;
+  }
+  min-height: 0;
+}
 .workspace-tabs {
   margin: 0;
   padding: 0;

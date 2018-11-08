@@ -19,6 +19,7 @@ export abstract class BaseRepository<T extends BaseEntity<IDbEntityState>> {
 
   async getById(id: string): Promise<T> {
     const st = await this.dbSet.findOne({ id });
+    if (!st) return st;
     return this.getEntity(st);
   }
 

@@ -1,11 +1,13 @@
-import { Controller, Post, Body, Req, Guard, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Body, Req, Guard, UseGuards, Get, UsePipes } from '@nestjs/common';
 import { CreateNewSpaceCommand } from '../../application/commands/spaces/createNewSpace.command';
 import { CommandBus } from '../../application/CommandBus';
 import { AuthGuard } from 'api/guards/auth.guard';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetSpacesByMemberQuery } from 'application/queries/spaces/getSpacesByMember.query';
+import { ICreateNewSpaceDto, createNewSpaceSchema } from 'api.contract';
+import { JoiValidationPipe } from 'joiValidation.pipe';
 
-@Controller('spaces')
+@Controller('api/spaces')
 @UseGuards(AuthGuard)
 export class SpacesController {
   constructor(
@@ -14,7 +16,8 @@ export class SpacesController {
   ) {}
 
   @Post()
-  async createNewSpace(@Body() commandDto: CreateNewSpaceCommand, @Req() { userInfo } ) {
+  @UsePipes(new JoiValidationPipe(createNewSpaceSchema))
+  async createNewSpace(@Body() commandDto, @Req() { userInfo } ) {
     const command = new CreateNewSpaceCommand();
     Object.assign(command, { ...commandDto, admin: userInfo.id });
     return await this.commandBus.execute(command);

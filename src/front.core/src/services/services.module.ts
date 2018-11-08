@@ -4,7 +4,7 @@ import { IPersistService, PersistServiceType, PersistService } from './persist.s
 
 export const servicesModule = new ContainerModule((bind: interfaces.Bind) => {
   bind<IPersistService>(PersistServiceType).to(PersistService);
-  bind<IApiService>(ApiServiceType).to(ApiService);
+  bind<IApiService>(ApiServiceType).to(ApiService).inSingletonScope();
 });
 
 export { IApiService, ApiServiceType } from './api.service';

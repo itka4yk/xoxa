@@ -15,6 +15,7 @@ import {
   NotificationsStoreType,
   INotificationsStore,
   INotification,
+  SpacesStoreType,
 } from 'front.core';
 import { AuthRoute } from './routes/auth.route';
 import { WorkspacesRoute } from './routes/workspaces.route';
@@ -25,6 +26,7 @@ enableDevTools();
 const browserHistory = createBrowserHistory();
 const history = syncHistoryWithStore(browserHistory, container.get(RouterStoreType));
 const notificationStore = container.get<INotificationsStore>(NotificationsStoreType);
+const store = container.get(SpacesStoreType);
 // function notifyMe(notification: string) {
 //   if (!('Notification' in window)) return;
 //   if (Notification.permission === 'granted') {

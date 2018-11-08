@@ -22,7 +22,7 @@
     "front.web:build": "yarn --cwd ./src/front.web/ build",
     "build": "yarn api:build && yarn auth:build",
     "lines": "sloc ./src/api/src ./src/auth/src",
-    "start": "concurrently \"yarn front.core\" \"yarn front.web\" \"yarn api\" \"yarn auth\" \"yarn api.contract\" \"yarn auth.contract\""
+    "start": "concurrently -n front.core,front.web,api,auth,api.contract,auth.contract  \"yarn front.core\" \"yarn front.web\" \"yarn api\" \"yarn auth\" \"yarn api.contract\" \"yarn auth.contract\""
   },
   "devDependencies": {
     "concurrently": "^4.0.1",

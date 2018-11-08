@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetSpacesByMemberQuery } from 'application/queries/spaces/getSpacesByMember.query';
-import { IMySpace } from 'application/viewModels/spaces/mySpace.interface';
 import { SpacesRepository } from 'infrastructure/repositories/spaces.repository';
+import { IMySpace } from 'api.contract';
 
 @QueryHandler(GetSpacesByMemberQuery)
 export class GetSpacesByMemberQueryHandler implements IQueryHandler<GetSpacesByMemberQuery, IMySpace[]> {

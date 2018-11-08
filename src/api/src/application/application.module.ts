@@ -7,10 +7,12 @@ import { InfrastructureModule } from '../infrastructure/infrastructure.module';
 import { CommandBus } from './CommandBus';
 import { SampleQueryHandler } from './queryHandlers/sample.queryHandler';
 import { GetSpacesByMemberQueryHandler } from './queryHandlers/spaces/getSpacesByMember.queryHandler';
+import { GetChannelsQueryHandler } from './queryHandlers/channels/getChannels.queryHandler';
 
 const QueryHandlers = [
   SampleQueryHandler,
   GetSpacesByMemberQueryHandler,
+  GetChannelsQueryHandler,
 ];
 
 @Module({

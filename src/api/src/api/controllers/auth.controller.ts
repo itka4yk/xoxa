@@ -3,7 +3,7 @@ import { AuthService } from 'auth/auth.service';
 import { credentialsSchema, newUserDtoSchema } from 'auth.contract';
 import { JoiValidationPipe } from 'joiValidation.pipe';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 

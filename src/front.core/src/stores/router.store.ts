@@ -3,7 +3,7 @@ import { injectable, decorate } from 'inversify';
 
 export interface IRouterStore extends RouterStore {}
 
-export const RouterStoreType = Symbol('ROUTER_STORE');
+export const RouterStoreType = 'ROUTER_STORE';
 
 decorate(injectable(), Base);
 

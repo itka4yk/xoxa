@@ -3,14 +3,15 @@ import { ContainerModule } from 'inversify';
 import { storesModule } from './stores/stores.module';
 import { servicesModule } from './services/services.module';
 import { configurationModule } from './configuration';
-import { authModule, spacesModule } from './modules';
+import { authModule, spacesModule, channelsModule } from './modules';
 
 export const coreModules: ContainerModule[] = [
   servicesModule,
   storesModule,
   configurationModule,
-  authModule,
   spacesModule,
+  channelsModule,
+  authModule,
 ];
 
 export * from './helpers/react.helpers';

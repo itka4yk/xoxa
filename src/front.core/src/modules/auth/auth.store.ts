@@ -1,4 +1,4 @@
-import { injectable, inject } from 'inversify';
+import { injectable, inject, LazyServiceIdentifer } from 'inversify';
 import { observable, computed, action, autorun, reaction, when } from 'mobx';
 import { persistable } from '../../helpers/persist.helpers';
 import { ApiServiceType, IApiService } from '../../services/api.service';
@@ -26,6 +26,7 @@ export class AuthStore implements IAuthStore {
 
   onActivation() {
     when(() => this.routerStore.location && this.routerStore.location.pathname === '/logout', () => this.signOut());
+    reaction(() => this.token, token => this.apiService.setToken(token), { fireImmediately: true });
   }
 
   @inject(ApiServiceType) private readonly apiService!: IApiService;
