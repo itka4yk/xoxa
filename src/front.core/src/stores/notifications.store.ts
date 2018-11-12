@@ -1,4 +1,4 @@
-import { observable, autorun, reaction, computed, action } from 'mobx';
+import { observable, autorun, action } from 'mobx';
 import { INotification } from '../models';
 import { injectable } from 'inversify';
 

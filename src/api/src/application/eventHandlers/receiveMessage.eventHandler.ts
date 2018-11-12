@@ -6,13 +6,11 @@ import { IMessageState } from '../../domain/messages/message';
 
 @WebSocketGateway()
 @EventsHandler(ReceivedMessageEvent)
-export class ReceivedMessageEventHandler implements IEventHandler<ReceivedMessageEvent> {
+export class ReceivedMessageEventHandler
+  implements IEventHandler<ReceivedMessageEvent> {
   @WebSocketServer() socket;
 
-  constructor(
-    private readonly messagesRepository: MessagesRepository,
-  ) {
-  }
+  constructor(private readonly messagesRepository: MessagesRepository) {}
 
   async handle(event: ReceivedMessageEvent) {
     await this.messagesRepository.create(event as IMessageState);

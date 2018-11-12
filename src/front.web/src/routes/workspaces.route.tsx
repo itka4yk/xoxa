@@ -9,9 +9,13 @@ import { SingleSpaceView } from '../views/SingleSpace.view';
 export const WorkspacesRoute = ({ match }: RouteComponentProps) => (
   <SwitchWithNotFound notFound={NotFoundView}>
     <Route exact path={`${match.path}`} component={WorkspacesView} />
-    <Route exact path={`${match.path}/single/:spaceName`} component={SingleSpaceView}/>
-    <Route exact path={`${match.path}/single/:spaceName/settings`}
-           component={() => <div>Settings</div>}/>
+    <Route exact path={`${match.path}/single/:spaceName`} component={SingleSpaceView} />
+    <Route
+      exact
+      path={`${match.path}/single/:spaceName/settings`}
+      // tslint:disable-next-line:jsx-no-lambda
+      component={() => <div>Settings</div>}
+    />
     <Route path={`${match.path}/create`} component={CreateSpaceView} />
   </SwitchWithNotFound>
 );

@@ -16,10 +16,7 @@ export class InitialSeedService {
     this.seed();
   }
 
-  readonly roles = [
-    { id: 1, name: 'admin' },
-    { id: 2, name: 'user' },
-  ];
+  readonly roles = [{ id: 1, name: 'admin' }, { id: 2, name: 'user' }];
 
   async seed() {
     const usersCount = await this.userRepository.count();

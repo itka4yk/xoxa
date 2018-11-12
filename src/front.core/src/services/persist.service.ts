@@ -18,7 +18,7 @@ export class PersistService implements IPersistService {
         const existingStore = getFromStore(storeName);
 
         if (existingStore) {
-          for(const key in existingStore) {
+          for (const key in existingStore) {
             store[key] = existingStore[key];
           }
         }

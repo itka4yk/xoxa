@@ -6,7 +6,8 @@ import { ChannelsRepository } from 'infrastructure/repositories/channels.reposit
 import { InvalidArgumentException } from 'shared/exceptions/InvalidArgument.exception';
 
 @QueryHandler(GetChannelsQuery)
-export class GetChannelsQueryHandler implements IQueryHandler<GetChannelsQuery, IChannel[]> {
+export class GetChannelsQueryHandler
+  implements IQueryHandler<GetChannelsQuery, IChannel[]> {
   constructor(
     private readonly channelsRepository: ChannelsRepository,
     private readonly spacesRepository: SpacesRepository,
@@ -16,13 +17,19 @@ export class GetChannelsQueryHandler implements IQueryHandler<GetChannelsQuery, 
     const space = await this.spacesRepository.getById(query.spaceId);
     if (!space) throw new InvalidArgumentException('Unknown spaceId');
 
-    if (!space.state.members.includes(query.memberId))
-    throw new InvalidArgumentException('Unauthorized access to space');
+    if (!space.state.members.includes(query.memberId)) {
+      throw new InvalidArgumentException('Unauthorized access to space');
+    }
 
     const channels = await this.channelsRepository.get();
-    return channels.filter(c => c.state.spaceId === query.spaceId).map(c => ({
-      name: c.state.name,
-      id: c.state.id,
-    }) as IChannel);
+    return channels
+      .filter(c => c.state.spaceId === query.spaceId)
+      .map(
+        c =>
+          ({
+            name: c.state.name,
+            id: c.state.id,
+          } as IChannel),
+      );
   }
 }

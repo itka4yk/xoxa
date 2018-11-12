@@ -5,8 +5,12 @@ import { ISocketsService, SocketsService, SocketsServiceType } from './sockets.s
 
 export const servicesModule = new ContainerModule((bind: interfaces.Bind) => {
   bind<IPersistService>(PersistServiceType).to(PersistService);
-  bind<IApiService>(ApiServiceType).to(ApiService).inSingletonScope();
-  bind<ISocketsService>(SocketsServiceType).to(SocketsService).inSingletonScope();
+  bind<IApiService>(ApiServiceType)
+    .to(ApiService)
+    .inSingletonScope();
+  bind<ISocketsService>(SocketsServiceType)
+    .to(SocketsService)
+    .inSingletonScope();
 });
 
 export { IApiService, ApiServiceType } from './api.service';

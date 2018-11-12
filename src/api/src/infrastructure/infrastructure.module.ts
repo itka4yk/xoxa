@@ -14,11 +14,7 @@ const schemas = [
   { name: 'Message', schema: MessageSchema },
 ];
 
-const repositories = [
-  SpacesRepository,
-  ChannelsRepository,
-  MessagesRepository,
-];
+const repositories = [SpacesRepository, ChannelsRepository, MessagesRepository];
 
 @Module({
   imports: [MongooseModule.forFeature(schemas)],

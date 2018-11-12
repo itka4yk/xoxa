@@ -42,21 +42,23 @@ export class AuthStore implements IAuthStore {
 
   @inject(ApiServiceType) private readonly apiService!: IApiService;
 
-  @computed get isAuthorized(): boolean {
+  @computed
+  get isAuthorized(): boolean {
     return this.store.token !== '';
   }
 
   @inject(RouterStoreType) private readonly routerStore!: IRouterStore;
 
   onActivation() {
-    console.log('ACTIVATION');
-    when(() => this.routerStore.location && this.routerStore.location.pathname === '/logout', () => this.signOut());
+    when(
+      () => this.routerStore.location && this.routerStore.location.pathname === '/logout',
+      () => this.signOut(),
+    );
     reaction(
       () => this.store.token,
-      token => {
+      (token: string) => {
         if (!token) return;
         this.apiService.setToken(token);
-        console.log('HERE');
         this.socketsService.setToken(token);
       },
       { fireImmediately: true },
@@ -65,7 +67,6 @@ export class AuthStore implements IAuthStore {
 
   @action
   async signIn(email: string, password: string) {
-    console.log('STORE', this.store);
     const result = await this.apiService.postAsync('/auth/authenticate', { email, password });
     if (result instanceof Error) {
       this.notifications.push({ body: 'Invalid login or password', type: NotificationType.ERROR });

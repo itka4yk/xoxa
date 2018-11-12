@@ -26,7 +26,6 @@ export interface ICreateChannelFormProps {
 @injectProps({ store: ChannelsStoreType })
 @autobind
 class CreateChannelContainer extends React.Component<IProps, IState> {
-
   state = { name: '' };
 
   async handleFormSubmit() {
@@ -37,10 +36,12 @@ class CreateChannelContainer extends React.Component<IProps, IState> {
   handleNameChange = (name: string) => this.setState({ name });
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) => React.cloneElement(child, {
-      onNameChange: this.handleNameChange,
-      onFormSubmit: this.handleFormSubmit,
-    } as ICreateChannelFormProps));
+    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+      React.cloneElement(child, {
+        onNameChange: this.handleNameChange,
+        onFormSubmit: this.handleFormSubmit,
+      } as ICreateChannelFormProps),
+    );
     return childrenWithProps;
   }
 }

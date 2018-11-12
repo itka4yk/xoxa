@@ -11,8 +11,7 @@ interface IInjectedProps {
   router: IRouterStore;
 }
 
-interface IProps extends IInjectedProps, IOuterProps {
-}
+interface IProps extends IInjectedProps, IOuterProps {}
 
 @injectProps({ router: RouterStoreType })
 class LinkButton extends React.Component<IProps> {

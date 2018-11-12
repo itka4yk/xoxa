@@ -6,6 +6,7 @@ import CreateChannelContainer from 'front.core/lib/modules/channels/containers/c
 import ChannelsListContainer from 'front.core/lib/modules/channels/containers/list.container';
 import SpacesTabBar from './SpacesTabBar';
 import CreateChannelForm from '../channels/CreateChannelForm';
+// tslint:disable-next-line:max-line-length
 import { ISingleSpaceComponentProps } from 'front.core/lib/modules/spaces/containers/singleSpace.container';
 import { OtherMessage } from '../chat/OtherMessage';
 import { MyMessage } from '../chat/MyMessage';
@@ -30,7 +31,7 @@ const SingleSpace = (props: ISingleSpaceComponentProps) => (
 
           <h3>Channels:</h3>
           <ChannelsListContainer spaceId={props.spaceId}>
-            <ChannelsList/>
+            <ChannelsList />
           </ChannelsListContainer>
           <CreateChannelContainer spaceId={props.spaceId}>
             <CreateChannelForm />
@@ -44,7 +45,7 @@ const SingleSpace = (props: ISingleSpaceComponentProps) => (
             </ul>
           </div>
           <SendMessageContainer>
-            <SendMessageForm/>
+            <SendMessageForm />
           </SendMessageContainer>
         </Col>
       </Row>

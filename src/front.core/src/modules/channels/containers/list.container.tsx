@@ -13,8 +13,7 @@ interface IOuterProps {
   spaceId: string;
 }
 
-interface IProps extends IOuterProps, IInjectedProps {
-}
+interface IProps extends IOuterProps, IInjectedProps {}
 
 export interface IChannelsListProps {
   channels: IChannel[];
@@ -26,10 +25,12 @@ export interface IChannelsListProps {
 @observer
 class ChannelsListContainer extends React.Component<IProps> {
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) => React.cloneElement(child, {
-      channels: this.props.store.channels[this.props.spaceId] || [],
-      onSelect: id => this.props.store.setActiveChannel(id),
-    } as IChannelsListProps));
+    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+      React.cloneElement(child, {
+        channels: this.props.store.channels[this.props.spaceId] || [],
+        onSelect: id => this.props.store.setActiveChannel(id),
+      } as IChannelsListProps),
+    );
     return childrenWithProps;
   }
 }

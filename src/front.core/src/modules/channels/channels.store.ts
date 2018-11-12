@@ -3,7 +3,6 @@ import { action, computed, observable } from 'mobx';
 import { persistable } from '../../helpers/persist.helpers';
 import { IChannel, ICreateNewChannelDto } from 'api.contract';
 import { ApiServiceType, IApiService } from '../../services/api.service';
-import { IRouterStore, RouterStoreType } from '../../stores/router.store';
 
 export const ChannelsStoreType = 'CHANNELS_STORE_TYPE';
 
@@ -28,10 +27,8 @@ export class ChannelsStore implements IChannelsStore {
   @observable activeChannel: string | undefined;
 
   @inject(ApiServiceType) private readonly apiService!: IApiService;
-  @inject(RouterStoreType) private readonly routerStore!: IRouterStore;
 
-  onActivation() {
-  }
+  onActivation() {}
 
   @computed
   get allChannels() {

@@ -5,8 +5,10 @@ import { IDbEntityState } from './IDbEntityState';
 
 @Injectable()
 export abstract class BaseRepository<T extends BaseEntity<IDbEntityState>> {
-  protected constructor(readonly dbSet: Model<any>, readonly getEntity: (state: IDbEntityState) => T) {
-  }
+  protected constructor(
+    readonly dbSet: Model<any>,
+    readonly getEntity: (state: IDbEntityState) => T,
+  ) {}
 
   async create(state: IDbEntityState) {
     const st = await this.dbSet.create(state);

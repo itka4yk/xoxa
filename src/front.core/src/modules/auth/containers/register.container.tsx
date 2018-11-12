@@ -35,11 +35,13 @@ class RegisterContainer extends React.Component<IInjectedProps, IState> {
   handlePasswordChange = (password: string) => this.setState({ password });
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) => React.cloneElement(child, {
-      onRegisterSubmit: this.handleSubmit,
-      onEmailChange: this.handleEmailChange,
-      onPasswordChange: this.handlePasswordChange,
-    } as IRegisterComponentProps));
+    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+      React.cloneElement(child, {
+        onRegisterSubmit: this.handleSubmit,
+        onEmailChange: this.handleEmailChange,
+        onPasswordChange: this.handlePasswordChange,
+      } as IRegisterComponentProps),
+    );
     return childrenWithProps;
   }
 }

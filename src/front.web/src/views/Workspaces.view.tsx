@@ -4,11 +4,9 @@ import SpacesList from '../components/spaces/SpacesList';
 
 export const WorkspacesView = () => (
   <div>
-    <h3>
-      Workspace list
-    </h3>
+    <h3>Workspace list</h3>
     <SpacesListContainer>
-      <SpacesList/>
+      <SpacesList />
     </SpacesListContainer>
   </div>
 );

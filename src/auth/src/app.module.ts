@@ -8,13 +8,7 @@ import { Role } from 'entity/role.entity';
 import { InitialSeedService } from './db/initialSeed.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot(),
-    TypeOrmModule.forFeature([
-      User,
-      Role,
-    ]),
-  ],
+  imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([User, Role])],
   providers: [UserService, HashService, InitialSeedService],
   controllers: [AuthController],
 })

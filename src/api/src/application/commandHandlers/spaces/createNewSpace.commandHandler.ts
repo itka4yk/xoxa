@@ -6,12 +6,19 @@ import { InvalidArgumentException } from 'shared/exceptions/InvalidArgument.exce
 import { ISpaceState } from 'domain/spaces/space';
 
 @CommandHandler(CreateNewSpaceCommand)
-export class CreateNewSpaceCommandHandler implements ICommandHandler<CreateNewSpaceCommand> {
+export class CreateNewSpaceCommandHandler
+  implements ICommandHandler<CreateNewSpaceCommand> {
   constructor(private readonly spacesRepository: SpacesRepository) {}
 
   async execute(command: CreateNewSpaceCommand) {
-    const space = await this.spacesRepository.dbSet.findOne({ name: command.name });
-    if (space) throw new InvalidArgumentException(`Space with name ${command.name} allready exists!`);
+    const space = await this.spacesRepository.dbSet.findOne({
+      name: command.name,
+    });
+    if (space) {
+      throw new InvalidArgumentException(
+        `Space with name ${command.name} allready exists!`,
+      );
+    }
     await this.spacesRepository.create({
       ...command,
       id: uuid.v4(),

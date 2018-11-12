@@ -35,12 +35,9 @@ export class ChatStore implements IChatStore {
 
   @action
   sendMessage(msg: IChatMessageDto) {
-    console.log(msg);
     this.sockets.send(msg);
   }
 
   @action
-  newMessage(msg: IChatMessageDto) {
-    console.log('NEW MESSAGE!!!', msg);
-  }
+  newMessage(msg: IChatMessageDto) {}
 }

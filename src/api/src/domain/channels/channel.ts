@@ -10,10 +10,10 @@ export interface IChannelState extends IDbEntityState {
 
 export class Channel extends BaseEntity<IChannelState> {
   rename(newName: string) {
-    if (!newName)
-      throw new InvalidArgumentException('New name can\' be null');
-    if (newName === this.state.name)
-      throw new InvalidArgumentException('Name can\'t be the same');
+    if (!newName) throw new InvalidArgumentException("New name can' be null");
+    if (newName === this.state.name) {
+      throw new InvalidArgumentException("Name can't be the same");
+    }
     this.state.name = newName;
   }
 }

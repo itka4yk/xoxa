@@ -9,7 +9,9 @@ import LinkButton from '../../containers/LinkButton';
 
 const SpacesList = observer((props: ISpacesComponentProps) => (
   <>
-    <LinkButton block to="/workspaces/create">Create new</LinkButton>
+    <LinkButton block to="/workspaces/create">
+      Create new
+    </LinkButton>
     {props.spaces.map(s => (
       <Button block active={s.active} onClick={() => props.onSpaceSelected(s.name)} key={s.id}>
         {s.name}

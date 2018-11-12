@@ -1,5 +1,3 @@
 import { ReceivedMessageEventHandler } from './receiveMessage.eventHandler';
 
-export const EventHandlers = [
-  ReceivedMessageEventHandler,
-];
+export const EventHandlers = [ReceivedMessageEventHandler];

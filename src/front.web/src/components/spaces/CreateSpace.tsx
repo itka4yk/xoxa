@@ -7,9 +7,11 @@ import LinkButton from '../../containers/LinkButton';
 const CreateSpace = (props: ICreateSpaceComponent) => (
   <form>
     <h3>Create new Space</h3>
-    <FormControl placeholder="name" onChange={(e: any) => props.onNameChange(e.target.value)}/>
+    <FormControl placeholder="name" onChange={(e: any) => props.onNameChange(e.target.value)} />
     <Button onClick={props.onFormSubmit}>Create</Button>
-    <LinkButton bsStyle="link" back>Back</LinkButton>
+    <LinkButton bsStyle="link" back>
+      Back
+    </LinkButton>
   </form>
 );
 

@@ -7,6 +7,6 @@ export class SampleContainer extends React.Component<any> {
         Sample container
         {this.props.children}
       </div>
-    )
+    );
   }
 }

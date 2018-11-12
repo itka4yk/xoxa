@@ -8,6 +8,8 @@ interface IProps {
 
 export const Channel = (props: IProps) => (
   <li className="chat-member">
-    <div className="name" onClick={props.onSelect}>{props.name}</div>
+    <div className="name" onClick={props.onSelect}>
+      {props.name}
+    </div>
   </li>
 );

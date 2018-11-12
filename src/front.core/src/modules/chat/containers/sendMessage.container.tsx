@@ -17,8 +17,7 @@ interface IState {
   body: string;
 }
 
-interface IProps extends IInjectedProps {
-}
+interface IProps extends IInjectedProps {}
 
 export interface ISendMessageForm {
   onBodyChange(name: string): void;
@@ -33,7 +32,6 @@ export interface ISendMessageForm {
 })
 @autobind
 class SendMessageContainer extends React.Component<IProps, IState> {
-
   state = { body: '' };
   handleBodyChange = (body: string) => this.setState({ body });
 
@@ -49,10 +47,12 @@ class SendMessageContainer extends React.Component<IProps, IState> {
   }
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) => React.cloneElement(child, {
-      onBodyChange: this.handleBodyChange,
-      onMessageSend: this.handleMessageSend,
-    } as ISendMessageForm));
+    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+      React.cloneElement(child, {
+        onBodyChange: this.handleBodyChange,
+        onMessageSend: this.handleMessageSend,
+      } as ISendMessageForm),
+    );
     return childrenWithProps;
   }
 }

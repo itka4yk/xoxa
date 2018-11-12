@@ -13,14 +13,18 @@ export class AuthService {
 
   async authenticate(credentials): Promise<string> {
     try {
-      return await this.client.send<string>({ cmd: 'authenticate' }, credentials).toPromise();
+      return await this.client
+        .send<string>({ cmd: 'authenticate' }, credentials)
+        .toPromise();
     } catch (error) {
       throw new BadRequestException('Invalid credentials');
     }
   }
 
   async register(newUser): Promise<string> {
-    return await this.client.send<string>({ cmd: 'register' }, newUser).toPromise();
+    return await this.client
+      .send<string>({ cmd: 'register' }, newUser)
+      .toPromise();
   }
 
   async activate(id: any) {
@@ -28,6 +32,8 @@ export class AuthService {
   }
 
   async getUserInfo(token: string): Promise<IUserInfo> {
-    return await this.client.send<IUserInfo>({ cmd: 'userInfo' }, token).toPromise();
+    return await this.client
+      .send<IUserInfo>({ cmd: 'userInfo' }, token)
+      .toPromise();
   }
 }

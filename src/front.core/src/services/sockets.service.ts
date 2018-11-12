@@ -29,22 +29,24 @@ export class SocketsService implements ISocketsService {
     this.connect();
   };
   private token: string = '';
-  private onMessageCallback: (msg: any) => void = () => {
-  };
+  private onMessageCallback: (msg: any) => void = () => {};
 
-  constructor(@inject(ConfigurationType) private readonly config: IEnvSettings) {
-  }
+  constructor(@inject(ConfigurationType) private readonly config: IEnvSettings) {}
 
   setMessageCallback(callback: (msg: any) => void) {
     this.onMessageCallback = callback;
+    // tslint:disable-next-line:no-console
     this.socket.on('*', console.log);
     this.socket.on('*', ({ data }: ISocketMessage) => this.onMessageCallback(data[0]));
   }
 
   connect() {
-    this.socket = connect(this.config.baseUrl.replace('http//', ''), {
-      query: `token=${this.token}`,
-    });
+    this.socket = connect(
+      this.config.baseUrl.replace('http//', ''),
+      {
+        query: `token=${this.token}`,
+      },
+    );
     const patch = wildcard(Manager);
     patch(this.socket);
   }

@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Container } from 'inversify';
 
@@ -17,8 +16,9 @@ export function initContainer(cont: Container) {
 
 export function injectProps(props: IInjectProps, callback?: (s: any) => ICallbackResult) {
   return function(Component: React.ComponentClass<any>): any {
-
-    if (container === undefined) throw new Error('Uninitialized container in injectProps decorator');
+    if (container === undefined) {
+      throw new Error('Uninitialized container in injectProps decorator');
+    }
 
     let newProps = Object.keys(props)
       .map(k => ({ [k]: container.get(props[k]) }))

@@ -26,22 +26,26 @@ const withRouter: any = wr;
 @observer
 @withRouter
 class SpacesContainer extends React.Component<IInjectedProps> {
-
   componentWillMount() {
     this.props.store.getMySpaces();
   }
 
   @autobind
   handleSpaceSelected(name: string) {
-    this.props.history.push(`/workspaces/single/${name.toLowerCase()}`)
+    this.props.history.push(`/workspaces/single/${name.toLowerCase()}`);
   }
 
   render() {
     const { pathname } = this.props.location;
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) => React.cloneElement(child, {
-      spaces: this.props.store.mySpaces.map(s => ({ ...s, active: `/workspaces/${s.name}` === pathname })),
-      onSpaceSelected: this.handleSpaceSelected,
-    } as ISpacesComponentProps));
+    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+      React.cloneElement(child, {
+        spaces: this.props.store.mySpaces.map(s => ({
+          ...s,
+          active: `/workspaces/${s.name}` === pathname,
+        })),
+        onSpaceSelected: this.handleSpaceSelected,
+      } as ISpacesComponentProps),
+    );
     return childrenWithProps;
   }
 }

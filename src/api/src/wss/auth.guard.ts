@@ -7,6 +7,6 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToWs();
-    return true;
+    if (request) return true;
   }
 }

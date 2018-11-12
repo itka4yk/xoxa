@@ -5,8 +5,9 @@ export interface ICreateNewChannelDto {
   spaceId: string;
 }
 
-export const createNewChannelSchema = object().keys({
-  name: string().min(2),
-  spaceId: string().min(2),
-}).required();
-
+export const createNewChannelSchema = object()
+  .keys({
+    name: string().min(2),
+    spaceId: string().min(2),
+  })
+  .required();

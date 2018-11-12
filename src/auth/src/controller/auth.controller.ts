@@ -1,10 +1,9 @@
-import { Controller, Body, UsePipes, UseFilters } from '@nestjs/common';
+import { Controller, UseFilters } from '@nestjs/common';
 import { UserService } from 'users.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { RpcFilter } from '../all-exception.filter';
 
 @Controller('auth')
-
 @UseFilters(new RpcFilter())
 export class AuthController {
   constructor(private readonly usersService: UserService) {}

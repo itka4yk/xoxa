@@ -9,7 +9,9 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(`mongodb://${process.env.DBNAME || 'localhost'}/xoxa`),
+    MongooseModule.forRoot(
+      `mongodb://${process.env.DBNAME || 'localhost'}/xoxa`,
+    ),
     ApiModule,
     InfrastructureModule,
     DomainModule,
@@ -18,4 +20,4 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

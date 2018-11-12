@@ -6,7 +6,9 @@ export interface IAssignNewUserDto {
   applierId: string;
 }
 
-export const assignNewUserSchema = object().keys({
-  spaceId: string().min(2),
-  userId: string().min(2),
-}).required();
+export const assignNewUserSchema = object()
+  .keys({
+    spaceId: string().min(2),
+    userId: string().min(2),
+  })
+  .required();

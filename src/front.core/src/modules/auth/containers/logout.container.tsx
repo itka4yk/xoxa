@@ -23,9 +23,11 @@ class LogoutContainer extends React.Component<IInjectedProps> {
   handlePasswordChange = (password: string) => this.setState({ password });
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) => React.cloneElement(child, {
-      onLogout: this.handleLogout,
-    } as ILogoutComponentProps));
+    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+      React.cloneElement(child, {
+        onLogout: this.handleLogout,
+      } as ILogoutComponentProps),
+    );
     return childrenWithProps;
   }
 }

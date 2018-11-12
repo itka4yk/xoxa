@@ -6,18 +6,28 @@ import { EventHandlers } from './eventHandlers';
 import { InfrastructureModule } from '../infrastructure/infrastructure.module';
 import { CommandBus } from './CommandBus';
 import { SampleQueryHandler } from './queryHandlers/sample.queryHandler';
+// tslint:disable-next-line:max-line-length
 import { GetSpacesByMemberQueryHandler } from './queryHandlers/spaces/getSpacesByMember.queryHandler';
 import { GetChannelsQueryHandler } from './queryHandlers/channels/getChannels.queryHandler';
+import { GetMessagesQueryHandler } from './queryHandlers/messages/getMessages.queryHandler';
 
 const QueryHandlers = [
   SampleQueryHandler,
   GetSpacesByMemberQueryHandler,
   GetChannelsQueryHandler,
+  GetMessagesQueryHandler,
 ];
 
 @Module({
   imports: [InfrastructureModule],
-  providers: [QueryBus, CommandBus, EventBus, ...CommandHandlers, ...EventHandlers, ...QueryHandlers],
+  providers: [
+    QueryBus,
+    CommandBus,
+    EventBus,
+    ...CommandHandlers,
+    ...EventHandlers,
+    ...QueryHandlers,
+  ],
   exports: [QueryBus, CommandBus, EventBus],
 })
 export class ApplicationModule {

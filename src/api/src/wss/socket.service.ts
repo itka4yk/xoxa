@@ -13,7 +13,7 @@ import { ClientsService } from './clients.service';
 import { Socket } from 'socket.io';
 import { AuthService } from '../auth/auth.service';
 import { chatMessageSchema } from 'api.contract';
-import { ValidationPipe } from './validation.pipe';
+import { WssValidationPipe } from '../shared/pipes/wssValidation.pipe';
 
 @WebSocketGateway()
 export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
@@ -22,7 +22,7 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
     private readonly eventBus: EventBus,
     private readonly clients: ClientsService,
     private readonly authService: AuthService,
-   ) { }
+  ) {}
 
   async handleConnection(client: Socket) {
     const query = client.handshake.query;
@@ -40,10 +40,8 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
 
   @UseGuards(AuthGuard)
   @SubscribeMessage('message')
-  @UsePipes(new ValidationPipe(chatMessageSchema))
+  @UsePipes(new WssValidationPipe(chatMessageSchema))
   newMessage(client, data) {
-    console.log('NEW MESSAGE', data);
-
     this.eventBus.publish(new ReceivedMessageEvent(data));
     return { event: 'hej', data: 'hhhej' };
   }

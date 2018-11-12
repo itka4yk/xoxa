@@ -8,6 +8,4 @@ export interface IMessageState extends IDbEntityState, IChatMessageDto {
   spaceId: string;
 }
 
-export class Message extends BaseEntity<IMessageState> {
-
-}
+export class Message extends BaseEntity<IMessageState> {}

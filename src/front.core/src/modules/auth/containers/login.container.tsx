@@ -35,11 +35,13 @@ class LoginContainer extends React.Component<IInjectedProps, IState> {
   handlePasswordChange = (password: string) => this.setState({ password });
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) => React.cloneElement(child, {
-      onLoginSubmit: this.handleSubmit,
-      onEmailChange: this.handleEmailChange,
-      onPasswordChange: this.handlePasswordChange,
-    } as ILoginComponentProps));
+    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+      React.cloneElement(child, {
+        onLoginSubmit: this.handleSubmit,
+        onEmailChange: this.handleEmailChange,
+        onPasswordChange: this.handlePasswordChange,
+      } as ILoginComponentProps),
+    );
     return childrenWithProps;
   }
 }

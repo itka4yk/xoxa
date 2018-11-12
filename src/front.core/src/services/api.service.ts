@@ -16,15 +16,17 @@ export class ApiService implements IApiService {
 
   private token: string = '';
 
-  setToken = (token: string) => this.token = token;
+  setToken = (token: string) => (this.token = token);
 
   getUrl = (urlSuffix: string): string => `${this.config.baseUrl}/api${urlSuffix}`;
 
   async getAsync<TResult>(urlSuffix: string): Promise<TResult | Error> {
-    const config = { headers: {
-      'Access-Control-Allow-Origin': '*',
+    const config = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
         Authorization: this.token,
-    } };
+      },
+    };
     const result: AxiosResponse<TResult> = await axios(this.getUrl(urlSuffix), config);
 
     if (result.status !== 200) {
@@ -34,11 +36,16 @@ export class ApiService implements IApiService {
     return result.data;
   }
 
-  async postAsync<TData, TResult>(urlSuffix: string, body?: TData | undefined): Promise<TResult | Error> {
-    const config = { headers: {
-      'Access-Control-Allow-Origin': '*',
+  async postAsync<TData, TResult>(
+    urlSuffix: string,
+    body?: TData | undefined,
+  ): Promise<TResult | Error> {
+    const config = {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
         Authorization: this.token,
-    } };
+      },
+    };
     let result: AxiosResponse;
     try {
       result = await axios.post(this.getUrl(urlSuffix), body, config);

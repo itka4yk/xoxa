@@ -4,9 +4,15 @@ import { SpacesController } from './controllers/spaces.controller';
 import { ChannelsController } from './controllers/channels.controller';
 import { AuthModule } from '../auth/auth.module';
 import { AuthController } from './controllers/auth.controller';
+import { MessagesController } from './controllers/messages.controller';
 
 @Module({
   imports: [ApplicationModule, AuthModule],
-  controllers: [SpacesController, ChannelsController, AuthController],
+  controllers: [
+    SpacesController,
+    ChannelsController,
+    AuthController,
+    MessagesController,
+  ],
 })
-export class ApiModule { }
+export class ApiModule {}

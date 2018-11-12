@@ -4,6 +4,8 @@ export interface ICreateNewSpaceDto {
   name: string;
 }
 
-export const createNewSpaceSchema = object().keys({
-  name: string().min(2),
-}).required();
+export const createNewSpaceSchema = object()
+  .keys({
+    name: string().min(2),
+  })
+  .required();
