@@ -27,8 +27,14 @@ export class AuthController {
   activate(id: string) {
     return this.usersService.activate(id);
   }
+
   @MessagePattern({ cmd: 'userInfo' })
   getUserInfo(token: string) {
     return this.usersService.getUserInfo(token);
+  }
+
+  @MessagePattern({ cmd: 'userInfoById' })
+  getUserInfoById(id: string) {
+    return this.usersService.getUserInfoById(id);
   }
 }

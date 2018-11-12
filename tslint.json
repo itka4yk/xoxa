@@ -23,6 +23,8 @@
       false,
       "never"
     ],
+    "indent": [true, "spaces", 2],
+    "ter-indent": [false, 2],
     "no-unused-variable": true,
     "semicolon": [
       true,

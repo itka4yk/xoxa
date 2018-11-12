@@ -36,4 +36,10 @@ export class AuthService {
       .send<IUserInfo>({ cmd: 'userInfo' }, token)
       .toPromise();
   }
+
+  async getUserInfoById(id: string): Promise<IUserInfo> {
+    return await this.client
+      .send<IUserInfo>({ cmd: 'userInfoById' }, id)
+      .toPromise();
+  }
 }

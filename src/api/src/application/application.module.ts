@@ -10,6 +10,7 @@ import { SampleQueryHandler } from './queryHandlers/sample.queryHandler';
 import { GetSpacesByMemberQueryHandler } from './queryHandlers/spaces/getSpacesByMember.queryHandler';
 import { GetChannelsQueryHandler } from './queryHandlers/channels/getChannels.queryHandler';
 import { GetMessagesQueryHandler } from './queryHandlers/messages/getMessages.queryHandler';
+import { AuthModule } from '../auth/auth.module';
 
 const QueryHandlers = [
   SampleQueryHandler,
@@ -19,7 +20,7 @@ const QueryHandlers = [
 ];
 
 @Module({
-  imports: [InfrastructureModule],
+  imports: [InfrastructureModule, AuthModule],
   providers: [
     QueryBus,
     CommandBus,

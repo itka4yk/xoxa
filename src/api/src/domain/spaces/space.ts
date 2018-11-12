@@ -11,6 +11,11 @@ export interface ISpaceState extends IDbEntityState {
 }
 
 export class Space extends BaseEntity<ISpaceState> {
+  setAdmin(adminId: string) {
+    // TODO: fix admin\'s member creation
+    this.state.admin = adminId;
+  }
+
   rename(newName: string) {
     if (!newName) throw new InvalidArgumentException("New name can' be null");
     if (newName === this.state.name) {
@@ -31,7 +36,7 @@ export class Space extends BaseEntity<ISpaceState> {
       throw new InvalidArgumentException("Channel id can' be null.");
     }
     if (!this.state.channels.find(c => c === channelId)) {
-      throw new InvalidArgumentException('Channel id not found.');
+      throw new InvalidArgumentException('Channel id not found');
     }
     this.state.channels = this.state.channels.filter(c => c !== channelId);
   }

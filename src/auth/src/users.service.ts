@@ -55,4 +55,12 @@ export class UserService {
     });
     return { id, email, roles: roles.map(r => r.name) } as IUserInfo;
   }
+
+  async getUserInfoById(userId: string) {
+    const { id, email, roles } = await this.userRepository.findOne({
+      where: { userId },
+      relations: ['roles'],
+    });
+    return { id, email, roles: roles.map(r => r.name) } as IUserInfo;
+  }
 }
