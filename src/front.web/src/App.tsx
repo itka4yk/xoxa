@@ -11,11 +11,10 @@ import { PrivateRoute, SwitchWithNotFound } from 'front.core/lib/containers';
 import { NotFoundView } from './views/NotFound.view';
 import { TodoView } from './views/Todo.view';
 import {
-  RouterStoreType,
-  NotificationsStoreType,
-  INotificationsStore,
   INotification,
-  SpacesStoreType,
+  INotificationsStore,
+  NotificationsStoreType,
+  RouterStoreType,
 } from 'front.core';
 import { AuthRoute } from './routes/auth.route';
 import { WorkspacesRoute } from './routes/workspaces.route';
@@ -26,7 +25,6 @@ enableDevTools();
 const browserHistory = createBrowserHistory();
 const history = syncHistoryWithStore(browserHistory, container.get(RouterStoreType));
 const notificationStore = container.get<INotificationsStore>(NotificationsStoreType);
-const store = container.get(SpacesStoreType);
 // function notifyMe(notification: string) {
 //   if (!('Notification' in window)) return;
 //   if (Notification.permission === 'granted') {

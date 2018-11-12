@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import uuid from 'uuid';
-import { sign, verify, decode } from 'jsonwebtoken';
+import { decode, sign, verify } from 'jsonwebtoken';
 
 import { User } from './entity/user.entity';
 import { Role } from './entity/role.entity';
@@ -49,7 +49,10 @@ export class UserService {
 
   async getUserInfo(token: string): Promise<IUserInfo> {
     const { email: decodedEmail } = decode(token) as IUserInfo;
-    const { id, email, roles } = await this.userRepository.findOne({ where: { decodedEmail }, relations: ['roles'] });
+    const { id, email, roles } = await this.userRepository.findOne({
+      where: { email: decodedEmail },
+      relations: ['roles'],
+    });
     return { id, email, roles: roles.map(r => r.name) } as IUserInfo;
   }
 }

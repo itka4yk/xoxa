@@ -4,7 +4,7 @@
   "port": 5432,
   "username": "postgres",
   "password": "password",
-  "database": "postgres",
+  "database": "xoxa_auth",
   "synchronize": true,
   "logging": false,
   "entities": [

@@ -2,12 +2,14 @@
 import * as React from 'react';
 import { as, ICreateSpaceComponent } from 'front.core';
 import { Button, FormControl } from 'react-bootstrap';
+import LinkButton from '../../containers/LinkButton';
 
 const CreateSpace = (props: ICreateSpaceComponent) => (
   <form>
     <h3>Create new Space</h3>
-    <FormControl placeholder="name" onChange={e => props.onNameChange(e.target.value)} />
+    <FormControl placeholder="name" onChange={(e: any) => props.onNameChange(e.target.value)}/>
     <Button onClick={props.onFormSubmit}>Create</Button>
+    <LinkButton bsStyle="link" back>Back</LinkButton>
   </form>
 );
 

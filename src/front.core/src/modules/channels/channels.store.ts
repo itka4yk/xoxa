@@ -1,21 +1,31 @@
-import { injectable, inject } from 'inversify';
-import { observable, computed, action, autorun, reaction, when } from 'mobx';
+import { inject, injectable } from 'inversify';
+import { action, computed, observable } from 'mobx';
 import { persistable } from '../../helpers/persist.helpers';
-import { IMySpace, ICreateNewChannelDto, IChannel } from 'api.contract';
-import { ApiServiceType, IApiService } from '../../services/services.module';
-import { RouterStoreType, IRouterStore } from '../../stores/stores.module';
+import { IChannel, ICreateNewChannelDto } from 'api.contract';
+import { ApiServiceType, IApiService } from '../../services/api.service';
+import { IRouterStore, RouterStoreType } from '../../stores/router.store';
 
 export const ChannelsStoreType = 'CHANNELS_STORE_TYPE';
 
-export interface IChannelsStore {
-  createNewChannel(newChannelName: ICreateNewChannelDto): void;
-  getChannels(spaceId: string): void;
-  channels: IChannel[];
+interface IChannelsData {
+  [spaceId: string]: IChannel[];
 }
 
+export interface IChannelsStore {
+  channels: IChannelsData;
+  createNewChannel(newChannelName: ICreateNewChannelDto): void;
+  getChannels(spaceId: string): void;
+
+  activeChannel: string | undefined;
+
+  setActiveChannel(id: string): void;
+}
+
+@persistable()
 @injectable()
 export class ChannelsStore implements IChannelsStore {
-  @observable private _channels: IChannel[] = [];
+  @observable channels: IChannelsData = {};
+  @observable activeChannel: string | undefined;
 
   @inject(ApiServiceType) private readonly apiService!: IApiService;
   @inject(RouterStoreType) private readonly routerStore!: IRouterStore;
@@ -24,20 +34,24 @@ export class ChannelsStore implements IChannelsStore {
   }
 
   @computed
-  get channels() {
-    return this._channels.map(s => s);
+  get allChannels() {
+    return this.channels;
   }
 
   @action
   async getChannels(spaceId: string) {
     const result = await this.apiService.getAsync<IChannel[]>(`/channels?spaceId=${spaceId}`);
-    console.log('CHANNELS', result);
     if (result instanceof Error) return;
-    this._channels = result;
+    this.channels[spaceId] = result;
   }
 
   @action
   async createNewChannel(newChannel: ICreateNewChannelDto) {
     await this.apiService.postAsync('/channels', newChannel);
+  }
+
+  @action
+  setActiveChannel(id: string): void {
+    this.activeChannel = id;
   }
 }

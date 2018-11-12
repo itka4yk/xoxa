@@ -1,4 +1,4 @@
-import { toJS, set, autorun, isObservableArray } from 'mobx';
+import { autorun, toJS } from 'mobx';
 import { injectable } from 'inversify';
 import { get as getFromStore, set as saveToStore } from 'store';
 
@@ -23,7 +23,6 @@ export class PersistService implements IPersistService {
           }
         }
       }
-
       saveToStore(storeName, toJS(store));
     });
 

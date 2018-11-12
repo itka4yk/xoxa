@@ -26,10 +26,13 @@ export class InitialSeedService {
     const rolesCount = await this.rolesRepository.count();
 
     if (!rolesCount) await this.seedRoles();
-    if (!usersCount) await this.seedUsers();
+    if (!usersCount) {
+      await this.seedAdmin();
+      await this.seedUser();
+    }
   }
 
-  async seedUsers() {
+  async seedAdmin() {
     const admin = new User();
     admin.id = uuid.v4();
     admin.email = 'admin@xoxa.app';
@@ -38,6 +41,17 @@ export class InitialSeedService {
     const adminRole = await this.rolesRepository.findOne('1');
     admin.roles = [adminRole];
     await this.userRepository.save(admin);
+  }
+
+  async seedUser() {
+    const user = new User();
+    user.id = uuid.v4();
+    user.email = 'user@xoxa.app';
+    user.passwordHash = await this.hashService.create('password');
+    user.activated = true;
+    const userRole = await this.rolesRepository.findOne('2');
+    user.roles = [userRole];
+    await this.userRepository.save(user);
   }
 
   async seedRoles() {

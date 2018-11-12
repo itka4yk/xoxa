@@ -7,6 +7,10 @@ export class HashService {
     return await bcrypt.hash(password, 10);
   }
 
+  createSync(password: string): string {
+    return bcrypt.hashSync(password, 10);
+  }
+
   async compare(password: string, hash: string): Promise<boolean> {
     return await bcrypt.compare(password, hash);
   }

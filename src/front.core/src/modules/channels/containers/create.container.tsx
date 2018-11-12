@@ -1,8 +1,8 @@
 import * as React from 'react';
 import autobind from 'autobind-decorator';
 
-import { IChannelsStore, ChannelsStoreType } from '../channels.store';
-import { injectProps, as } from '../../../helpers';
+import { ChannelsStoreType, IChannelsStore } from '../channels.store';
+import { as, injectProps } from '../../../helpers';
 
 interface IInjectedProps {
   store: IChannelsStore;
@@ -29,8 +29,9 @@ class CreateChannelContainer extends React.Component<IProps, IState> {
 
   state = { name: '' };
 
-  handleFormSubmit() {
-    this.props.store.createNewChannel({ name: this.state.name, spaceId: this.props.spaceId });
+  async handleFormSubmit() {
+    await this.props.store.createNewChannel({ name: this.state.name, spaceId: this.props.spaceId });
+    await this.props.store.getChannels(this.props.spaceId);
   }
 
   handleNameChange = (name: string) => this.setState({ name });

@@ -7,8 +7,9 @@ import { Button, FormControl } from 'react-bootstrap';
 const Login = (props: ILoginComponentProps) => (
   <form>
     <h3>Login View</h3>
-    <FormControl placeholder="email" onChange={e => props.onEmailChange(e.target.value)} />
-    <FormControl placeholder="password" onChange={e => props.onPasswordChange(e.target.value)} />
+    <FormControl placeholder="email" onChange={(e: any) => props.onEmailChange(e.target.value)}/>
+    <FormControl placeholder="password"
+                 onChange={(e: any) => props.onPasswordChange(e.target.value)}/>
     <Button onClick={props.onLoginSubmit}>Login</Button>
   </form>
 );

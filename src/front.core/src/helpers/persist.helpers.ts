@@ -1,5 +1,5 @@
-import { injectable, inject } from 'inversify';
-import { PersistServiceType, IPersistService } from '../services/persist.service';
+import { injectable } from 'inversify';
+import { PersistService } from '../services/persist.service';
 
 /**
  * Persists object in browser storage.
@@ -7,9 +7,10 @@ import { PersistServiceType, IPersistService } from '../services/persist.service
  */
 export function persistable(): any {
   return function<T>(target: new () => T): new () => T {
+    const persistService = new PersistService();
     @injectable()
     class PersistedClass {
-      constructor(@inject(PersistServiceType) persistService: IPersistService) {
+      constructor() {
         target.apply(this);
         persistService.persistStore(this);
       }

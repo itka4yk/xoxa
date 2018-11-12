@@ -20,11 +20,11 @@
     "skipLibCheck": true,
     "allowJs": true,
     // "noStrictGenericChecks": true,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": false
   },
   "include": [
     "src/**/*",
-    "node_modules/class-validator",
+    "node_modules/class-validator"
   ],
   "exclude": [
     "node_modules",

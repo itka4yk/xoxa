@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { EventBus, QueryBus } from '@nestjs/cqrs';
 import { ModuleRef } from '@nestjs/core';
-import { CommandHandlers } from '../application/commandHandlers';
-import { EventHandlers } from '../application/eventHandlers';
+import { CommandHandlers } from './commandHandlers';
+import { EventHandlers } from './eventHandlers';
 import { InfrastructureModule } from '../infrastructure/infrastructure.module';
 import { CommandBus } from './CommandBus';
 import { SampleQueryHandler } from './queryHandlers/sample.queryHandler';

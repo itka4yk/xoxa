@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { as, injectProps } from 'front.core';
-import { FormControl, FormGroup, Button, Panel } from 'react-bootstrap';
+import { Button, FormControl, FormGroup, Panel } from 'react-bootstrap';
 import autobind from 'autobind-decorator';
-import { ITodoStore, TodoStoreType } from '../todo.module';
+import { ITodoStore, TodoStoreType } from '../todo.store';
 
 interface IInjectedProps {
   store: ITodoStore;
@@ -21,8 +21,8 @@ class TodoForm extends React.Component<IInjectedProps, IState> {
     body: '',
   };
 
-  handleBodyChange = (e: React.FormEvent<FormControl>) => this.setState({ body: e.target.value });
-  handleTypeChange = (e: React.FormEvent<FormControl>) => this.setState({ type: e.target.value });
+  handleBodyChange = (e: any) => this.setState({ body: e.target.value });
+  handleTypeChange = (e: any) => this.setState({ type: e.target.value });
   handleAddTodo = () => this.props.store.addTodo(this.state.body);
   render() {
     return (

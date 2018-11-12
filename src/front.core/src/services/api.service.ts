@@ -1,7 +1,6 @@
-import { injectable, inject, LazyServiceIdentifer } from 'inversify';
+import { inject, injectable } from 'inversify';
 import axios, { AxiosResponse } from 'axios';
 import { ConfigurationType, IEnvSettings } from '../configuration';
-import { AuthStoreType, IAuthStore } from '../modules';
 
 export const ApiServiceType = 'API_SERVICE';
 
@@ -10,7 +9,6 @@ export interface IApiService {
   postAsync<TData, TResult>(urlSuffix: string, body?: TData): Promise<TResult | Error>;
   setToken(token: string): void;
 }
-
 
 @injectable()
 export class ApiService implements IApiService {
@@ -25,7 +23,7 @@ export class ApiService implements IApiService {
   async getAsync<TResult>(urlSuffix: string): Promise<TResult | Error> {
     const config = { headers: {
       'Access-Control-Allow-Origin': '*',
-      'Authorization': this.token,
+        Authorization: this.token,
     } };
     const result: AxiosResponse<TResult> = await axios(this.getUrl(urlSuffix), config);
 
@@ -39,7 +37,7 @@ export class ApiService implements IApiService {
   async postAsync<TData, TResult>(urlSuffix: string, body?: TData | undefined): Promise<TResult | Error> {
     const config = { headers: {
       'Access-Control-Allow-Origin': '*',
-      'Authorization': this.token,
+        Authorization: this.token,
     } };
     let result: AxiosResponse;
     try {

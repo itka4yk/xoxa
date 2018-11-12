@@ -1,14 +1,12 @@
 import * as React from 'react';
 
-import { IncrementAction, DecrementAction, CounterAction } from '../actions/counterActions';
-
 require('./Counter.scss');
 
 export interface Props {
-    value: number;
+  value: number;
 
-    incrementValue: () => any;
-    decrementValue: () => any;
+  incrementValue: () => any;
+  decrementValue: () => any;
 }
 
 const Counter: React.SFC<Props> = ({ value, incrementValue, decrementValue }) => (

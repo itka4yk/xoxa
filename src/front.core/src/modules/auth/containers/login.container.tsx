@@ -1,8 +1,8 @@
 import * as React from 'react';
 import autobind from 'autobind-decorator';
 
-import { IAuthStore, AuthStoreType } from '../auth.store';
-import { injectProps, as } from '../../../helpers';
+import { AuthStoreType, IAuthStore } from '../auth.store';
+import { as, injectProps } from '../../../helpers';
 
 interface IState {
   email: string;
@@ -25,7 +25,7 @@ class LoginContainer extends React.Component<IInjectedProps, IState> {
   state = {
     email: '',
     password: '',
-  }
+  };
 
   handleSubmit() {
     this.props.store.signIn(this.state.email, this.state.password);

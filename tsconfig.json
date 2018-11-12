@@ -17,10 +17,12 @@
     "rootDir": ".",
     "experimentalDecorators": true,
     "paths": {
-      "~/*": ["src/*"],
+      "~/*": [
+        "src/*"
+      ]
     },
     "noStrictGenericChecks": true,
-    "noImplicitAny": false,
+    "noImplicitAny": false
   },
   "exclude": [
     "**/build"

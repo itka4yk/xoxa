@@ -1,16 +1,23 @@
-import { CacheService } from '../infrastructure/cache.service';
 import { Injectable } from '@nestjs/common';
+import Redis from 'ioredis';
 
 @Injectable()
 export class ClientsService {
-  constructor(private readonly cache: CacheService) {}
+  cache: Redis.Redis;
 
-  async handleClientConnected(clientId: string, socketId: string) {
-    await this.cache.multi().sadd(`client:${clientId}`, socketId).set(`socket:${socketId}`, clientId).exec();
+  constructor() {
+    this.cache = new Redis({ host: process.env.REDISNAME || 'localhost' });
   }
 
-  async handleClientDisconnected(clientId: string, socketId: string) {
-    await this.cache.multi().srem(`client:${clientId}`, socketId).del(`socket:${socketId}`, clientId).exec();
+  async handleClientConnected(clientId: string, socketId: string) {
+    return await this.cache.multi().sadd(`client:${clientId}`, socketId).set(`socket:${socketId}`, clientId).exec();
+  }
+
+  async handleClientDisconnected(socketId: string) {
+    const clientId = await this.cache.get(`socket:${socketId}`);
+    return await this.cache.multi()
+      .srem(`client:${clientId}`, socketId)
+      .del(`socket:${socketId}`).exec();
   }
 
   async getSocketId(clientId: string): Promise<string[]> {

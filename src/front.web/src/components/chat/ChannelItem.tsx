@@ -1,7 +1,13 @@
 import * as React from 'react';
 
-export const Channel = () => (
+interface IProps {
+  name: string;
+
+  onSelect(): void;
+}
+
+export const Channel = (props: IProps) => (
   <li className="chat-member">
-    <div className="name">Vincent Porter</div>
+    <div className="name" onClick={props.onSelect}>{props.name}</div>
   </li>
 );

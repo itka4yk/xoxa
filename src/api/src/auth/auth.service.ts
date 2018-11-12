@@ -1,6 +1,6 @@
-import { Injectable, NotImplementedException, BadRequestException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Client, ClientProxy, Transport } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
+import { IUserInfo } from 'auth.contract';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +27,7 @@ export class AuthService {
     return await this.client.send<string>({ cmd: 'activate' }, id).toPromise();
   }
 
-  async getUserInfo(token: string): Promise<any> {
-    return await this.client.send<string>({ cmd: 'userInfo' }, token).toPromise();
+  async getUserInfo(token: string): Promise<IUserInfo> {
+    return await this.client.send<IUserInfo>({ cmd: 'userInfo' }, token).toPromise();
   }
 }

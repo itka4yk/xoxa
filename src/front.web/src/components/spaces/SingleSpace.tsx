@@ -1,19 +1,24 @@
 import * as React from 'react';
-import { Grid, Row, Col, Navbar, Button } from 'react-bootstrap';
+import { Col, Grid, Navbar, Row } from 'react-bootstrap';
 import SpacesContainer from 'front.core/lib/modules/spaces/containers/spacesTabBar.container';
+import SendMessageContainer from 'front.core/lib/modules/chat/containers/sendMessage.container';
 import CreateChannelContainer from 'front.core/lib/modules/channels/containers/create.container';
+import ChannelsListContainer from 'front.core/lib/modules/channels/containers/list.container';
 import SpacesTabBar from './SpacesTabBar';
 import CreateChannelForm from '../channels/CreateChannelForm';
-// tslint:disable-next-line:max-line-length
 import { ISingleSpaceComponentProps } from 'front.core/lib/modules/spaces/containers/singleSpace.container';
-import { Channel } from '../chat/ChannelItem';
 import { OtherMessage } from '../chat/OtherMessage';
 import { MyMessage } from '../chat/MyMessage';
-import { observer } from 'mobx-react';
+import ChannelsList from '../channels/ChannelsList';
+import { as } from 'front.core';
+import LinkButton from '../../containers/LinkButton';
+import SendMessageForm from '../chat/SendMessageForm';
 
-export const SingleSpace = observer((props: ISingleSpaceComponentProps) => (
+const SingleSpace = (props: ISingleSpaceComponentProps) => (
   <div>
     <Navbar className="workspace-tabs">
+      <LinkButton to={`/workspaces/single/${props.spaceName}/settings`}>Settings</LinkButton>
+      <LinkButton to="/workspaces/create">Create</LinkButton>
       <SpacesContainer>
         <SpacesTabBar />
       </SpacesContainer>
@@ -22,21 +27,14 @@ export const SingleSpace = observer((props: ISingleSpaceComponentProps) => (
       <Row className="content-wrapper">
         <Col className="sidebar" xs={3} md={3}>
           <h2>{props.spaceName}</h2>
-          {/* <div className="search">
-            <input type="text" placeholder="search" />
-            <i className="fa fa-search" />
-          </div> */}
+
           <h3>Channels:</h3>
-          <ul className="list">
-            {props.channels.map(c => <Channel key={c.id}/>)}
-          </ul>
+          <ChannelsListContainer spaceId={props.spaceId}>
+            <ChannelsList/>
+          </ChannelsListContainer>
           <CreateChannelContainer spaceId={props.spaceId}>
             <CreateChannelForm />
           </CreateChannelContainer>
-          <h3>Direct:</h3>
-          <ul className="list">
-            {props.privates.map(c => <Channel key={c.id}/>)}
-          </ul>
         </Col>
         <Col className="chat-content" xs={9} md={9}>
           <div className="chat-messages">
@@ -45,12 +43,13 @@ export const SingleSpace = observer((props: ISingleSpaceComponentProps) => (
               <MyMessage />
             </ul>
           </div>
-          <div className="chat-input-wrapper">
-            <textarea />
-            <button type="submit">Send</button>
-          </div>
+          <SendMessageContainer>
+            <SendMessageForm/>
+          </SendMessageContainer>
         </Col>
       </Row>
     </Grid>
   </div>
-));
+);
+
+export default as<React.ComponentClass>(SingleSpace);

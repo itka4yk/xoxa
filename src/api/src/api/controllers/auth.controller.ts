@@ -1,7 +1,8 @@
-import { Controller, Post, Body, BadRequestException, UsePipes, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, UseGuards, UsePipes } from '@nestjs/common';
 import { AuthService } from 'auth/auth.service';
 import { credentialsSchema, newUserDtoSchema } from 'auth.contract';
 import { JoiValidationPipe } from 'joiValidation.pipe';
+import { AuthGuard } from 'api/guards/auth.guard';
 
 @Controller('api/auth')
 export class AuthController {
@@ -22,5 +23,11 @@ export class AuthController {
   @Post('activate')
   async activate(@Query() { id }) {
     await this.authService.activate(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('userInfo')
+  async getUserInfo(@Req() { userInfo }) {
+    return userInfo;
   }
 }

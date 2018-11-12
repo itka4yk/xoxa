@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 cd src/api.contract
 yarn link
 cd ../src/auth.contract
