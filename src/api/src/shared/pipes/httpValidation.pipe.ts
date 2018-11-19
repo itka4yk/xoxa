@@ -15,7 +15,7 @@ export class HttpValidationPipe implements PipeTransform {
       presence: 'required',
     });
     if (error) {
-      throw new BadRequestException('Validation failed');
+      throw new BadRequestException(error);
     }
     return value;
   }

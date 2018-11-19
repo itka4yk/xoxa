@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CacheService } from './cache.service';
 import { SpaceSchema } from './schemas/space.schema';
 import { ChannelSchema } from './schemas/channel.schema';
 import { MessageSchema } from './schemas/message.schema';
@@ -9,6 +8,7 @@ import { SpacesRepository } from './repositories/spaces.repository';
 import { ChannelsRepository } from './repositories/channels.repository';
 import { MessagesRepository } from './repositories/messages.repository';
 import { MembersRepository } from './repositories/members.repository';
+import { ClientsService } from './clients.service';
 
 const schemas = [
   { name: 'Space', schema: SpaceSchema },
@@ -26,7 +26,7 @@ const repositories = [
 
 @Module({
   imports: [MongooseModule.forFeature(schemas)],
-  providers: [...repositories, CacheService],
-  exports: [...repositories, CacheService],
+  providers: [...repositories, ClientsService],
+  exports: [...repositories, ClientsService],
 })
 export class InfrastructureModule {}

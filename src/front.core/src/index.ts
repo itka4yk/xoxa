@@ -4,6 +4,7 @@ import { storesModule } from './stores/stores.module';
 import { servicesModule } from './services/services.module';
 import { configurationModule } from './configuration';
 import { authModule, channelsModule, chatModule, spacesModule } from './modules';
+import { membersModule } from './modules/members/members.module';
 
 export const coreModules: ContainerModule[] = [
   servicesModule,
@@ -13,6 +14,7 @@ export const coreModules: ContainerModule[] = [
   channelsModule,
   authModule,
   chatModule,
+  membersModule,
 ];
 
 export * from './helpers/react.helpers';

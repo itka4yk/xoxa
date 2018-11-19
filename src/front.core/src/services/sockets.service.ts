@@ -14,19 +14,14 @@ export interface ISocketsService {
   setMessageCallback(callback: (msg: any) => void): void;
 }
 
-interface ISocketMessage {
-  type: Number;
-  nsp: string;
-  data: any[];
-}
-
 @injectable()
 export class SocketsService implements ISocketsService {
-  socket!: SocketIOClient.Socket;
+  socket!: any;
   setToken = (token: string) => {
     this.token = token;
     if (this.token === '') this.socket.disconnect();
     this.connect();
+    this.socket.on('message', (msg: any[]) => this.onMessageCallback(msg));
   };
   private token: string = '';
   private onMessageCallback: (msg: any) => void = () => {};
@@ -35,16 +30,14 @@ export class SocketsService implements ISocketsService {
 
   setMessageCallback(callback: (msg: any) => void) {
     this.onMessageCallback = callback;
-    // tslint:disable-next-line:no-console
-    this.socket.on('*', console.log);
-    this.socket.on('*', ({ data }: ISocketMessage) => this.onMessageCallback(data[0]));
   }
 
   connect() {
     this.socket = connect(
-      this.config.baseUrl.replace('http//', ''),
+      this.config.baseUrl,
       {
         query: `token=${this.token}`,
+        secure: true,
       },
     );
     const patch = wildcard(Manager);

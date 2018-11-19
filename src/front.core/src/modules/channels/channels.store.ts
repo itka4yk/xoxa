@@ -17,7 +17,7 @@ export interface IChannelsStore {
 
   activeChannel: string | undefined;
 
-  setActiveChannel(id: string): void;
+  setActiveChannel(channelId: string): void;
 }
 
 @persistable()
@@ -38,7 +38,7 @@ export class ChannelsStore implements IChannelsStore {
   @action
   async getChannels(spaceId: string) {
     const result = await this.apiService.getAsync<IChannel[]>(`/channels?spaceId=${spaceId}`);
-    if (result instanceof Error) return;
+    if (result instanceof Error) throw result;
     this.channels[spaceId] = result;
   }
 

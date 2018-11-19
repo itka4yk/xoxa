@@ -10,17 +10,19 @@ interface IInjectedProps {
 
 interface IState {
   name: string;
+  adminName: string;
 }
 
 export interface ICreateSpaceComponent {
   onNameChange(name: string): void;
+  onAdminNameChange(adminName: string): void;
   onFormSubmit(): void;
 }
 
 @injectProps({ store: SpacesStoreType })
 @autobind
 class CreateSpaceContainer extends React.Component<IInjectedProps, IState> {
-  state = { name: '' };
+  state = { name: '', adminName: '' };
 
   handleFormSubmit() {
     this.props.store.createNewSpace(this.state);
@@ -28,9 +30,12 @@ class CreateSpaceContainer extends React.Component<IInjectedProps, IState> {
 
   handleNameChange = (name: string) => this.setState({ name });
 
+  handleAdminNameChange = (adminName: string) => this.setState({ adminName });
+
   render() {
     const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
+        onAdminNameChange: this.handleAdminNameChange,
         onNameChange: this.handleNameChange,
         onFormSubmit: this.handleFormSubmit,
       } as ICreateSpaceComponent),

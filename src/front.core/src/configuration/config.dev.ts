@@ -1,3 +1,3 @@
 export default {
-  baseUrl: 'http://localhost:3001',
+  baseUrl: 'https://localhost:3001',
 };

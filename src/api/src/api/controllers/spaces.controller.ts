@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Req,
   UseGuards,
   UsePipes,
@@ -15,6 +16,7 @@ import { GetSpacesByMemberQuery } from 'application/queries/spaces/getSpacesByMe
 import { assignNewUserSchema, createNewSpaceSchema } from 'api.contract';
 import { HttpValidationPipe } from 'shared/pipes/httpValidation.pipe';
 import { AssignNewUserCommand } from 'application/commands/spaces/assignNewUser.command';
+import { GetSpaceMembersQuery } from '../../application/queries/spaces/getSpaceMembersQuery';
 
 @Controller('api/spaces')
 @UseGuards(AuthGuard)
@@ -28,7 +30,7 @@ export class SpacesController {
   @UsePipes(new HttpValidationPipe(createNewSpaceSchema))
   async createNewSpace(@Body() commandDto, @Req() { userInfo }) {
     const command = new CreateNewSpaceCommand();
-    Object.assign(command, { ...commandDto, admin: userInfo.id });
+    Object.assign(command, { ...commandDto, adminId: userInfo.id });
     return await this.commandBus.execute(command);
   }
 
@@ -45,5 +47,11 @@ export class SpacesController {
     const command = new AssignNewUserCommand();
     Object.assign(command, { ...commandDto, applierId: userInfo.id });
     return await this.commandBus.execute(command);
+  }
+
+  @Get('spaceMembers')
+  async getSpaceMembers(@Query() { spaceId }, @Req() { userInfo }) {
+    const query = new GetSpaceMembersQuery(spaceId, userInfo.id);
+    return await this.queryBus.execute(query);
   }
 }

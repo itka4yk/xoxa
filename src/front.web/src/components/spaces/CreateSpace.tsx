@@ -8,6 +8,10 @@ const CreateSpace = (props: ICreateSpaceComponent) => (
   <form>
     <h3>Create new Space</h3>
     <FormControl placeholder="name" onChange={(e: any) => props.onNameChange(e.target.value)} />
+    <FormControl
+      placeholder="admin name"
+      onChange={(e: any) => props.onAdminNameChange(e.target.value)}
+    />
     <Button onClick={props.onFormSubmit}>Create</Button>
     <LinkButton bsStyle="link" back>
       Back

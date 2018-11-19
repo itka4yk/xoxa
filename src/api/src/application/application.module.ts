@@ -10,13 +10,17 @@ import { SampleQueryHandler } from './queryHandlers/sample.queryHandler';
 import { GetSpacesByMemberQueryHandler } from './queryHandlers/spaces/getSpacesByMember.queryHandler';
 import { GetChannelsQueryHandler } from './queryHandlers/channels/getChannels.queryHandler';
 import { GetMessagesQueryHandler } from './queryHandlers/messages/getMessages.queryHandler';
+import { GetSpaceMembersQueryHandler } from './queryHandlers/spaces/getSpaceMembers.queryHandler';
 import { AuthModule } from '../auth/auth.module';
+import { GetMemberInfoQueryHandler } from './queryHandlers/members/getMemberInfo.queryHandler';
 
 const QueryHandlers = [
   SampleQueryHandler,
   GetSpacesByMemberQueryHandler,
   GetChannelsQueryHandler,
   GetMessagesQueryHandler,
+  GetMemberInfoQueryHandler,
+  GetSpaceMembersQueryHandler,
 ];
 
 @Module({

@@ -6,10 +6,6 @@ import { ISocketsService, SocketsServiceType } from '../../services/sockets.serv
 
 export const ChatStoreType = Symbol.for('CHAT_STORE');
 
-interface IMessagesData {
-  [channelId: string]: IMessage[];
-}
-
 export interface IChatStore {
   data: IChatData;
 
@@ -17,20 +13,23 @@ export interface IChatStore {
 }
 
 interface IChatData {
-  messages: IMessagesData;
+  privateMessages: { [userId: string]: IMessage[] };
+  channelMessages: { [channelId: string]: IMessage[] };
 }
 
 @persistable()
 class ChatData implements IChatData {
-  @observable messages: IMessagesData = {};
+  @observable channelMessages: { [p: string]: IMessage[] } = {};
+  @observable privateMessages: { [p: string]: IMessage[] } = {};
 }
 
 @injectable()
 export class ChatStore implements IChatStore {
-  data: IChatData = new ChatData();
+  data: IChatData;
 
   constructor(@inject(SocketsServiceType) private readonly sockets: ISocketsService) {
-    this.sockets.setMessageCallback(this.newMessage);
+    this.sockets.setMessageCallback(this.newMessage.bind(this));
+    this.data = new ChatData();
   }
 
   @action
@@ -39,5 +38,17 @@ export class ChatStore implements IChatStore {
   }
 
   @action
-  newMessage(msg: IChatMessageDto) {}
+  newMessage(msg: IChatMessageDto) {
+    if (msg.isPrivate) {
+      if (!this.data.privateMessages[msg.receiverId]) {
+        this.data.privateMessages[msg.receiverId] = [];
+      }
+      this.data.privateMessages[msg.receiverId].unshift(msg);
+    } else {
+      if (!this.data.channelMessages[msg.receiverId]) {
+        this.data.channelMessages[msg.receiverId] = [];
+      }
+      this.data.channelMessages[msg.receiverId].unshift(msg);
+    }
+  }
 }

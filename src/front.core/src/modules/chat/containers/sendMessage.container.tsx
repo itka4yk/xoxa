@@ -21,7 +21,6 @@ interface IProps extends IInjectedProps {}
 
 export interface ISendMessageForm {
   onBodyChange(name: string): void;
-
   onMessageSend(): void;
 }
 
@@ -43,7 +42,16 @@ class SendMessageContainer extends React.Component<IProps, IState> {
       timestamp: new Date(),
       isPrivate: false,
     };
+    const secondMessage: IChatMessageDto = {
+      body: this.state.body,
+      senderId: this.props.authStore.store.userInfo.id,
+      receiverId: '7e5ea29e-89c0-4834-bebf-e6db6191bfd7',
+      timestamp: new Date(),
+      isPrivate: true,
+    };
+
     this.props.chatStore.sendMessage(newMessage);
+    this.props.chatStore.sendMessage(secondMessage);
   }
 
   render() {

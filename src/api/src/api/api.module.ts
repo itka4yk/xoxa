@@ -5,6 +5,7 @@ import { ChannelsController } from './controllers/channels.controller';
 import { AuthModule } from '../auth/auth.module';
 import { AuthController } from './controllers/auth.controller';
 import { MessagesController } from './controllers/messages.controller';
+import { MembersController } from './controllers/members.controller';
 
 @Module({
   imports: [ApplicationModule, AuthModule],
@@ -13,6 +14,7 @@ import { MessagesController } from './controllers/messages.controller';
     ChannelsController,
     AuthController,
     MessagesController,
+    MembersController,
   ],
 })
 export class ApiModule {}

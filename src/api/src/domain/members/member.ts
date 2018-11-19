@@ -10,14 +10,6 @@ export interface IMemberState extends IDbEntityState {
 }
 
 export class Member extends BaseEntity<IMemberState> {
-  constructor(id: string, userId: string, spaceId: string, name: string) {
-    super();
-    this.state.id = id;
-    this.state.name = name;
-    this.state.userId = userId;
-    this.state.spaceId = spaceId;
-  }
-
   rename(newName: string) {
     if (!newName) throw new InvalidArgumentException("New name can' be empty");
     if (newName === this.state.name) {

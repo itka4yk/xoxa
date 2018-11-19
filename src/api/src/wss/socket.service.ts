@@ -9,7 +9,7 @@ import { EventBus } from '@nestjs/cqrs';
 import { ReceivedMessageEvent } from '../application/events/receivedMessage.event';
 import { UseGuards, UsePipes } from '@nestjs/common';
 import { AuthGuard } from './auth.guard';
-import { ClientsService } from './clients.service';
+import { ClientsService } from '../infrastructure/clients.service';
 import { Socket } from 'socket.io';
 import { AuthService } from '../auth/auth.service';
 import { chatMessageSchema } from 'api.contract';
@@ -43,6 +43,5 @@ export class SocketService implements OnGatewayConnection, OnGatewayDisconnect {
   @UsePipes(new WssValidationPipe(chatMessageSchema))
   newMessage(client, data) {
     this.eventBus.publish(new ReceivedMessageEvent(data));
-    return { event: 'hej', data: 'hhhej' };
   }
 }

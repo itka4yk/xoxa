@@ -36,18 +36,15 @@ class AuthData implements IAuth {
 export class AuthStore implements IAuthStore {
   @observable store: IAuth = new AuthData();
 
-  @inject(NotificationsStoreType)
-  notifications!: INotificationsStore;
+  @inject(NotificationsStoreType) notifications!: INotificationsStore;
   @inject(SocketsServiceType) private readonly socketsService!: ISocketsService;
-
   @inject(ApiServiceType) private readonly apiService!: IApiService;
+  @inject(RouterStoreType) private readonly routerStore!: IRouterStore;
 
   @computed
   get isAuthorized(): boolean {
     return this.store.token !== '';
   }
-
-  @inject(RouterStoreType) private readonly routerStore!: IRouterStore;
 
   onActivation() {
     when(
@@ -60,6 +57,7 @@ export class AuthStore implements IAuthStore {
         if (!token) return;
         this.apiService.setToken(token);
         this.socketsService.setToken(token);
+        this.getUserInfo();
       },
       { fireImmediately: true },
     );

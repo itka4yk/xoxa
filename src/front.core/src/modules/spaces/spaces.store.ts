@@ -1,27 +1,31 @@
 import { inject, injectable } from 'inversify';
 import { action, computed, observable } from 'mobx';
 import { persistable } from '../../helpers/persist.helpers';
-import { ICreateNewSpaceDto, IMySpace } from 'api.contract';
+import { ICreateNewSpaceDto, IMySpace, ISpaceMember } from 'api.contract';
 import { ApiServiceType, IApiService } from '../../services/api.service';
 import { IRouterStore, RouterStoreType } from '../../stores/router.store';
 import { ChannelsStoreType, IChannelsStore } from '../channels/channels.store';
+import { IMembersStore, MembersStoreType } from '../members/members.store';
 
 export const SpacesStoreType = 'SPACES_STORE_TYPE';
 
 export interface ISpacesStore {
   getMySpaces(): void;
   mySpaces: IMySpace[];
+  spaceMembers: { [spaceId: string]: ISpaceMember[] };
   createNewSpace(newSpace: any): void;
 }
 
 @persistable()
 @injectable()
 export class SpacesStore implements ISpacesStore {
-  @observable private spaces: IMySpace[] = [];
+  @observable spaces: IMySpace[] = [];
+  @observable spaceMembers: { [p: string]: ISpaceMember[] } = {};
 
   @inject(ApiServiceType) private readonly apiService!: IApiService;
   @inject(ChannelsStoreType) private readonly channelsStore!: IChannelsStore;
   @inject(RouterStoreType) private readonly routerStore!: IRouterStore;
+  @inject(MembersStoreType) private readonly membersStore!: IMembersStore;
 
   onActivation() {
     this.getMySpaces();
@@ -35,9 +39,10 @@ export class SpacesStore implements ISpacesStore {
   @action
   async getMySpaces() {
     const result = await this.apiService.getAsync<IMySpace[]>('/spaces');
-    if (result instanceof Error) return;
+    if (result instanceof Error) throw result;
     this.spaces = result;
     this.requestChannels();
+    this.requestSpaceMembers();
   }
 
   @action
@@ -49,5 +54,10 @@ export class SpacesStore implements ISpacesStore {
   async createNewSpace(newSpace: ICreateNewSpaceDto) {
     await this.apiService.postAsync('/spaces', newSpace);
     this.routerStore.push('/workspaces');
+  }
+
+  @action
+  requestSpaceMembers() {
+    this.mySpaces.forEach(s => this.membersStore.requestMembers(s.id));
   }
 }
