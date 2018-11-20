@@ -84,6 +84,7 @@ export class AuthStore implements IAuthStore {
   async signOut() {
     this.store.token = '';
     this.routerStore.push('/auth/login');
+    localStorage.clear();
   }
 
   @action

@@ -39,10 +39,6 @@ body {
   ul {
     padding: 20px;
     list-style: none;
-
-    li {
-      padding-bottom: 20px;
-    }
   }
 }
 .navbar {
@@ -202,13 +198,33 @@ body {
 }
 
 .chat-member {
+  position: relative;
   height: 40px;
-  text-align: center;
-  // display: inline;
-  clear: both;
+  top: 50%;
+  display: flex;
+  width: 200px;
+  align-items: center;
+  user-select: none;
+  img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
 }
 
 .chat-member:hover {
   color: darken($blue, 7%);
   background: #6a6c75;
+}
+
+.chat-member:active {
+  color: darken($blue, 40%);
+  background: darken(#6a6c75, 7%);
+}
+
+.spaces-tab-bar {
+  color: red;
+  button:active {
+    background-color: blue;
+  }
 }
