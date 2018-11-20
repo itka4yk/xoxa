@@ -3,14 +3,22 @@ import autobind from 'autobind-decorator';
 
 import { ChatStoreType, IChatStore } from '../chat.store';
 import { as, injectProps } from '../../../helpers';
-import { ChannelsStoreType, IChannelsStore } from '../../channels/channels.store';
+import {
+  ChannelsStoreType,
+  ChannelStoreState,
+  IChannelsStore,
+} from '../../channels/channels.store';
 import { AuthStoreType, IAuthStore } from '../../auth/auth.store';
 import { IChatMessageDto } from 'api.contract';
+import { ISpacesStore, SpacesStoreType } from '../../spaces/spaces.store';
+import { IMembersStore, MembersStoreType } from '../../members/members.store';
 
 interface IInjectedProps {
   chatStore: IChatStore;
   channelsStore: IChannelsStore;
   authStore: IAuthStore;
+  spacesStore: ISpacesStore;
+  membersStore: IMembersStore;
 }
 
 interface IState {
@@ -28,30 +36,44 @@ export interface ISendMessageForm {
   chatStore: ChatStoreType,
   channelsStore: ChannelsStoreType,
   authStore: AuthStoreType,
+  spacesStore: SpacesStoreType,
+  membersStore: MembersStoreType,
 })
-@autobind
 class SendMessageContainer extends React.Component<IProps, IState> {
   state = { body: '' };
   handleBodyChange = (body: string) => this.setState({ body });
 
+  @autobind
   async handleMessageSend() {
-    const newMessage: IChatMessageDto = {
-      body: this.state.body,
-      senderId: this.props.authStore.store.userInfo.id,
-      receiverId: this.props.channelsStore.activeChannel!,
-      timestamp: new Date(),
-      isPrivate: false,
-    };
-    const secondMessage: IChatMessageDto = {
-      body: this.state.body,
-      senderId: this.props.authStore.store.userInfo.id,
-      receiverId: '7e5ea29e-89c0-4834-bebf-e6db6191bfd7',
-      timestamp: new Date(),
-      isPrivate: true,
-    };
-
-    this.props.chatStore.sendMessage(newMessage);
-    this.props.chatStore.sendMessage(secondMessage);
+    const spaceId = this.props.spacesStore.activeSpace!;
+    const senderUserId = this.props.authStore.store.userInfo.id;
+    const spaceMembers = this.props.membersStore.members[spaceId];
+    const senderId = spaceMembers.find(m => m.userId === senderUserId)!.id;
+    switch (this.props.channelsStore.state) {
+      case ChannelStoreState.NONE:
+        break;
+      case ChannelStoreState.PUBLIC:
+        const channelMessage: IChatMessageDto = {
+          senderId,
+          body: this.state.body,
+          receiverId: this.props.channelsStore.activeChannel!,
+          timestamp: new Date(),
+          isPrivate: false,
+        };
+        this.props.chatStore.sendMessage(channelMessage);
+        break;
+      case ChannelStoreState.PRIVATE:
+        const privateMessage: IChatMessageDto = {
+          senderId,
+          body: this.state.body,
+          receiverId: this.props.channelsStore.activePrivateChannel!,
+          timestamp: new Date(),
+          isPrivate: true,
+        };
+        this.props.chatStore.sendMessage(privateMessage);
+        break;
+    }
+    this.setState({ body: '' });
   }
 
   render() {

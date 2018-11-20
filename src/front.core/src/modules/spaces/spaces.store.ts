@@ -11,9 +11,11 @@ export const SpacesStoreType = 'SPACES_STORE_TYPE';
 
 export interface ISpacesStore {
   getMySpaces(): void;
+  activeSpace: string | undefined;
   mySpaces: IMySpace[];
   spaceMembers: { [spaceId: string]: ISpaceMember[] };
   createNewSpace(newSpace: any): void;
+  setActiveSpace(spaceId: string): void;
 }
 
 @persistable()
@@ -21,6 +23,7 @@ export interface ISpacesStore {
 export class SpacesStore implements ISpacesStore {
   @observable spaces: IMySpace[] = [];
   @observable spaceMembers: { [p: string]: ISpaceMember[] } = {};
+  @observable activeSpace: string | undefined;
 
   @inject(ApiServiceType) private readonly apiService!: IApiService;
   @inject(ChannelsStoreType) private readonly channelsStore!: IChannelsStore;
@@ -59,5 +62,10 @@ export class SpacesStore implements ISpacesStore {
   @action
   requestSpaceMembers() {
     this.mySpaces.forEach(s => this.membersStore.requestMembers(s.id));
+  }
+
+  @action
+  setActiveSpace(spaceId: string): void {
+    this.activeSpace = spaceId;
   }
 }

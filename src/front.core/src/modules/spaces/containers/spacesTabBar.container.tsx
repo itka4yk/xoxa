@@ -32,6 +32,8 @@ class SpacesContainer extends React.Component<IInjectedProps> {
 
   @autobind
   handleSpaceSelected(name: string) {
+    const spaceId = this.props.store.mySpaces.find(s => s.name === name)!.id;
+    this.props.store.setActiveSpace(spaceId);
     this.props.history.push(`/workspaces/single/${name.toLowerCase()}`);
   }
 

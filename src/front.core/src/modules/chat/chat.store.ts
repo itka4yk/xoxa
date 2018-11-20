@@ -13,14 +13,14 @@ export interface IChatStore {
 }
 
 interface IChatData {
-  privateMessages: { [userId: string]: IMessage[] };
+  privateMessages: IMessage[];
   channelMessages: { [channelId: string]: IMessage[] };
 }
 
 @persistable()
 class ChatData implements IChatData {
   @observable channelMessages: { [p: string]: IMessage[] } = {};
-  @observable privateMessages: { [p: string]: IMessage[] } = {};
+  @observable privateMessages: IMessage[] = [];
 }
 
 @injectable()
@@ -40,10 +40,7 @@ export class ChatStore implements IChatStore {
   @action
   newMessage(msg: IChatMessageDto) {
     if (msg.isPrivate) {
-      if (!this.data.privateMessages[msg.receiverId]) {
-        this.data.privateMessages[msg.receiverId] = [];
-      }
-      this.data.privateMessages[msg.receiverId].unshift(msg);
+      this.data.privateMessages.unshift(msg);
     } else {
       if (!this.data.channelMessages[msg.receiverId]) {
         this.data.channelMessages[msg.receiverId] = [];

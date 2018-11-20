@@ -6,6 +6,7 @@ import { IMessageState } from '../../domain/messages/message';
 import { ClientsService } from '../../infrastructure/clients.service';
 import { SpacesRepository } from '../../infrastructure/repositories/spaces.repository';
 import { ChannelsRepository } from '../../infrastructure/repositories/channels.repository';
+import { MembersRepository } from '../../infrastructure/repositories/members.repository';
 
 @WebSocketGateway()
 @EventsHandler(ReceivedMessageEvent)
@@ -18,12 +19,16 @@ export class ReceivedMessageEventHandler
     private readonly clientsService: ClientsService,
     private readonly channelsRepository: ChannelsRepository,
     private readonly spacesRepository: SpacesRepository,
+    private readonly membersRepository: MembersRepository,
   ) {}
 
   async handle(event: ReceivedMessageEvent) {
     await this.messagesRepository.create(event as IMessageState);
     if (event.isPrivate) {
-      await this.sendToClient(event.receiverId, event);
+      const receiver = await this.membersRepository.getById(event.receiverId);
+      await this.sendToClient(receiver.state.userId, event);
+      const sender = await this.membersRepository.getById(event.senderId);
+      await this.sendToClient(sender.state.userId, event);
     } else {
       const channel = await this.channelsRepository.getById(event.receiverId);
       const space = await this.spacesRepository.getById(channel.state.spaceId);

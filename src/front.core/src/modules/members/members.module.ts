@@ -8,3 +8,4 @@ export const membersModule = new ContainerModule((bind: interfaces.Bind) => {
 });
 
 export { IMembersStore, MembersStoreType } from './members.store';
+export * from './containers';

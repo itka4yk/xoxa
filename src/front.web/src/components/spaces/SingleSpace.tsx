@@ -4,12 +4,14 @@ import SpacesContainer from 'front.core/lib/modules/spaces/containers/spacesTabB
 import SendMessageContainer from 'front.core/lib/modules/chat/containers/sendMessage.container';
 import CreateChannelContainer from 'front.core/lib/modules/channels/containers/create.container';
 import ChannelsListContainer from 'front.core/lib/modules/channels/containers/list.container';
+import MembersListContainer from 'front.core/lib/modules/members/containers/list.container';
 import MessagesContainer from 'front.core/lib/modules/chat/containers/messages.container';
 import SpacesTabBar from './SpacesTabBar';
 import CreateChannelForm from '../channels/CreateChannelForm';
 // tslint:disable-next-line:max-line-length
 import { ISingleSpaceComponentProps } from 'front.core/lib/modules/spaces/containers/singleSpace.container';
 import ChannelsList from '../channels/ChannelsList';
+import MembersList from '../members/MembersList';
 import { as } from 'front.core';
 import LinkButton from '../../containers/LinkButton';
 import SendMessageForm from '../chat/SendMessageForm';
@@ -36,6 +38,10 @@ const SingleSpace = (props: ISingleSpaceComponentProps) => (
           <CreateChannelContainer spaceId={props.spaceId}>
             <CreateChannelForm />
           </CreateChannelContainer>
+          <h3>Privates:</h3>
+          <MembersListContainer spaceId={props.spaceId}>
+            <MembersList />
+          </MembersListContainer>
         </Col>
         <Col className="chat-content" xs={9} md={9}>
           <div className="chat-messages">
