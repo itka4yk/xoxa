@@ -9,11 +9,7 @@ import { Button, ButtonGroup } from 'react-bootstrap';
 const SpacesTabBar = observer((props: ISpacesComponentProps) => (
   <ButtonGroup className="spaces-tab-bar">
     {props.spaces.map(s => (
-      <Button
-        active={s.active}
-        onClick={() => props.onSpaceSelected(s.name)}
-        key={s.id}
-      >
+      <Button active={s.active} onClick={() => props.onSpaceSelected(s.name)} key={s.id}>
         {s.name}
       </Button>
     ))}

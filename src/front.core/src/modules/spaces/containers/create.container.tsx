@@ -1,11 +1,11 @@
 import * as React from 'react';
 import autobind from 'autobind-decorator';
 
-import { ISpacesStore, SpacesStoreType } from '../spaces.store';
 import { injectProps, as } from '../../../helpers';
+import { ISpacesService, SpacesServiceType } from '../spaces.service';
 
 interface IInjectedProps {
-  store: ISpacesStore;
+  service: ISpacesService;
 }
 
 interface IState {
@@ -19,13 +19,13 @@ export interface ICreateSpaceComponent {
   onFormSubmit(): void;
 }
 
-@injectProps({ store: SpacesStoreType })
+@injectProps({ service: SpacesServiceType })
 @autobind
 class CreateSpaceContainer extends React.Component<IInjectedProps, IState> {
   state = { name: '', adminName: '' };
 
   handleFormSubmit() {
-    this.props.store.createNewSpace(this.state);
+    this.props.service.createNewSpace(this.state);
   }
 
   handleNameChange = (name: string) => this.setState({ name });

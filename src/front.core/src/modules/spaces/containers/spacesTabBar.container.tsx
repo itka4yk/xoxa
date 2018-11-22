@@ -1,14 +1,13 @@
 import * as React from 'react';
-
-import { ISpacesStore, SpacesStoreType } from '../spaces.store';
 import { as, injectProps } from '../../../helpers';
 import { IMySpace } from 'api.contract';
 import { observer } from 'mobx-react';
 import { RouteComponentProps, withRouter as wr } from 'react-router';
 import autobind from 'autobind-decorator';
+import { ISpacesService, SpacesServiceType } from '../spaces.service';
 
 interface IInjectedProps extends RouteComponentProps<any> {
-  store: ISpacesStore;
+  spacesService: ISpacesService;
 }
 
 interface ISpaceTabElement extends IMySpace {
@@ -22,18 +21,18 @@ export interface ISpacesComponentProps {
 
 const withRouter: any = wr;
 
-@injectProps({ store: SpacesStoreType })
-@observer
+@injectProps({ spacesService: SpacesServiceType })
 @withRouter
+@observer
 class SpacesContainer extends React.Component<IInjectedProps> {
   componentWillMount() {
-    this.props.store.getMySpaces();
+    this.props.spacesService.getMySpaces();
   }
 
   @autobind
   handleSpaceSelected(name: string) {
-    const spaceId = this.props.store.mySpaces.find(s => s.name === name)!.id;
-    this.props.store.setActiveSpace(spaceId);
+    const spaceId = this.props.spacesService.mySpaces.find(s => s.name === name)!.id;
+    this.props.spacesService.setActiveSpace(spaceId);
     this.props.history.push(`/workspaces/single/${name.toLowerCase()}`);
   }
 
@@ -41,7 +40,7 @@ class SpacesContainer extends React.Component<IInjectedProps> {
     const { pathname } = this.props.location;
     const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
-        spaces: this.props.store.mySpaces.map(s => ({
+        spaces: this.props.spacesService.mySpaces.map(s => ({
           ...s,
           active: `/workspaces/${s.name}` === pathname,
         })),

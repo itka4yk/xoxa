@@ -1,23 +1,23 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { ChatStoreType, IChatStore } from '../chat.store';
+import { ChatServiceType, IChatService } from '../chat.service';
 import { as, injectProps } from '../../../helpers';
 import {
-  ChannelsStoreType,
-  ChannelStoreState,
-  IChannelsStore,
-} from '../../channels/channels.store';
-import { AuthStoreType, IAuthStore } from '../../auth/auth.store';
+  ChannelsServiceType,
+  IChannelsService,
+} from '../../channels/channels.service';
+import { AuthServiceType, IAuthService } from '../../auth/auth.service';
 import { IChatMessageDto } from 'api.contract';
-import { ISpacesStore, SpacesStoreType } from '../../spaces/spaces.store';
-import { IMembersStore, MembersStoreType } from '../../members/members.store';
+import { IMembersService, MembersServiceType } from '../../members/members.service';
+import { ChannelStoreState } from '../../channels/channels.store';
+import { ISpacesService, SpacesServiceType } from '../../spaces/spaces.service';
 
 interface IInjectedProps {
-  chatStore: IChatStore;
-  channelStore: IChannelsStore;
-  authStore: IAuthStore;
-  spacesStore: ISpacesStore;
-  membersStore: IMembersStore;
+  chatService: IChatService;
+  channelService: IChannelsService;
+  authStore: IAuthService;
+  spacesService: ISpacesService;
+  membersService: IMembersService;
 }
 
 interface IProps extends IInjectedProps {}
@@ -32,32 +32,31 @@ export interface IMessagesListProps {
 }
 
 @injectProps({
-  membersStore: MembersStoreType,
-  authStore: AuthStoreType,
-  chatStore: ChatStoreType,
-  channelStore: ChannelsStoreType,
-  spacesStore: SpacesStoreType,
+  membersService: MembersServiceType,
+  authStore: AuthServiceType,
+  chatService: ChatServiceType,
+  channelService: ChannelsServiceType,
+  spacesService: SpacesServiceType,
 })
 @observer
 class MessagesContainer extends React.Component<IProps> {
   render() {
     let messages: IExtendedMessage[] = [];
-    const privateChannelId = this.props.channelStore.activePrivateChannel;
-    const spaceId = this.props.spacesStore.activeSpace!;
+    const channelId = this.props.channelService.store.activeChannelId;
+    const spaceId = this.props.spacesService.store.activeSpace!;
     const senderUserId = this.props.authStore.store.userInfo.id;
-    const spaceMembers = this.props.membersStore.members[spaceId];
-    const channelId = this.props.channelStore.activeChannel;
+    const spaceMembers = this.props.membersService.store.members[spaceId];
     const myMemberId = spaceMembers.find(m => m.userId === senderUserId)!.id;
-    switch (this.props.channelStore.state) {
+    switch (this.props.channelService.store.state) {
       case ChannelStoreState.NONE:
         break;
       case ChannelStoreState.PRIVATE:
-        if (privateChannelId) {
-          messages = this.props.chatStore.data.privateMessages
+        if (channelId) {
+          messages = this.props.chatService.store.privateMessages
             .filter(
               m =>
-                (m.receiverId === privateChannelId && m.senderId === myMemberId) ||
-                (m.receiverId === myMemberId && m.senderId === privateChannelId),
+                (m.receiverId === channelId && m.senderId === myMemberId) ||
+                (m.receiverId === myMemberId && m.senderId === channelId),
             )
             .map(m => ({
               ...m,
@@ -68,7 +67,7 @@ class MessagesContainer extends React.Component<IProps> {
         break;
       case ChannelStoreState.PUBLIC:
         if (channelId) {
-          messages = (this.props.chatStore.data.channelMessages[channelId] || []).map(m => ({
+          messages = (this.props.chatService.store.channelMessages[channelId] || []).map(m => ({
             ...m,
             name: spaceMembers.find(member => member.id === m.senderId)!.name,
             mine: m.senderId === myMemberId,

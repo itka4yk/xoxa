@@ -1,7 +1,7 @@
 import * as React from 'react';
 import autobind from 'autobind-decorator';
 
-import { AuthStoreType, IAuthStore } from '../auth.store';
+import { AuthServiceType, IAuthService } from '../auth.service';
 import { as, injectProps } from '../../../helpers';
 
 interface IState {
@@ -10,7 +10,7 @@ interface IState {
 }
 
 interface IInjectedProps {
-  store: IAuthStore;
+  store: IAuthService;
 }
 
 export interface ILoginComponentProps {
@@ -19,7 +19,7 @@ export interface ILoginComponentProps {
   onPasswordChange(password: string): void;
 }
 
-@injectProps({ store: AuthStoreType })
+@injectProps({ store: AuthServiceType })
 @autobind
 class LoginContainer extends React.Component<IInjectedProps, IState> {
   state = {

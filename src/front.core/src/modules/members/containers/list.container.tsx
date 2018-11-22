@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-import { MembersStoreType, IMembersStore } from '../members.store';
+import { MembersServiceType, IMembersService } from '../members.service';
 import { as, injectProps } from '../../../helpers';
 import { observer } from 'mobx-react';
 import { IChannel } from 'api.contract';
-import { ChannelsStoreType, IChannelsStore } from '../../channels/channels.store';
+import { ChannelsServiceType, IChannelsService } from '../../channels/channels.service';
 
 interface IInjectedProps {
-  membersStore: IMembersStore;
-  channelsStore: IChannelsStore;
+  membersService: IMembersService;
+  channelsService: IChannelsService;
 }
 
 interface IOuterProps {
@@ -19,18 +19,17 @@ interface IProps extends IOuterProps, IInjectedProps {}
 
 export interface IMembersListProps {
   channels: IChannel[];
-
   onSelect(id: string): void;
 }
 
-@injectProps({ membersStore: MembersStoreType, channelsStore: ChannelsStoreType })
+@injectProps({ membersService: MembersServiceType, channelsService: ChannelsServiceType })
 @observer
 class ListContainer extends React.Component<IProps> {
   render() {
     const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
-        channels: this.props.membersStore.members[this.props.spaceId] || [],
-        onSelect: this.props.channelsStore.setActivePrivateChannel,
+        channels: this.props.membersService.store.members[this.props.spaceId] || [],
+        onSelect: this.props.channelsService.setActivePrivateChannel,
       } as IMembersListProps),
     );
     return childrenWithProps;

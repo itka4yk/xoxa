@@ -1,18 +1,18 @@
 import * as React from 'react';
 import autobind from 'autobind-decorator';
 
-import { IAuthStore, AuthStoreType } from '../auth.store';
+import { IAuthService, AuthServiceType } from '../auth.service';
 import { injectProps, as } from '../../../helpers';
 
 interface IInjectedProps {
-  store: IAuthStore;
+  store: IAuthService;
 }
 
 export interface ILogoutComponentProps {
   onLogout(): void;
 }
 
-@injectProps({ store: AuthStoreType })
+@injectProps({ store: AuthServiceType })
 @autobind
 class LogoutContainer extends React.Component<IInjectedProps> {
   handleLogout() {

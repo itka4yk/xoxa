@@ -1,16 +1,13 @@
 import * as React from 'react';
-
-import { ISpacesStore, SpacesStoreType } from '../spaces.store';
 import { as, injectProps } from '../../../helpers';
 import { IMySpace } from 'api.contract';
 import { observer } from 'mobx-react';
 import { RouteComponentProps, withRouter as wr } from 'react-router';
 import autobind from 'autobind-decorator';
-import { ChannelsStoreType, IChannelsStore } from '../../channels/channels.store';
+import { ISpacesService, SpacesServiceType } from '../spaces.service';
 
 interface IInjectedProps extends RouteComponentProps<any> {
-  spaces: ISpacesStore;
-  channels: IChannelsStore;
+  spaceService: ISpacesService;
 }
 
 export interface ISingleSpaceComponentProps {
@@ -20,12 +17,12 @@ export interface ISingleSpaceComponentProps {
 
 const withRouter: any = wr;
 
-@injectProps({ spaces: SpacesStoreType, channels: ChannelsStoreType })
+@injectProps({ spaceService: SpacesServiceType })
 @observer
 @withRouter
 class SingleSpaceContainer extends React.Component<IInjectedProps> {
   componentWillMount() {
-    this.props.spaces.getMySpaces();
+    this.props.spaceService.getMySpaces();
   }
 
   @autobind
@@ -36,7 +33,7 @@ class SingleSpaceContainer extends React.Component<IInjectedProps> {
   render() {
     const routeChatName = this.props.match.params.spaceName.toLowerCase();
     // FIXME: fix routing problems
-    const space: IMySpace | undefined = this.props.spaces.mySpaces.find(
+    const space: IMySpace | undefined = this.props.spaceService.mySpaces.find(
       c => c.name.toLowerCase() === routeChatName,
     );
     if (!space) return 'NOT FOUND';

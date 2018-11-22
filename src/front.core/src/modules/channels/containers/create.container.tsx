@@ -1,11 +1,11 @@
 import * as React from 'react';
 import autobind from 'autobind-decorator';
 
-import { ChannelsStoreType, IChannelsStore } from '../channels.store';
+import { ChannelsServiceType, IChannelsService } from '../channels.service';
 import { as, injectProps } from '../../../helpers';
 
 interface IInjectedProps {
-  store: IChannelsStore;
+  store: IChannelsService;
 }
 
 interface IOuterProps {
@@ -23,7 +23,7 @@ export interface ICreateChannelFormProps {
   onFormSubmit(): void;
 }
 
-@injectProps({ store: ChannelsStoreType })
+@injectProps({ store: ChannelsServiceType })
 @autobind
 class CreateChannelContainer extends React.Component<IProps, IState> {
   state = { name: '' };

@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { ChannelsStoreType, IChannelsStore } from '../channels.store';
+import { ChannelsServiceType, IChannelsService } from '../channels.service';
 import { as, injectProps } from '../../../helpers';
 import { observer } from 'mobx-react';
 import { IChannel } from 'api.contract';
 
 interface IInjectedProps {
-  store: IChannelsStore;
+  service: IChannelsService;
 }
 
 interface IOuterProps {
@@ -21,14 +21,14 @@ export interface IChannelsListProps {
   onSelect(id: string): void;
 }
 
-@injectProps({ store: ChannelsStoreType })
+@injectProps({ service: ChannelsServiceType })
 @observer
 class ChannelsListContainer extends React.Component<IProps> {
   render() {
     const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
-        channels: this.props.store.channels[this.props.spaceId] || [],
-        onSelect: id => this.props.store.setActiveChannel(id),
+        channels: this.props.service.store.publicChannels[this.props.spaceId] || [],
+        onSelect: id => this.props.service.setActivePublicChannel(id),
       } as IChannelsListProps),
     );
     return childrenWithProps;

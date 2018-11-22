@@ -1,22 +1,21 @@
-import { inject, injectable } from 'inversify';
-import { action, computed, observable, autorun } from 'mobx';
+import { injectable } from 'inversify';
 import { persistable } from '../../helpers/persist.helpers';
-import { IChannel, ICreateNewChannelDto, IMemberInfo } from 'api.contract';
-import { ApiServiceType, IApiService } from '../../services/api.service';
-import { IMembersStore, MembersStoreType } from '../members/members.store';
+import { IChannel } from 'api.contract';
+import { observable } from 'mobx';
 
-export const ChannelsStoreType = 'CHANNELS_STORE_TYPE';
+export const ChannelsStoreType = Symbol('CHANNELS_STORE');
 
-interface IPrivateChannel {
+export interface IPublicChannel extends IChannel {}
+export interface IPrivateChannel {
   receiverId: string;
+  name: string;
 }
 
-interface IPrivateChannelData {
+export interface IPrivateChannels {
   [spaceId: string]: IPrivateChannel[];
 }
-
-interface IChannelsData {
-  [spaceId: string]: IChannel[];
+export interface IPublicChannels {
+  [spaceId: string]: IPublicChannel[];
 }
 
 export enum ChannelStoreState {
@@ -26,68 +25,18 @@ export enum ChannelStoreState {
 }
 
 export interface IChannelsStore {
-  channels: IChannelsData;
+  privateChannels: IPrivateChannels;
+  publicChannels: IPublicChannels;
   state: ChannelStoreState;
-  createNewChannel(newChannelName: ICreateNewChannelDto): void;
-  getChannels(spaceId: string): void;
 
-  activeChannel: string | undefined;
-  activePrivateChannel: string | undefined;
-
-  setActiveChannel(channelId: string): void;
-  setActivePrivateChannel(receiverId: string): void;
+  activeChannelId: string | undefined;
 }
 
 @persistable()
 @injectable()
 export class ChannelsStore implements IChannelsStore {
-  @observable channels: IChannelsData = {};
-  @observable privateChannels: IPrivateChannelData = {};
-  @observable activeChannel: string | undefined;
-  @observable activePrivateChannel: string | undefined;
+  @observable privateChannels: IPrivateChannels = {};
+  @observable publicChannels: IPublicChannels = {};
   @observable state: ChannelStoreState = ChannelStoreState.NONE;
-
-  @inject(ApiServiceType) private readonly apiService!: IApiService;
-  @inject(MembersStoreType) private readonly membersStore!: IMembersStore;
-
-  onActivation() {
-    autorun(() => {
-      Object.keys(this.membersStore.members).forEach((spaceId: string) => {
-        this.privateChannels[spaceId] = this.membersStore.members[spaceId].map(
-          (m: IMemberInfo) => ({
-            receiverId: m.id,
-          }),
-        );
-      });
-    });
-  }
-
-  @computed
-  get allChannels() {
-    return this.channels;
-  }
-
-  @action
-  async getChannels(spaceId: string) {
-    const result = await this.apiService.getAsync<IChannel[]>(`/channels?spaceId=${spaceId}`);
-    if (result instanceof Error) throw result;
-    this.channels[spaceId] = result;
-  }
-
-  @action
-  async createNewChannel(newChannel: ICreateNewChannelDto) {
-    await this.apiService.postAsync('/channels', newChannel);
-  }
-
-  @action.bound
-  setActiveChannel(id: string): void {
-    this.activeChannel = id;
-    this.state = ChannelStoreState.PUBLIC;
-  }
-
-  @action.bound
-  setActivePrivateChannel(receiverId: string): void {
-    this.activePrivateChannel = receiverId;
-    this.state = ChannelStoreState.PRIVATE;
-  }
+  @observable activeChannelId: string | undefined;
 }

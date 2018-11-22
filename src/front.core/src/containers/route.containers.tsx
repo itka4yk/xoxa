@@ -2,15 +2,15 @@ import * as React from 'react';
 import { Redirect, Route, RouteComponentProps, RouteProps, Switch } from 'react-router-dom';
 import autobind from 'autobind-decorator';
 import { as, injectProps } from '../helpers/react.helpers';
-import { AuthStoreType, IAuthStore } from '../modules';
+import { AuthServiceType, IAuthService } from '../modules';
 
 interface IInjectedProps {
-  auth: IAuthStore;
+  auth: IAuthService;
 }
 
 interface IPrivateRouteProps extends IInjectedProps, RouteProps {}
 
-@injectProps({ auth: AuthStoreType })
+@injectProps({ auth: AuthServiceType })
 @autobind
 class PrivateRoutePure extends React.Component<IPrivateRouteProps> {
   routeRenderer(props: RouteComponentProps): React.ReactNode {
