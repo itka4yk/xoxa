@@ -3,10 +3,7 @@ import autobind from 'autobind-decorator';
 
 import { ChatServiceType, IChatService } from '../chat.service';
 import { as, injectProps } from '../../../helpers';
-import {
-  ChannelsServiceType,
-  IChannelsService,
-} from '../../channels/channels.service';
+import { ChannelsServiceType, IChannelsService } from '../../channels/channels.service';
 import { AuthServiceType, IAuthService } from '../../auth/auth.service';
 import { IChatMessageDto } from 'api.contract';
 import { IMembersService, MembersServiceType } from '../../members/members.service';

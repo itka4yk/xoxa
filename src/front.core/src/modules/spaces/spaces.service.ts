@@ -1,5 +1,5 @@
 import { injectable, inject } from 'inversify';
-import { ICreateNewSpaceDto, IMySpace } from 'api.contract';
+import { ICreateNewSpaceDto, IMySpace, IAllSpaces } from 'api.contract';
 import { MembersServiceType, IMembersService } from '../members/members.module';
 import { computed, action } from 'mobx';
 import { ISpacesStore, SpacesStoreType } from './spaces.store';
@@ -20,32 +20,31 @@ export interface ISpacesService {
 @injectable()
 export class SpacesService implements ISpacesService {
   @inject(SpacesStoreType) store!: ISpacesStore;
+
   @inject(ApiServiceType) private readonly apiService!: IApiService;
   @inject(ChannelsServiceType) private readonly channelsService!: IChannelsService;
   @inject(RouterStoreType) private readonly routerStore!: IRouterStore;
   @inject(MembersServiceType) private readonly membersService!: IMembersService;
-
-  onActivation() {
-    this.getMySpaces();
-  }
 
   @computed
   get mySpaces() {
     return this.store.spaces.map(s => s);
   }
 
-  @action
-  async getMySpaces() {
-    const result = await this.apiService.getAsync<IMySpace[]>('/spaces');
-    if (result instanceof Error) throw result;
-    this.store.spaces = result;
-    this.requestChannels();
-    this.requestSpaceMembers();
-  }
+  onActivation() {}
 
   @action
-  async requestChannels() {
-    this.mySpaces.forEach(s => this.channelsService.getChannels(s.id));
+  async getMySpaces() {
+    const result = await this.apiService.getAsync<IAllSpaces>('/spaces/allSpaces');
+    if (result instanceof Error) throw result;
+    this.store.spaces = result.spaces.map(s => ({
+      id: s.spaceId,
+      name: s.name,
+    }));
+    result.spaces.forEach((s) => {
+      this.channelsService.setChannels(s.spaceId, s.channels);
+      this.membersService.setMembers(s.spaceId, s.members);
+    });
   }
 
   @action
@@ -55,12 +54,8 @@ export class SpacesService implements ISpacesService {
   }
 
   @action
-  requestSpaceMembers() {
-    this.mySpaces.forEach(s => this.membersService.requestMembers(s.id));
-  }
-
-  @action
   setActiveSpace(spaceId: string): void {
     this.store.activeSpace = spaceId;
+    this.channelsService.setNoneChannel();
   }
 }

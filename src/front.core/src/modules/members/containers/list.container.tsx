@@ -26,9 +26,13 @@ export interface IMembersListProps {
 @observer
 class ListContainer extends React.Component<IProps> {
   render() {
+    let members = this.props.membersService.store.members[this.props.spaceId] || [];
+    if (members) {
+      members = members.filter(m => m.id !== this.props.membersService.activeSpaceMemberId);
+    }
     const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
-        channels: this.props.membersService.store.members[this.props.spaceId] || [],
+        channels: members,
         onSelect: this.props.channelsService.setActivePrivateChannel,
       } as IMembersListProps),
     );

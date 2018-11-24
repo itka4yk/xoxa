@@ -17,6 +17,7 @@ import { assignNewUserSchema, createNewSpaceSchema } from 'api.contract';
 import { HttpValidationPipe } from 'shared/pipes/httpValidation.pipe';
 import { AssignNewUserCommand } from 'application/commands/spaces/assignNewUser.command';
 import { GetSpaceMembersQuery } from '../../application/queries/spaces/getSpaceMembersQuery';
+import { GetAllSpacesQuery } from '../../application/queries/spaces/getAllSpacesQuery';
 
 @Controller('api/spaces')
 @UseGuards(AuthGuard)
@@ -52,6 +53,12 @@ export class SpacesController {
   @Get('spaceMembers')
   async getSpaceMembers(@Query() { spaceId }, @Req() { userInfo }) {
     const query = new GetSpaceMembersQuery(spaceId, userInfo.id);
+    return await this.queryBus.execute(query);
+  }
+
+  @Get('allSpaces')
+  async getAllSpaces(@Req() { userInfo }) {
+    const query = new GetAllSpacesQuery(userInfo.id);
     return await this.queryBus.execute(query);
   }
 }

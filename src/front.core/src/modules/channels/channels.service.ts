@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { action, autorun } from 'mobx';
+import { action, autorun, computed } from 'mobx';
 import { IChannel, ICreateNewChannelDto, IMemberInfo } from 'api.contract';
 import { ApiServiceType, IApiService } from '../../services/api.service';
 import { IMembersService, MembersServiceType } from '../members/members.service';
@@ -8,11 +8,15 @@ import { ChannelsStoreType, ChannelStoreState, IChannelsStore } from './channels
 export const ChannelsServiceType = Symbol('CHANNELS_SERVICE');
 
 export interface IChannelsService {
+  state: ChannelStoreState;
   store: IChannelsStore;
   createNewChannel(newChannelName: ICreateNewChannelDto): void;
   getChannels(spaceId: string): void;
   setActivePublicChannel(channelId: string): void;
   setActivePrivateChannel(receiverId: string): void;
+  setNoneChannel(): void;
+
+  setChannels(spaceId: string, channels: IChannel[]): void;
 }
 
 @injectable()
@@ -47,6 +51,11 @@ export class ChannelsService implements IChannelsService {
     await this.apiService.postAsync('/channels', newChannel);
   }
 
+  @action
+  setNoneChannel() {
+    this.store.state = ChannelStoreState.NONE;
+  }
+
   @action.bound
   setActivePublicChannel(id: string): void {
     this.store.activeChannelId = id;
@@ -57,5 +66,15 @@ export class ChannelsService implements IChannelsService {
   setActivePrivateChannel(receiverId: string): void {
     this.store.activeChannelId = receiverId;
     this.store.state = ChannelStoreState.PRIVATE;
+  }
+
+  @action
+  setChannels(spaceId: string, channels: IChannel[]): void {
+    this.store.publicChannels[spaceId] = channels;
+  }
+
+  @computed
+  get state() {
+    return this.store.state;
   }
 }

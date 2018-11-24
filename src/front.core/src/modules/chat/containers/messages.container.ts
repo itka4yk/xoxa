@@ -2,10 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { ChatServiceType, IChatService } from '../chat.service';
 import { as, injectProps } from '../../../helpers';
-import {
-  ChannelsServiceType,
-  IChannelsService,
-} from '../../channels/channels.service';
+import { ChannelsServiceType, IChannelsService } from '../../channels/channels.service';
 import { AuthServiceType, IAuthService } from '../../auth/auth.service';
 import { IChatMessageDto } from 'api.contract';
 import { IMembersService, MembersServiceType } from '../../members/members.service';
@@ -47,6 +44,7 @@ class MessagesContainer extends React.Component<IProps> {
     const senderUserId = this.props.authStore.store.userInfo.id;
     const spaceMembers = this.props.membersService.store.members[spaceId];
     const myMemberId = spaceMembers.find(m => m.userId === senderUserId)!.id;
+    debugger;
     switch (this.props.channelService.store.state) {
       case ChannelStoreState.NONE:
         break;
