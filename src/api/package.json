@@ -33,7 +33,6 @@
     "class-transformer": "0.1.9",
     "class-transformer-validator": "^0.6.0",
     "class-validator": "0.9.1",
-    "firebase-admin": "6.0.0",
     "helmet": "3.13.0",
     "ioredis": "4.0.0",
     "joi": "^14.0.1",
