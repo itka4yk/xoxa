@@ -4,7 +4,18 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import { syncHistoryWithStore } from 'mobx-react-router';
 import { Router } from 'react-router';
 import { Route } from 'react-router-dom';
+import store from 'store';
+import { ILocalStorage } from 'front.core/lib/services/persist.service';
+import { injectable } from 'inversify';
+
+@injectable()
+class Storage implements ILocalStorage {
+  getFromStore = (...arg) => store.get(...arg);
+  saveToStore = (...arg) => store.set(...arg);
+}
+
 import { container } from './diContainer';
+container.bind<ILocalStorage>('STORAGE').to(Storage);
 
 import { enableDevTools } from 'front.core/lib/helpers/devtools';
 import { PrivateRoute, SwitchWithNotFound } from 'front.core/lib/containers';

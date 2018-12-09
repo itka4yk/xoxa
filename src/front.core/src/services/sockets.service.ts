@@ -1,8 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { ConfigurationType, IEnvSettings } from '../configuration';
-import { connect, Manager } from 'socket.io-client';
-// @ts-ignore
-import * as wildcard from 'socketio-wildcard';
+import { connect } from 'socket.io-client';
 
 export const SocketsServiceType = Symbol.for('SOCKET_SERVICE');
 
@@ -40,8 +38,6 @@ export class SocketsService implements ISocketsService {
         secure: true,
       },
     );
-    const patch = wildcard(Manager);
-    patch(this.socket);
   }
 
   send(msg: any) {

@@ -41,7 +41,7 @@ export class SpacesService implements ISpacesService {
       id: s.spaceId,
       name: s.name,
     }));
-    result.spaces.forEach((s) => {
+    result.spaces.forEach((s: any) => {
       this.channelsService.setChannels(s.spaceId, s.channels);
       this.membersService.setMembers(s.spaceId, s.members);
     });

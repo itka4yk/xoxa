@@ -5,8 +5,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from './all-exception.filter';
 
 const httpsOptions = {
-  key: fs.readFileSync('./localhost.key'),
-  cert: fs.readFileSync('./localhost.crt'),
+  key: fs.readFileSync('./xoxa-localhost.key'),
+  cert: fs.readFileSync('./xoxa-localhost.crt'),
 };
 
 async function bootstrap() {
