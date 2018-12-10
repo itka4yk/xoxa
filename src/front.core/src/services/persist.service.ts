@@ -23,13 +23,14 @@ export class PersistService implements IPersistService {
     autorun(() => {
       if (firstRun) {
         const existingStore = this.localStorage.getFromStore(storeName);
-
+        console.log('EXISTING STORE', existingStore);
         if (existingStore) {
           for (const key in existingStore) {
             store[key] = existingStore[key];
           }
         }
       }
+      console.log('SAVING STORE', store);
       this.localStorage.saveToStore(storeName, toJS(store));
     });
 

@@ -11,8 +11,7 @@ export const servicesModule = new ContainerModule((bind: interfaces.Bind) => {
     .to(SocketsService)
     .inSingletonScope();
   bind<IPersistService>(PersistServiceType)
-    .to(PersistService)
-    .inSingletonScope();
+    .to(PersistService);
 });
 
 export { IApiService, ApiServiceType } from './api.service';

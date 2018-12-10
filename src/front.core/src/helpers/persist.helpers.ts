@@ -10,6 +10,7 @@ export function persistable(): any {
     @injectable()
     class PersistedClass {
       constructor(@inject(PersistServiceType) persistService: IPersistService) {
+        target.apply(this);
         persistService.persistStore(this);
       }
     }
