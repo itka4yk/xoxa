@@ -18,7 +18,6 @@ interface IProps extends IInjectedProps, IOuterProps {}
 class LinkedListItem extends React.Component<IProps> {
   handleLinkClick = (e: any) => {
     e.preventDefault();
-    console.log('LINKED LIST', this.props);
     if (this.props.callback) this.props.callback();
     if (this.props.to) this.props.router.push(this.props.to);
     if (this.props.back) this.props.router.goBack();

@@ -4,7 +4,19 @@ import { ICreateChannelFormProps } from 'front.core/lib/modules/channels/contain
 import { as } from 'front.core';
 
 // tslint:disable-next-line:max-line-length
-import { Container, Header, Content, Form, Item, Input, Button, Text, Left, Body, Right } from 'native-base';
+import {
+  Container,
+  Header,
+  Content,
+  Form,
+  Item,
+  Input,
+  Button,
+  Text,
+  Left,
+  Body,
+  Right,
+} from 'native-base';
 import LinkButton from '../../containers/LinkButton';
 
 const CreateChannelForm = (props: ICreateChannelFormProps) => (
@@ -23,11 +35,7 @@ const CreateChannelForm = (props: ICreateChannelFormProps) => (
     <Content>
       <Form>
         <Item>
-          <Input
-            placeholder="Space name"
-            onChangeText={props.onNameChange}
-            autoCapitalize="none"
-          />
+          <Input placeholder="Space name" onChangeText={props.onNameChange} autoCapitalize="none" />
         </Item>
         <Button block onPress={props.onFormSubmit}>
           <Text>Create</Text>

@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { RouteProps } from 'react-router';
 // tslint:disable-next-line:max-line-length
-import { Container, Header, Content, Form, Item, Input, Body, Text, Left, Right } from 'native-base';
+import { Container, Header, Content, Body, Text, Left, Right } from 'native-base';
 import MessagesContainer from 'front.core/lib/modules/chat/containers/messages.container';
 import SendMessageContainer from 'front.core/lib/modules/chat/containers/sendMessage.container';
 import { Messages } from '../components/chat/Messages';

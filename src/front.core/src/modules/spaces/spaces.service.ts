@@ -1,7 +1,7 @@
 import { injectable, inject } from 'inversify';
 import { ICreateNewSpaceDto, IMySpace, IAllSpaces } from 'api.contract';
 import { MembersServiceType, IMembersService } from '../members/members.module';
-import { computed, action, autorun } from 'mobx';
+import { computed, action } from 'mobx';
 import { ISpacesStore, SpacesStoreType } from './spaces.store';
 import { ApiServiceType, IApiService } from '../../services/api.service';
 import { ChannelsServiceType, IChannelsService } from '../channels/channels.service';
@@ -31,20 +31,17 @@ export class SpacesService implements ISpacesService {
     return this.store.spaces.map(s => s);
   }
 
-  onActivation() { }
+  onActivation() {}
 
   @action
   async getMySpaces() {
-    console.log('REQUESTED');
     const result = await this.apiService.getAsync<IAllSpaces>('/spaces/allSpaces');
-    console.log('RESULT', result);
     if (result instanceof Error) throw result;
     this.store.spaces = result.spaces.map(s => ({
       id: s.spaceId,
       name: s.name,
     }));
     result.spaces.forEach((s: any) => {
-      console.log('SPACE', s);
       if (s.channels) this.channelsService.setChannels(s.spaceId, s.channels);
       if (s.members) this.membersService.setMembers(s.spaceId, s.members);
     });

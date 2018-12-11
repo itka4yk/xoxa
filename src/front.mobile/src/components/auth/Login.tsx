@@ -10,11 +10,7 @@ const Login = (props: ILoginComponentProps) => (
     <Content>
       <Form>
         <Item>
-          <Input
-            placeholder="Email"
-            onChangeText={props.onEmailChange}
-            autoCapitalize="none"
-          />
+          <Input placeholder="Email" onChangeText={props.onEmailChange} autoCapitalize="none" />
         </Item>
         <Item last>
           <Input

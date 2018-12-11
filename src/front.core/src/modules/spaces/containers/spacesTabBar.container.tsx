@@ -26,9 +26,7 @@ const withRouter: any = wr;
 @observer
 class SpacesContainer extends React.Component<IInjectedProps> {
   componentDidMount() {
-    console.log('DID MOUNT');
     this.props.spacesService.getMySpaces();
-    console.log('WILL ?');
   }
 
   @autobind

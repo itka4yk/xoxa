@@ -2,7 +2,19 @@
 import * as React from 'react';
 import { as, ICreateSpaceComponent } from 'front.core';
 // tslint:disable-next-line:max-line-length
-import { Container, Header, Content, Form, Item, Input, Button, Text, Left, Body, Right } from 'native-base';
+import {
+  Container,
+  Header,
+  Content,
+  Form,
+  Item,
+  Input,
+  Button,
+  Text,
+  Left,
+  Body,
+  Right,
+} from 'native-base';
 import LinkButton from '../../containers/LinkButton';
 
 const CreateSpace = (props: ICreateSpaceComponent) => (
@@ -21,11 +33,7 @@ const CreateSpace = (props: ICreateSpaceComponent) => (
     <Content>
       <Form>
         <Item>
-          <Input
-            placeholder="Space name"
-            onChangeText={props.onNameChange}
-            autoCapitalize="none"
-          />
+          <Input placeholder="Space name" onChangeText={props.onNameChange} autoCapitalize="none" />
         </Item>
         <Item last>
           <Input

@@ -6,11 +6,7 @@ import { Form, Item, Input, Button, Text } from 'native-base';
 const SendMessageForm = (props: ISendMessageForm) => (
   <Form>
     <Item>
-      <Input
-        placeholder="Space name"
-        onChangeText={props.onBodyChange}
-        autoCapitalize="none"
-      />
+      <Input placeholder="Space name" onChangeText={props.onBodyChange} autoCapitalize="none" />
     </Item>
     <Button block onPress={props.onMessageSend}>
       <Text>Send</Text>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteProps } from 'react-router';
-import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
+import { Container, Header, Content, Text } from 'native-base';
 
 export const NotFoundView = ({ location }: RouteProps) => (
   <Container>
