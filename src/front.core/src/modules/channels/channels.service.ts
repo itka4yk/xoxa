@@ -70,6 +70,7 @@ export class ChannelsService implements IChannelsService {
 
   @action
   setChannels(spaceId: string, channels: IChannel[]): void {
+    console.log('SETTINGS CHANNELS', spaceId, channels);
     this.store.publicChannels[spaceId] = channels;
   }
 

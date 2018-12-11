@@ -3,19 +3,25 @@
 import * as React from 'react';
 import { ISpacesComponentProps } from 'front.core/lib/modules/spaces/containers';
 import { as } from 'front.core';
-import { Container, Header, Content, Text, List, ListItem, Button } from 'native-base';
+// tslint:disable-next-line:max-line-length
+import { Container, Header, Content, Text, List, ListItem, Right, Body, Left } from 'native-base';
 import LinkButton from '../../containers/LinkButton';
 import { observer } from 'mobx-react';
 
 const SpacesList = observer((props: ISpacesComponentProps) => (
   <Container>
     <Header>
-      <Text>My Spaces</Text>
+      <Left />
+      <Body>
+        <Text>My Spaces</Text>
+      </Body>
+      <Right>
+        <LinkButton transparent block to="/workspaces/create">
+          <Text>New</Text>
+        </LinkButton>
+      </Right>
     </Header>
     <Content>
-      <LinkButton block to="/workspaces/create">
-        <Text>Create new</Text>
-      </LinkButton>
       <List>
         {props.spaces.map(s => (
           <ListItem onPress={() => props.onSpaceSelected(s.name)} key={s.id}>

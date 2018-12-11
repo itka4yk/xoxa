@@ -1,11 +1,23 @@
 // tslint:disable:jsx-no-lambda
 import * as React from 'react';
 import { as, ICreateSpaceComponent } from 'front.core';
-import { Container, Header, Content, Form, Item, Input, Button, Text } from 'native-base';
+// tslint:disable-next-line:max-line-length
+import { Container, Header, Content, Form, Item, Input, Button, Text, Left, Body, Right } from 'native-base';
+import LinkButton from '../../containers/LinkButton';
 
 const CreateSpace = (props: ICreateSpaceComponent) => (
   <Container>
-    <Header />
+    <Header>
+      <Left>
+        <LinkButton transparent back>
+          <Text>Back</Text>
+        </LinkButton>
+      </Left>
+      <Body>
+        <Text>Create</Text>
+      </Body>
+      <Right />
+    </Header>
     <Content>
       <Form>
         <Item>

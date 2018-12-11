@@ -44,7 +44,6 @@ class MessagesContainer extends React.Component<IProps> {
     const senderUserId = this.props.authStore.store.userInfo.id;
     const spaceMembers = this.props.membersService.store.members[spaceId];
     const myMemberId = spaceMembers.find(m => m.userId === senderUserId)!.id;
-    debugger;
     switch (this.props.channelService.store.state) {
       case ChannelStoreState.NONE:
         break;
