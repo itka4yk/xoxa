@@ -38,6 +38,15 @@ export class AuthService implements IAuthService {
       () => this.routerStore.location && this.routerStore.location.pathname === '/logout',
       () => this.signOut(),
     );
+    when(
+      () => this.routerStore.location && this.routerStore.location.pathname === '/',
+      () => this.routerStore.push('/auth/login'),
+    );
+    when(
+      () => this.routerStore.location && this.routerStore.location.pathname === '/auth/login'
+        && this.store.token !== '',
+      () => this.routerStore.push('/workspaces'),
+    );
     reaction(
       () => this.store.token,
       (token: string) => {

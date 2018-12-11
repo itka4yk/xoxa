@@ -18,7 +18,7 @@ export class GetAllSpacesQueryHandler
     const spaces = await this.spacesRepository.get();
     const channels = await this.channelsRepository.get();
     const members = await this.membersRepository.get();
-
+    console.log('EHRE');
     return {
       spaces: spaces
         .filter(s => s.state.members.includes(query.userId))

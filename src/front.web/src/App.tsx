@@ -10,7 +10,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 class Storage implements ILocalStorage {
-  getFromStore = (key) => store.get(key);
+  getFromStore = key => store.get(key);
   saveToStore = (key, value) => store.set(key, value);
 }
 

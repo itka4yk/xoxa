@@ -6,7 +6,7 @@
     "start": "concurrently -n modules,bundler \"yarn watch-modules\" \"yarn bundler\"",
     "bundler": "node node_modules/react-native/local-cli/cli.js start",
     "start:ios": "react-native run-ios",
-    "watch-modules": "rn-link ../front.core",
+    "watch-modules": "rn-link --ignore react-native ../front.core ",
     "test": "jest"
   },
   "dependencies": {
@@ -17,10 +17,13 @@
     "history": "^4.7.2",
     "inversify": "^5.0.1",
     "mobx": "^5.7.0",
+    "mobx-react": "^5.4.2",
     "mobx-react-router": "^4.0.5",
+    "native-base": "^2.8.1",
     "object-assign": "^4.1.1",
     "react": "16.6.1",
-    "react-native": "0.57.5",
+    "react-native": "^0.57.7",
+    "react-native-storage": "^1.0.0-beta.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "reflect-metadata": "^0.1.12",

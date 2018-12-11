@@ -1,59 +1,33 @@
 ﻿// tslint:disable:jsx-no-lambda
 import 'reflect-metadata';
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
 import { container } from './diContainer';
+import SyncStorage from 'sync-storage';
+SyncStorage.init();
 
 import createMemoryHistory from 'history/createMemoryHistory';
 import { syncHistoryWithStore } from 'mobx-react-router';
 import { Router } from 'react-router';
 import { Route } from 'react-router-dom';
-import { SwitchWithNotFound } from 'front.core/lib/containers';
-import { RouterStoreType } from 'front.core';
+import { SwitchWithNotFound, PrivateRoute } from 'front.core/lib/containers';
+import { RouterStoreType, enableDevTools } from 'front.core';
+import { AuthRoute } from './routes/auth.route';
+import { NotFoundView } from './views/NotFound.view';
+import { WorkspacesRoute } from './routes/workspaces.route';
 
+enableDevTools();
 const memoryHistory = createMemoryHistory();
 const history = syncHistoryWithStore(memoryHistory, container.get(RouterStoreType));
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\nCmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\nShake or press menu button for dev menu',
-});
 
 export default class Root extends Component {
   render() {
     return (
       <Router history={history}>
-        <SwitchWithNotFound notFound={() => <Text>Not found!</Text>}>
-          <Route path="/" component={App} />
+        <SwitchWithNotFound notFound={NotFoundView}>
+          <Route path="/auth" component={AuthRoute} />
+          <PrivateRoute path="/workspaces" component={WorkspacesRoute} />
         </SwitchWithNotFound>
       </Router>
     );
   }
 }
-
-export const App = () => (
-  <View style={styles.container}>
-    <Text style={styles.welcome}>Welcome to React Native!!!</Text>
-    <Text style={styles.instructions}>To get started, edit App.js!</Text>
-    <Text style={styles.instructions}>{instructions}</Text>
-  </View>
-);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

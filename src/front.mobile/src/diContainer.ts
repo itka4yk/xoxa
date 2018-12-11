@@ -1,14 +1,19 @@
 ﻿import { Container, injectable } from 'inversify';
 import { coreModules, initContainer } from 'front.core';
-import SyncStorage from 'sync-storage';
+import { AsyncStorage } from 'react-native';
+import RNStorage from 'react-native-storage';
 
 @injectable()
 class Storage {
+  storage: RNStorage;
   constructor() {
-    SyncStorage.init();
+    this.storage = new RNStorage({
+      defaultExpires: null,
+      storageBackend: AsyncStorage,
+    });
   }
-  getFromStore = (...arg) => SyncStorage.get(...arg);
-  saveToStore = (...arg) => SyncStorage.set(...arg);
+  getFromStore = async (key: string) => await this.storage.load({ key });
+  saveToStore = async (key: string, data: any) => await this.storage.save({ key, data });
 }
 const container = new Container();
 container.bind('STORAGE').to(Storage);

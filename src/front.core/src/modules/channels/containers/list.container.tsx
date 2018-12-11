@@ -25,6 +25,7 @@ export interface IChannelsListProps {
 @observer
 class ChannelsListContainer extends React.Component<IProps> {
   render() {
+    console.log('CHANNELS LIST', this.props.service);
     const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
         channels: this.props.service.store.publicChannels[this.props.spaceId] || [],

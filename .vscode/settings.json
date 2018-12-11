@@ -1,13 +1,13 @@
 {
   "files.exclude": {
-    "**/.cache": false,
-    "**/dist": false,
-    "**/lib": false,
-    "**/node_modules": false,
-    "**/public": false,
-    "**/shrinkwrap.yaml": false,
-    "**/yarn-error.log": false,
-    "**/yarn.lock": false
+    "**/.cache": true,
+    "**/dist": true,
+    "**/lib": true,
+    "**/node_modules": true,
+    "**/public": true,
+    "**/shrinkwrap.yaml": true,
+    "**/yarn-error.log": true,
+    "**/yarn.lock": true
   },
   "editor.rulers": [
     100
