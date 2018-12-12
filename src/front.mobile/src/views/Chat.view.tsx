@@ -1,14 +1,20 @@
 ﻿import * as React from 'react';
 import { RouteProps } from 'react-router';
 // tslint:disable-next-line:max-line-length
-import { Container, Header, Content, Body, Text, Left, Right } from 'native-base';
-import MessagesContainer from 'front.core/lib/modules/chat/containers/messages.container';
-import SendMessageContainer from 'front.core/lib/modules/chat/containers/sendMessage.container';
+import { View, StyleSheet } from 'react-native';
+import { Container, Header, Body, Text, Left, Right } from 'native-base';
+import ChatContainer from 'front.core/lib/modules/chat/containers/chat.container';
 import { Messages } from '../components/chat/Messages';
-import SendMessageForm from '../components/chat/SendMessageForm';
 import LinkButton from '../containers/LinkButton';
 
-export const ChatView = ({ location }: RouteProps) => (
+const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+    marginBottom: 30,
+  },
+});
+
+export const ChatView = (props: RouteProps) => (
   <Container>
     <Header>
       <Left>
@@ -17,17 +23,14 @@ export const ChatView = ({ location }: RouteProps) => (
         </LinkButton>
       </Left>
       <Body>
-        <Text>Create</Text>
+        <Text>Chat</Text>
       </Body>
       <Right />
     </Header>
-    <Content>
-      <MessagesContainer>
+    <View style={styles.view}>
+      <ChatContainer>
         <Messages />
-      </MessagesContainer>
-      <SendMessageContainer>
-        <SendMessageForm />
-      </SendMessageContainer>
-    </Content>
+      </ChatContainer>
+    </View>
   </Container>
 );

@@ -11,6 +11,7 @@ import { as } from 'front.core';
 
 import { Container, Header, Content, Text, List, ListItem, Left, Right, Body } from 'native-base';
 import LinkButton from '../../containers/LinkButton';
+import LinkIcon from '../../containers/LinkIcon';
 
 const SingleSpace = (props: ISingleSpaceComponentProps) => (
   <Container>
@@ -21,7 +22,7 @@ const SingleSpace = (props: ISingleSpaceComponentProps) => (
         </LinkButton>
       </Left>
       <Body>
-        <Text>Create</Text>
+        <Text>{props.spaceName}</Text>
       </Body>
       <Right />
     </Header>
@@ -31,15 +32,13 @@ const SingleSpace = (props: ISingleSpaceComponentProps) => (
           <Left>
             <Text>Channels</Text>
           </Left>
-          <Body>
-            <LinkButton
-              transparent
+          <Body />
+          <Right>
+            <LinkIcon
+              name="add"
               to={`/workspaces/single/${props.spaceName}/createChannel/${props.spaceId}`}
-            >
-              <Text>New channel</Text>
-            </LinkButton>
-          </Body>
-          <Right />
+            />
+          </Right>
         </ListItem>
         <ChannelsListContainer spaceId={props.spaceId}>
           <ChannelsList />

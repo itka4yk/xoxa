@@ -1,4 +1,4 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import { observer } from 'mobx-react';
 import { ChatServiceType, IChatService } from '../chat.service';
 import { as, injectProps } from '../../../helpers';
@@ -8,6 +8,7 @@ import { IChatMessageDto } from 'api.contract';
 import { IMembersService, MembersServiceType } from '../../members/members.service';
 import { ChannelStoreState } from '../../channels/channels.store';
 import { ISpacesService, SpacesServiceType } from '../../spaces/spaces.service';
+import autobind from 'autobind-decorator';
 
 interface IInjectedProps {
   chatService: IChatService;
@@ -19,13 +20,19 @@ interface IInjectedProps {
 
 interface IProps extends IInjectedProps {}
 
+interface IState {
+  body: string;
+}
+
 export interface IExtendedMessage extends IChatMessageDto {
   mine: boolean;
   name: string;
 }
 
-export interface IMessagesListProps {
+export interface IChatProps {
   messages: IExtendedMessage[];
+  onBodyChange(name: string): void;
+  onMessageSend(): void;
 }
 
 @injectProps({
@@ -36,7 +43,41 @@ export interface IMessagesListProps {
   spacesService: SpacesServiceType,
 })
 @observer
-class MessagesContainer extends React.Component<IProps> {
+class ChatContainer extends React.Component<IProps, IState> {
+  state = { body: '' };
+  handleBodyChange = (body: string) => this.setState({ body });
+  @autobind
+  async handleMessageSend() {
+    const spaceId = this.props.spacesService.store.activeSpace!;
+    const senderUserId = this.props.authStore.store.userInfo.id;
+    const spaceMembers = this.props.membersService.store.members[spaceId];
+    const senderId = spaceMembers.find(m => m.userId === senderUserId)!.id;
+    switch (this.props.channelService.store.state) {
+      case ChannelStoreState.NONE:
+        break;
+      case ChannelStoreState.PUBLIC:
+        const channelMessage: IChatMessageDto = {
+          senderId,
+          body: this.state.body,
+          receiverId: this.props.channelService.store.activeChannelId!,
+          timestamp: new Date(),
+          isPrivate: false,
+        };
+        this.props.chatService.sendMessage(channelMessage);
+        break;
+      case ChannelStoreState.PRIVATE:
+        const privateMessage: IChatMessageDto = {
+          senderId,
+          body: this.state.body,
+          receiverId: this.props.channelService.store.activeChannelId!,
+          timestamp: new Date(),
+          isPrivate: true,
+        };
+        this.props.chatService.sendMessage(privateMessage);
+        break;
+    }
+    this.setState({ body: '' });
+  }
   render() {
     let messages: IExtendedMessage[] = [];
     const channelId = this.props.channelService.store.activeChannelId;
@@ -77,10 +118,13 @@ class MessagesContainer extends React.Component<IProps> {
     const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
         messages,
-      } as IMessagesListProps),
+        myId: myMemberId,
+        onBodyChange: this.handleBodyChange,
+        onMessageSend: this.handleMessageSend,
+      } as IChatProps),
     );
     return childrenWithProps;
   }
 }
 
-export default as<React.ComponentClass>(MessagesContainer);
+export default as<React.ComponentClass>(ChatContainer);

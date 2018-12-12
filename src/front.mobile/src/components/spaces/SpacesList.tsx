@@ -5,8 +5,8 @@ import { ISpacesComponentProps } from 'front.core/lib/modules/spaces/containers'
 import { as } from 'front.core';
 // tslint:disable-next-line:max-line-length
 import { Container, Header, Content, Text, List, ListItem, Right, Body, Left } from 'native-base';
-import LinkButton from '../../containers/LinkButton';
 import { observer } from 'mobx-react';
+import LinkIcon from '../../containers/LinkIcon';
 
 const SpacesList = observer((props: ISpacesComponentProps) => (
   <Container>
@@ -16,9 +16,7 @@ const SpacesList = observer((props: ISpacesComponentProps) => (
         <Text>My Spaces</Text>
       </Body>
       <Right>
-        <LinkButton transparent block to="/workspaces/create">
-          <Text>New</Text>
-        </LinkButton>
+        <LinkIcon name="add" to="/workspaces/create" />
       </Right>
     </Header>
     <Content>

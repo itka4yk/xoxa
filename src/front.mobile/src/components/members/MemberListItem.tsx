@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { ListItem, Text } from 'native-base';
+import { Text } from 'native-base';
+import LinkedListItem from '../../containers/LinkedListItem';
 
 interface IProps {
   name: string;
@@ -7,7 +8,7 @@ interface IProps {
 }
 
 export const Member = (props: IProps) => (
-  <ListItem onPress={props.onSelect}>
+  <LinkedListItem to="/workspaces/chat" callback={props.onSelect}>
     <Text>{props.name}</Text>
-  </ListItem>
+  </LinkedListItem>
 );
