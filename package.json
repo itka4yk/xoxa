@@ -21,7 +21,7 @@
     "front.web": "yarn --cwd ./src/front.web/ start",
     "front.web:build": "yarn --cwd ./src/front.web/ build",
     "build": "yarn api:build && yarn auth:build",
-    "lines": "sloc ./src/api/src ./src/auth/src ./src/api.contract/src ./src/auth.contract/src ./src/front.core/src ./src/front.web/src",
+    "lines": "sloc ./src/api/src ./src/auth/src ./src/api.contract/src ./src/auth.contract/src ./src/front.core/src ./src/front.web/src ./src/front.desktop/src ./src/front.mobile/src",
     "start": "concurrently -n front.core,front.web,api,auth,api.contract,auth.contract  \"yarn front.core\" \"yarn front.web\" \"yarn api\" \"yarn auth\" \"yarn api.contract\" \"yarn auth.contract\"",
     "start:mobile": "concurrently -n front.core,api,auth,api.contract,auth.contract  \"yarn front.core\" \"yarn api\" \"yarn auth\" \"yarn api.contract\" \"yarn auth.contract\"",
     "lint": "tslint --project .",

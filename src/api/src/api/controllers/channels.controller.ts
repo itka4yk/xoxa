@@ -8,7 +8,6 @@ import {
   Req,
   Query,
 } from '@nestjs/common';
-
 // tslint:disable-next-line:max-line-length
 import { CreateNewChannelCommand } from '../../application/commands/channels/createNewChannel.command';
 import { CommandBus } from '../../application/CommandBus';

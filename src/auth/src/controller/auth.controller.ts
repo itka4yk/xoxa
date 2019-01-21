@@ -37,4 +37,9 @@ export class AuthController {
   getUserInfoById(id: string) {
     return this.usersService.getUserInfoById(id);
   }
+
+  @MessagePattern({ cmd: 'userInfoByEmail' })
+  getUserInfoByEmail(email: string) {
+    return this.usersService.getUserInfoByEmail(email);
+  }
 }

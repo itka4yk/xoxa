@@ -13,11 +13,16 @@ import { CommandBus } from '../../application/CommandBus';
 import { AuthGuard } from 'api/guards/auth.guard';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetSpacesByMemberQuery } from 'application/queries/spaces/getSpacesByMember.query';
-import { assignNewUserSchema, createNewSpaceSchema } from 'api.contract';
+import {
+  assignNewUserSchema,
+  createNewSpaceSchema,
+  inviteNewUserSchema,
+} from 'api.contract';
 import { HttpValidationPipe } from 'shared/pipes/httpValidation.pipe';
 import { AssignNewUserCommand } from 'application/commands/spaces/assignNewUser.command';
 import { GetSpaceMembersQuery } from '../../application/queries/spaces/getSpaceMembersQuery';
 import { GetAllSpacesQuery } from '../../application/queries/spaces/getAllSpacesQuery';
+import { InviteNewUserCommand } from '../../application/commands/spaces/inviteNewUser.command';
 
 @Controller('api/spaces')
 @UseGuards(AuthGuard)
@@ -60,5 +65,13 @@ export class SpacesController {
   async getAllSpaces(@Req() { userInfo }) {
     const query = new GetAllSpacesQuery(userInfo.id);
     return await this.queryBus.execute(query);
+  }
+
+  @Post('inviteUser')
+  @UsePipes(new HttpValidationPipe(inviteNewUserSchema))
+  async inviteNewUser(@Body() commandDto, @Req() { userInfo }) {
+    const command = new InviteNewUserCommand();
+    Object.assign(command, { ...commandDto, applierId: userInfo.id });
+    return await this.commandBus.execute(command);
   }
 }

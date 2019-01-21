@@ -3,6 +3,7 @@ import { CreateNewChannelCommandHandler } from './channels/createNewChannel.comm
 import { AssignNewUserCommandHandler } from './spaces/assignNewUser.commandHandler';
 import { CreateMemberCommandHandler } from './members/createMember.commandHandler';
 import { RenameMemberCommandHandler } from './members/renameMember.commandHandler';
+import { InviteNewUserCommandHandler } from './spaces/inviteNewUser.commandHandler';
 
 export const CommandHandlers = [
   CreateNewSpaceCommandHandler,
@@ -10,4 +11,5 @@ export const CommandHandlers = [
   AssignNewUserCommandHandler,
   CreateMemberCommandHandler,
   RenameMemberCommandHandler,
+  InviteNewUserCommandHandler,
 ];

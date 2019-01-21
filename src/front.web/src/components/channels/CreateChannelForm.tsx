@@ -6,7 +6,7 @@ import { Button, FormControl } from 'react-bootstrap';
 
 const CreateChannelForm = (props: ICreateChannelFormProps) => (
   <form>
-    <h3>Create View</h3>
+    <h3>New channel</h3>
     <FormControl placeholder="name" onChange={(e: any) => props.onNameChange(e.target.value)} />
     <Button onClick={props.onFormSubmit}>+</Button>
   </form>

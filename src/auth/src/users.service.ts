@@ -63,4 +63,20 @@ export class UserService {
     });
     return { id, email, roles: roles.map(r => r.name) } as IUserInfo;
   }
+
+  async getUserInfoByEmail(email: string) {
+    try {
+      const info = await this.userRepository.findOneOrFail({
+        where: { email },
+        relations: ['roles'],
+      });
+      return {
+        roles: info.roles.map(r => r.name),
+        id: info.id,
+        email: info.email,
+      } as IUserInfo;
+    } catch (e) {
+      return null;
+    }
+  }
 }

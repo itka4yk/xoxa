@@ -42,4 +42,10 @@ export class AuthService {
       .send<IUserInfo>({ cmd: 'userInfoById' }, id)
       .toPromise();
   }
+
+  async getUserInfoByEmail(email: string): Promise<IUserInfo> {
+    return await this.client
+      .send<IUserInfo>({ cmd: 'userInfoByEmail' }, email)
+      .toPromise();
+  }
 }
