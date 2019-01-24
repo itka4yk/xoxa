@@ -1,23 +1,31 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetSpacesByMemberQuery } from 'application/queries/spaces/getSpacesByMember.query';
+import { GetSpacesByUserQuery } from 'application/queries/spaces/getSpacesByUserQuery';
 import { SpacesRepository } from 'infrastructure/repositories/spaces.repository';
 import { IMySpace } from 'api.contract';
+import { MembershipRepository } from '../../../infrastructure/repositories/membership.repository';
 
-@QueryHandler(GetSpacesByMemberQuery)
+@QueryHandler(GetSpacesByUserQuery)
 export class GetSpacesByMemberQueryHandler
-  implements IQueryHandler<GetSpacesByMemberQuery, IMySpace[]> {
-  constructor(private readonly spacesRepository: SpacesRepository) {}
+  implements IQueryHandler<GetSpacesByUserQuery, IMySpace[]> {
+  constructor(
+    private readonly spacesRepository: SpacesRepository,
+    private readonly membershipRepository: MembershipRepository,
+  ) {}
 
-  async execute(query: GetSpacesByMemberQuery): Promise<IMySpace[]> {
-    const spaces = await this.spacesRepository.get();
-    return spaces
-      .filter(s => s.state.members.includes(query.memberId))
-      .map(
-        s =>
-          ({
-            id: s.state.id,
-            name: s.state.name,
-          } as IMySpace),
-      );
+  async execute(query: GetSpacesByUserQuery): Promise<IMySpace[]> {
+    const membership = await this.membershipRepository.dbSet
+      .findOne({ userId: query.userId })
+      .exec();
+    if (!membership) return [];
+    const spaces = await this.spacesRepository.dbSet
+      .find({ id: membership.spaces })
+      .exec();
+    return spaces.map(s => ({
+      id: s.id,
+      name: s.name,
+      adminId: s.adminId,
+      channels: s.channels,
+      members: s.members,
+    }));
   }
 }

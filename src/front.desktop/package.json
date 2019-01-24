@@ -1,0 +1,109 @@
+{
+  "name": "electron-react-parcel-boilerplate",
+  "version": "0.7.1",
+  "description": "A boilerplate for Electron + React + Parcel.",
+  "main": "app/main/.parcel/main.js",
+  "scripts": {
+    "start": "run-s main:build watch",
+    "dist": "run-s parcel:build \"electron:build {@}\" --",
+    "watch": "run-p -r parcel:watch electron:start",
+    "electron:start": "nodemon --watch app/main/.parcel --exec \"electron .\"",
+    "electron:build": "build --x64 --publish=never",
+    "parcel:watch": "run-p -r main:watch renderer:watch",
+    "main:watch": "parcel watch app/main/main.ts --out-dir app/main/.parcel --out-file main --target electron",
+    "renderer:watch2": "parcel app/renderer/index.html --port 1124 --out-dir app/renderer/.parcel/development",
+    "renderer:watch": "parcel ../front.web/public/index.html --port 1124 --out-dir app/renderer/.parcel/development",
+    "parcel:build": "run-s main:build renderer:build",
+    "main:build": "parcel build app/main/main.ts --out-dir app/main/.parcel --out-file main --target electron",
+    "renderer:build": "parcel build app/renderer/index.html --public-url ./ --out-dir app/renderer/.parcel/production",
+    "test": "run-s parcel:build \"test:jest {@}\" --",
+    "test:jest": "jest",
+    "lint": "tslint app/**/*.ts{,x}"
+  },
+  "author": "shamofu",
+  "license": "MIT",
+  "build": {
+    "productName": "ElectronReactParcel",
+    "appId": "org.shamofu.ElectronReactParcel",
+    "files": [
+      "app/**",
+      "!app/main/main.ts",
+      "!app/main/tests/**",
+      "!app/renderer/**",
+      "app/renderer/.parcel/production/**",
+      "!app/**/*.map"
+    ],
+    "mac": {
+      "target": [
+        "zip"
+      ],
+      "artifactName": "${productName}-mac.${ext}"
+    },
+    "win": {
+      "target": [
+        "zip"
+      ],
+      "artifactName": "${productName}-win.${ext}"
+    },
+    "linux": {
+      "target": [
+        "zip"
+      ],
+      "category": "Development",
+      "artifactName": "${productName}-linux.${ext}"
+    },
+    "directories": {
+      "output": "release"
+    }
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverageFrom": [
+      "app/renderer/**",
+      "!app/renderer/index.tsx",
+      "!app/renderer/tests/**",
+      "!app/renderer/.parcel/**"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "babel-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/jest": "^23.3.10",
+    "@types/react": "^16.7.17",
+    "@types/react-dom": "^16.0.11",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
+    "electron": "^3.0.13",
+    "electron-builder": "^20.38.4",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.9",
+    "npm-run-all": "^4.1.5",
+    "parcel-bundler": "^1.11.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-router-dom": "^4.3.1",
+    "react-test-renderer": "^16.7.0",
+    "spectron": "^5.0.0",
+    "tslint": "^5.12.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "app-root-path": "^2.1.0",
+    "electron-is-dev": "^1.0.1"
+  }
+}

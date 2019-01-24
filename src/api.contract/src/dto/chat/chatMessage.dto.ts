@@ -6,6 +6,7 @@ export interface IChatMessageDto {
   body: string;
   timestamp: Date;
   isPrivate: boolean | true;
+  spaceId: string;
 }
 
 export const chatMessageSchema = object()
@@ -15,5 +16,6 @@ export const chatMessageSchema = object()
     body: string().min(2),
     timestamp: any(),
     isPrivate: boolean(),
+    spaceId: string().min(2),
   })
   .required();

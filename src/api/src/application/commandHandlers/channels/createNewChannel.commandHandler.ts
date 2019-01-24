@@ -3,16 +3,13 @@ import { NotFoundException } from '@nestjs/common';
 import uuid from 'uuid';
 
 import { CreateNewChannelCommand } from '../../commands/channels/createNewChannel.command';
-import { ChannelsRepository } from '../../../infrastructure/repositories/channels.repository';
 import { SpacesRepository } from '../../../infrastructure/repositories/spaces.repository';
+import { IChannelState } from '../../../domain/space.model';
 
 @CommandHandler(CreateNewChannelCommand)
 export class CreateNewChannelCommandHandler
   implements ICommandHandler<CreateNewChannelCommand> {
-  constructor(
-    private readonly channelsRepository: ChannelsRepository,
-    private readonly spacesRepository: SpacesRepository,
-  ) {}
+  constructor(private readonly spacesRepository: SpacesRepository) {}
 
   async execute(command: CreateNewChannelCommand) {
     const space = await this.spacesRepository.getById(command.spaceId);
@@ -20,8 +17,11 @@ export class CreateNewChannelCommandHandler
       throw new NotFoundException(`no space exist with id ${command.spaceId}`);
     }
     const id = uuid.v4();
-    space.createNewChannel(id);
-    await this.channelsRepository.create({ ...command, id } as any);
-    await this.spacesRepository.update(space.state);
+    const newChannel = {
+      id,
+      name: command.name,
+    } as IChannelState;
+    space.createNewChannel(newChannel);
+    await this.spacesRepository.update(space);
   }
 }

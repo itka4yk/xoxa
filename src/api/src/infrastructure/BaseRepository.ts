@@ -30,7 +30,7 @@ export abstract class BaseRepository<T extends BaseEntity<IDbEntityState>> {
     await this.dbSet.deleteOne({ id });
   }
 
-  async update(newState: IDbEntityState) {
-    await this.dbSet.findOneAndUpdate({ id: newState.id }, newState);
+  async update(entity: BaseEntity<IDbEntityState>) {
+    await this.dbSet.findOneAndUpdate({ id: entity.state.id }, entity.state);
   }
 }

@@ -7,4 +7,5 @@ export const MessageSchema = new Schema({
   body: String,
   timestamp: Date,
   isPrivate: Boolean,
+  spaceId: String,
 });

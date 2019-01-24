@@ -10,7 +10,7 @@ export class GetChannelMessagesQueryHandler
 
   async execute(query: GetChannelMessagesQuery): Promise<IMessage[]> {
     return await this.messagesRepository.dbSet
-      .find({ receiverId: query.receiverId })
+      .find({ receiverId: query.receiverId, spaceId: query.spaceId })
       .sort('-timestamp')
       .skip(query.from)
       .limit(query.to);

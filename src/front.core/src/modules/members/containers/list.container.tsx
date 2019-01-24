@@ -1,14 +1,15 @@
 import * as React from 'react';
 
-import { MembersServiceType, IMembersService } from '../members.service';
 import { as, injectProps } from '../../../helpers';
 import { observer } from 'mobx-react';
 import { IChannel } from 'api.contract';
-import { ChannelsServiceType, IChannelsService } from '../../channels/channels.service';
+import { ChannelsServiceType, IChannelsService, ISpacesStore, SpacesStoreType } from '../..';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { IMembersListProps } from './list.container';
 
-interface IInjectedProps {
-  membersService: IMembersService;
+interface IInjectedProps extends RouteComponentProps<{ spaceId: string }> {
   channelsService: IChannelsService;
+  spacesStore: ISpacesStore;
 }
 
 interface IOuterProps {
@@ -18,25 +19,30 @@ interface IOuterProps {
 interface IProps extends IOuterProps, IInjectedProps {}
 
 export interface IMembersListProps {
-  channels: IChannel[];
+  channels: IChannel[]; // FIXME: rename prop
   onSelect(id: string): void;
 }
 
-@injectProps({ membersService: MembersServiceType, channelsService: ChannelsServiceType })
+@injectProps({
+  channelsService: ChannelsServiceType,
+  spacesStore: SpacesStoreType,
+})
 @observer
+@(withRouter as any)
 class ListContainer extends React.Component<IProps> {
   render() {
-    let members = this.props.membersService.store.members[this.props.spaceId] || [];
-    if (members) {
-      members = members.filter(m => m.id !== this.props.membersService.activeSpaceMemberId);
-    }
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+    const members = this.props.spacesStore.spaces.find(
+      s => s.id === this.props.match.params.spaceId,
+    )!.members;
+    return React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
         channels: members,
-        onSelect: this.props.channelsService.setActivePrivateChannel,
+        onSelect: id =>
+          this.props.history.push(
+            `/workspaces/single/${this.props.match.params.spaceId}/false/${id}`,
+          ),
       } as IMembersListProps),
     );
-    return childrenWithProps;
   }
 }
 

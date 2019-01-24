@@ -5,27 +5,21 @@ import { CommandHandlers } from './commandHandlers';
 import { EventHandlers } from './eventHandlers';
 import { InfrastructureModule } from '../infrastructure/infrastructure.module';
 import { CommandBus } from './CommandBus';
-import { SampleQueryHandler } from './queryHandlers/sample.queryHandler';
 // tslint:disable-next-line:max-line-length
 import { GetSpacesByMemberQueryHandler } from './queryHandlers/spaces/getSpacesByMember.queryHandler';
 import { GetChannelsQueryHandler } from './queryHandlers/channels/getChannels.queryHandler';
 // tslint:disable-next-line:max-line-length
 import { GetChannelMessagesQueryHandler } from './queryHandlers/messages/getChannelMessages.queryHandler';
-import { GetSpaceMembersQueryHandler } from './queryHandlers/spaces/getSpaceMembers.queryHandler';
 import { AuthModule } from '../auth/auth.module';
 import { GetMemberInfoQueryHandler } from './queryHandlers/members/getMemberInfo.queryHandler';
-import { GetAllSpacesQueryHandler } from './queryHandlers/spaces/getAllSpaces.queryHandler';
 // tslint:disable-next-line:max-line-length
 import { GetPrivateMessagesQueryHandler } from './queryHandlers/messages/getPrivateMessages.queryHandler';
 
 const QueryHandlers = [
-  SampleQueryHandler,
   GetSpacesByMemberQueryHandler,
   GetChannelsQueryHandler,
   GetChannelMessagesQueryHandler,
   GetMemberInfoQueryHandler,
-  GetSpaceMembersQueryHandler,
-  GetAllSpacesQueryHandler,
   GetPrivateMessagesQueryHandler,
 ];
 

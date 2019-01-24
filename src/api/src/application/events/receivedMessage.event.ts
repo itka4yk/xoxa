@@ -7,6 +7,7 @@ export class ReceivedMessageEvent implements IEvent, IChatMessageDto {
   receiverId: string;
   senderId: string;
   timestamp: Date;
+  spaceId: string;
 
   constructor(dto: IChatMessageDto) {
     Object.assign(this, dto);

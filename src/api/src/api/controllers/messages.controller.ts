@@ -15,10 +15,11 @@ export class MessagesController {
   async getChannelMessages(@Query()
   {
     receiverId,
+    spaceId,
     from,
     to,
   }: GetChannelMessagesQuery) {
-    const query = new GetChannelMessagesQuery(receiverId, +from, +to);
+    const query = new GetChannelMessagesQuery(receiverId, spaceId, +from, +to);
     return await this.queryBus.execute(query);
   }
 

@@ -1,12 +1,14 @@
 import * as React from 'react';
 
-import { ChannelsServiceType, IChannelsService } from '../channels.service';
 import { as, injectProps } from '../../../helpers';
 import { observer } from 'mobx-react';
 import { IChannel } from 'api.contract';
+import { IChannelsListProps } from './list.container';
+import { ISpacesStore, SpacesStoreType } from '../..';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-interface IInjectedProps {
-  service: IChannelsService;
+interface IInjectedProps extends RouteComponentProps<{ spaceId: string }> {
+  spacesStore: ISpacesStore;
 }
 
 interface IOuterProps {
@@ -21,17 +23,21 @@ export interface IChannelsListProps {
   onSelect(id: string): void;
 }
 
-@injectProps({ service: ChannelsServiceType })
+@injectProps({ spacesStore: SpacesStoreType })
 @observer
+@(withRouter as any)
 class ChannelsListContainer extends React.Component<IProps> {
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+    return React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
-        channels: this.props.service.store.publicChannels[this.props.spaceId] || [],
-        onSelect: id => this.props.service.setActivePublicChannel(id),
+        channels: this.props.spacesStore.spaces.find(s => s.id === this.props.match.params.spaceId)!
+          .channels,
+        onSelect: id =>
+          this.props.history.push(
+            `/workspaces/single/${this.props.match.params.spaceId}/true/${id}`,
+          ),
       } as IChannelsListProps),
     );
-    return childrenWithProps;
   }
 }
 

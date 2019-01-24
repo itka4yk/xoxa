@@ -1,18 +1,17 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler, EventBus } from '@nestjs/cqrs';
 import { CreateNewSpaceCommand } from '../../commands/spaces/createNewSpace.command';
 import { SpacesRepository } from '../../../infrastructure/repositories/spaces.repository';
 import uuid from 'uuid';
 import { InvalidArgumentException } from 'shared/exceptions/InvalidArgument.exception';
-import { Space } from 'domain/spaces/space';
-import { MembersRepository } from '../../../infrastructure/repositories/members.repository';
-import { Member } from '../../../domain/members/member';
+import { ISpaceState, IMemberState, SpaceModel } from 'domain/space.model';
+import { SpaceCreatedEvent } from '../../events/spaceCreated.event';
 
 @CommandHandler(CreateNewSpaceCommand)
 export class CreateNewSpaceCommandHandler
   implements ICommandHandler<CreateNewSpaceCommand> {
   constructor(
     private readonly spacesRepository: SpacesRepository,
-    private readonly membersRepository: MembersRepository,
+    private readonly eventBus: EventBus,
   ) {}
 
   async execute(command: CreateNewSpaceCommand) {
@@ -27,24 +26,26 @@ export class CreateNewSpaceCommandHandler
 
     const spaceId: string = uuid.v4();
 
-    const newSpace = new Space({
-      ...command,
-      id: spaceId,
-      members: [command.adminId],
-      channels: [],
-      admin: command.adminId,
-    } as any);
-
-    await this.spacesRepository.create(newSpace.state);
-
     const memberId = uuid.v4();
 
-    const member = new Member({
-      spaceId,
+    const admin: IMemberState = {
       userId: command.adminId,
       name: command.adminName,
       id: memberId,
-    } as any);
-    await this.membersRepository.create(member.state);
+    };
+
+    const newSpace = new SpaceModel({
+      id: spaceId,
+      name: command.name,
+      adminId: command.adminId,
+      members: [],
+      channels: [],
+    } as ISpaceState);
+
+    newSpace.addNewMember(admin);
+    await this.spacesRepository.create(newSpace.state);
+    this.eventBus.publish(
+      new SpaceCreatedEvent({ spaceId, userId: command.adminId }),
+    );
   }
 }

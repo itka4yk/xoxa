@@ -7,8 +7,8 @@ export const SpacesStoreType = Symbol('SPACES_STORE');
 
 export interface ISpacesStore {
   spaces: IMySpace[];
-  activeSpace: string | undefined;
-  spaceMembers: { [spaceId: string]: ISpaceMember[] };
+  activeSpace: string | undefined; // TODO: remove this kurwa
+  spaceMembers: { [spaceId: string]: ISpaceMember[] }; // TODO: remove this kurwa
 }
 
 @persistable()

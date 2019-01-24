@@ -3,8 +3,10 @@ import autobind from 'autobind-decorator';
 
 import { ChannelsServiceType, IChannelsService } from '../channels.service';
 import { as, injectProps } from '../../../helpers';
+import { ICreateChannelFormProps } from './create.container';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-interface IInjectedProps {
+interface IInjectedProps extends RouteComponentProps<{ spaceId: string }> {
   store: IChannelsService;
 }
 
@@ -24,25 +26,27 @@ export interface ICreateChannelFormProps {
 }
 
 @injectProps({ store: ChannelsServiceType })
-@autobind
+@(withRouter as any)
 class CreateChannelContainer extends React.Component<IProps, IState> {
   state = { name: '' };
 
+  @autobind
   async handleFormSubmit() {
-    await this.props.store.createNewChannel({ name: this.state.name, spaceId: this.props.spaceId });
-    await this.props.store.getChannels(this.props.spaceId);
+    await this.props.store.createNewChannel({
+      name: this.state.name,
+      spaceId: this.props.match.params.spaceId,
+    });
   }
 
   handleNameChange = (name: string) => this.setState({ name });
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+    return React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
         onNameChange: this.handleNameChange,
         onFormSubmit: this.handleFormSubmit,
       } as ICreateChannelFormProps),
     );
-    return childrenWithProps;
   }
 }
 

@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import { RouteComponentProps, withRouter as wr } from 'react-router';
 import autobind from 'autobind-decorator';
 import { ISpacesService, SpacesServiceType } from '../spaces.service';
+import { ISpacesComponentProps } from './spacesTabBar.container';
 
 interface IInjectedProps extends RouteComponentProps<any> {
   spacesService: ISpacesService;
@@ -30,15 +31,13 @@ class SpacesContainer extends React.Component<IInjectedProps> {
   }
 
   @autobind
-  handleSpaceSelected(name: string) {
-    const spaceId = this.props.spacesService.mySpaces.find(s => s.name === name)!.id;
-    this.props.spacesService.setActiveSpace(spaceId);
-    this.props.history.push(`/workspaces/single/${name.toLowerCase()}`);
+  handleSpaceSelected(id: string) {
+    this.props.history.push(`/workspaces/single/${id}`);
   }
 
   render() {
     const { pathname } = this.props.location;
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+    return React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
         spaces: this.props.spacesService.mySpaces.map(s => ({
           ...s,
@@ -47,7 +46,6 @@ class SpacesContainer extends React.Component<IInjectedProps> {
         onSpaceSelected: this.handleSpaceSelected,
       } as ISpacesComponentProps),
     );
-    return childrenWithProps;
   }
 }
 

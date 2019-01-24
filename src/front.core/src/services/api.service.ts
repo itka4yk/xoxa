@@ -23,7 +23,6 @@ export class ApiService implements IApiService {
   async getAsync<TResult>(urlSuffix: string): Promise<TResult | Error> {
     const config = {
       headers: {
-        'Access-Control-Allow-Origin': '*',
         Authorization: this.token,
       },
     };
@@ -42,7 +41,6 @@ export class ApiService implements IApiService {
   ): Promise<TResult | Error> {
     const config = {
       headers: {
-        'Access-Control-Allow-Origin': '*',
         Authorization: this.token,
       },
     };

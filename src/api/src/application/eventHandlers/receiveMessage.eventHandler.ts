@@ -5,8 +5,6 @@ import { MessagesRepository } from '../../infrastructure/repositories/messages.r
 import { IMessageState } from '../../domain/messages/message';
 import { ClientsService } from '../../infrastructure/clients.service';
 import { SpacesRepository } from '../../infrastructure/repositories/spaces.repository';
-import { ChannelsRepository } from '../../infrastructure/repositories/channels.repository';
-import { MembersRepository } from '../../infrastructure/repositories/members.repository';
 
 @WebSocketGateway()
 @EventsHandler(ReceivedMessageEvent)
@@ -17,23 +15,22 @@ export class ReceivedMessageEventHandler
   constructor(
     private readonly messagesRepository: MessagesRepository,
     private readonly clientsService: ClientsService,
-    private readonly channelsRepository: ChannelsRepository,
     private readonly spacesRepository: SpacesRepository,
-    private readonly membersRepository: MembersRepository,
   ) {}
 
   async handle(event: ReceivedMessageEvent) {
     await this.messagesRepository.create(event as IMessageState);
+    const space = await this.spacesRepository.getById(event.spaceId);
     if (event.isPrivate) {
-      const receiver = await this.membersRepository.getById(event.receiverId);
-      await this.sendToClient(receiver.state.userId, event);
-      const sender = await this.membersRepository.getById(event.senderId);
-      await this.sendToClient(sender.state.userId, event);
+      const receiver = space.state.members.find(
+        m => m.id === event.receiverId,
+      )!;
+      await this.sendToClient(receiver.userId, event);
+      const sender = space.state.members.find(m => m.id === event.senderId)!;
+      await this.sendToClient(sender.userId, event);
     } else {
-      const channel = await this.channelsRepository.getById(event.receiverId);
-      const space = await this.spacesRepository.getById(channel.state.spaceId);
       const members = space.state.members;
-      members.forEach(c => this.sendToClient(c, event));
+      members.forEach(c => this.sendToClient(c.userId, event));
     }
   }
 

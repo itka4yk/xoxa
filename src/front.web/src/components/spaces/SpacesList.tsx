@@ -13,7 +13,7 @@ const SpacesList = observer((props: ISpacesComponentProps) => (
       Create new
     </LinkButton>
     {props.spaces.map(s => (
-      <Button block active={s.active} onClick={() => props.onSpaceSelected(s.name)} key={s.id}>
+      <Button block active={s.active} onClick={() => props.onSpaceSelected(s.id)} key={s.id}>
         {s.name}
       </Button>
     ))}

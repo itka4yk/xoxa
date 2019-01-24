@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   Post,
-  Query,
   Req,
   UseGuards,
   UsePipes,
@@ -12,7 +11,7 @@ import { CreateNewSpaceCommand } from '../../application/commands/spaces/createN
 import { CommandBus } from '../../application/CommandBus';
 import { AuthGuard } from 'api/guards/auth.guard';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetSpacesByMemberQuery } from 'application/queries/spaces/getSpacesByMember.query';
+import { GetSpacesByUserQuery } from 'application/queries/spaces/getSpacesByUserQuery';
 import {
   assignNewUserSchema,
   createNewSpaceSchema,
@@ -20,8 +19,6 @@ import {
 } from 'api.contract';
 import { HttpValidationPipe } from 'shared/pipes/httpValidation.pipe';
 import { AssignNewUserCommand } from 'application/commands/spaces/assignNewUser.command';
-import { GetSpaceMembersQuery } from '../../application/queries/spaces/getSpaceMembersQuery';
-import { GetAllSpacesQuery } from '../../application/queries/spaces/getAllSpacesQuery';
 import { InviteNewUserCommand } from '../../application/commands/spaces/inviteNewUser.command';
 
 @Controller('api/spaces')
@@ -42,8 +39,8 @@ export class SpacesController {
 
   @Get()
   async getSpaces(@Req() { userInfo }) {
-    const query = new GetSpacesByMemberQuery();
-    query.memberId = userInfo.id;
+    const query = new GetSpacesByUserQuery();
+    query.userId = userInfo.id;
     return await this.queryBus.execute(query);
   }
 
@@ -53,18 +50,6 @@ export class SpacesController {
     const command = new AssignNewUserCommand();
     Object.assign(command, { ...commandDto, applierId: userInfo.id });
     return await this.commandBus.execute(command);
-  }
-
-  @Get('spaceMembers')
-  async getSpaceMembers(@Query() { spaceId }, @Req() { userInfo }) {
-    const query = new GetSpaceMembersQuery(spaceId, userInfo.id);
-    return await this.queryBus.execute(query);
-  }
-
-  @Get('allSpaces')
-  async getAllSpaces(@Req() { userInfo }) {
-    const query = new GetAllSpacesQuery(userInfo.id);
-    return await this.queryBus.execute(query);
   }
 
   @Post('inviteUser')
