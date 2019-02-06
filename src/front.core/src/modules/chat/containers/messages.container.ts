@@ -7,10 +7,10 @@ import { IChatMessageDto } from 'api.contract';
 import { ISpacesService, SpacesServiceType } from '../../spaces/spaces.service';
 import { IMessagesListProps } from './messages.container';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { RouterStoreType } from '../../../stores/router.store';
+import { RouterStoreType } from '../../..';
 import { observable } from 'mobx';
 
-interface IInjectedProps
+interface IInjectedProps  // @ts-ignore
   extends RouteComponentProps<{ spaceId: string; isPublic: boolean; channelId: string }> {
   chatService: IChatService;
   channelService: IChannelsService;

@@ -20,7 +20,7 @@ export class AuthController {
 
   @MessagePattern({ cmd: 'verify' })
   verify(token: string): string {
-    return this.usersService.validate(token) as any;
+    return UserService.validate(token) as any;
   }
 
   @MessagePattern({ cmd: 'activate' })

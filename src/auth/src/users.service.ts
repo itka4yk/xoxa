@@ -43,7 +43,7 @@ export class UserService {
     return sign({ id, email }, 'some_random_secret');
   }
 
-  validate(token: string): Promise<IUserInfo> {
+  static validate(token: string): Promise<IUserInfo> {
     return verify(token, 'some_random_secret') as any;
   }
 

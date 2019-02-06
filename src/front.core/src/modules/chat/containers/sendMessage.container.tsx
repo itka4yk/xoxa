@@ -3,13 +3,18 @@ import autobind from 'autobind-decorator';
 
 import { ChatServiceType, IChatService } from '../chat.service';
 import { as, injectProps } from '../../../helpers';
-import { ChannelsServiceType, IChannelsService } from '../../channels/channels.service';
-import { AuthServiceType, IAuthService } from '../../auth/auth.service';
+import {
+  AuthServiceType,
+  ChannelsServiceType,
+  IAuthService,
+  IChannelsService,
+  ISendMessageForm,
+} from '../..';
 import { IChatMessageDto } from 'api.contract';
 import { ISpacesService, SpacesServiceType } from '../../spaces/spaces.service';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-interface IInjectedProps
+interface IInjectedProps  // @ts-ignore
   extends RouteComponentProps<{ spaceId: string; isPublic: boolean; channelId: string }> {
   chatService: IChatService;
   channelsService: IChannelsService;
@@ -71,13 +76,12 @@ class SendMessageContainer extends React.Component<IProps, IState> {
   }
 
   render() {
-    const childrenWithProps = React.Children.map(this.props.children, (child: any) =>
+    return React.Children.map(this.props.children, (child: any) =>
       React.cloneElement(child, {
         onBodyChange: this.handleBodyChange,
         onMessageSend: this.handleMessageSend,
       } as ISendMessageForm),
     );
-    return childrenWithProps;
   }
 }
 
