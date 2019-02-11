@@ -8,7 +8,7 @@ interface IProps {
 }
 
 export const Member = (props: IProps) => (
-  <LinkedListItem to="/workspaces/chat" callback={props.onSelect}>
+  <LinkedListItem callback={props.onSelect}>
     <Text>{props.name}</Text>
   </LinkedListItem>
 );

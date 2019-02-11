@@ -22,7 +22,7 @@ const SpacesList = observer((props: ISpacesComponentProps) => (
     <Content>
       <List>
         {props.spaces.map(s => (
-          <ListItem onPress={() => props.onSpaceSelected(s.name)} key={s.id}>
+          <ListItem onPress={() => props.onSpaceSelected(s.id)} key={s.id}>
             <Text>{s.name}</Text>
           </ListItem>
         ))}

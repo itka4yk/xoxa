@@ -10,12 +10,12 @@
     "start": "tsc -w"
   },
   "dependencies": {
-    "class-validator": "^0.9.1",
-    "joi": "^14.0.1",
-    "reflect-metadata": "^0.1.12"
+    "class-validator": "0.9.1",
+    "joi": "14.0.1",
+    "reflect-metadata": "0.1.12"
   },
   "devDependencies": {
-    "@types/joi": "^13.6.1",
+    "@types/joi": "13.6.1",
     "@types/node": "10.12.0",
     "typescript": "3.1.3"
   }

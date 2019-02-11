@@ -5,6 +5,8 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
+.parcel
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -467,3 +469,5 @@ $RECYCLE.BIN/
 #lib folders
 /src/**/lib
 /src/**/dist
+/src/front.desktop/app/renderer/.parcel
+/src/front.desktop/app/main/.parcel

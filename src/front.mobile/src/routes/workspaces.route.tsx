@@ -12,11 +12,16 @@ export const WorkspacesRoute = ({ match }: RouteComponentProps) => (
   <SwitchWithNotFound notFound={NotFoundView}>
     <Route exact path={`${match.path}`} component={WorkspacesView} />
     <Route path={`${match.path}/create`} component={CreateSpaceView} />
-    <Route exact path={`${match.path}/single/:spaceName`} component={SingleSpaceView} />
-    <Route exact path={`${match.path}/chat`} component={ChatView} />
+    <Route exact path={`${match.path}/single/:spaceId`} component={SingleSpaceView} />
     <Route
       exact
-      path={`${match.path}/single/:spaceName/createChannel/:spaceId`}
+      path={`${match.path}/single/:spaceId/:isPublic?/:channelId?`}
+      component={ChatView}
+    />
+    {/* <Route exact path={`${match.path}/chat`} component={ChatView} /> */}
+    <Route
+      exact
+      path={`${match.path}/single/:spaceId/createChannel/:spaceId`}
       component={CreateChannelView}
     />
   </SwitchWithNotFound>

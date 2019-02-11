@@ -1,7 +1,6 @@
 {
-  "name": "electron-react-parcel-boilerplate",
-  "version": "0.7.1",
-  "description": "A boilerplate for Electron + React + Parcel.",
+  "name": "front.desktop",
+  "author": "Ihor Tkachuk",
   "main": "app/main/.parcel/main.js",
   "scripts": {
     "start": "run-s main:build watch",
@@ -20,11 +19,10 @@
     "test:jest": "jest",
     "lint": "tslint app/**/*.ts{,x}"
   },
-  "author": "shamofu",
   "license": "MIT",
   "build": {
-    "productName": "ElectronReactParcel",
-    "appId": "org.shamofu.ElectronReactParcel",
+    "productName": "Xpxa",
+    "appId": "org.itka4yk.xoxa",
     "files": [
       "app/**",
       "!app/main/main.ts",
@@ -78,32 +76,32 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/preset-typescript": "^7.1.0",
-    "@types/jest": "^23.3.10",
-    "@types/react": "^16.7.17",
-    "@types/react-dom": "^16.0.11",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.4.2",
-    "electron": "^3.0.13",
-    "electron-builder": "^20.38.4",
-    "jest": "^23.6.0",
-    "nodemon": "^1.18.9",
-    "npm-run-all": "^4.1.5",
-    "parcel-bundler": "^1.11.0",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-router-dom": "^4.3.1",
-    "react-test-renderer": "^16.7.0",
-    "spectron": "^5.0.0",
-    "tslint": "^5.12.0",
-    "tslint-react": "^3.6.0",
-    "typescript": "^3.2.2"
+    "@babel/core": "7.0.0-0",
+    "@babel/preset-env": "7.0.0",
+    "@babel/preset-react": "7.0.0",
+    "@babel/preset-typescript": "7.1.0",
+    "@types/jest": "23.3.10",
+    "@types/react": "16.7.17",
+    "@types/react-dom": "16.0.11",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "23.4.2",
+    "electron": "3.0.13",
+    "electron-builder": "20.38.4",
+    "jest": "23.6.0",
+    "nodemon": "1.18.9",
+    "npm-run-all": "4.1.5",
+    "parcel-bundler": "1.11.0",
+    "react": "16.7.0",
+    "react-dom": "16.7.0",
+    "react-router-dom": "4.3.1",
+    "react-test-renderer": "16.7.0",
+    "spectron": "5.0.0",
+    "tslint": "5.12.0",
+    "tslint-react": "3.6.0",
+    "typescript": "3.2.2"
   },
   "dependencies": {
-    "app-root-path": "^2.1.0",
-    "electron-is-dev": "^1.0.1"
+    "app-root-path": "2.1.0",
+    "electron-is-dev": "1.0.1"
   }
 }
